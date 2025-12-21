@@ -1,0 +1,107 @@
+version: '3.8'
+
+services:
+  # Nginx reverse proxy - Entry point for all HTTP requests
+  nginx:
+    image: registry.gitlab.com/zairakai/docker-ecosystem/web:nginx-1.26
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - laravel-public:/var/www/html/public
+      - vuejs-dist:/var/www/html/dist
+    depends_on:
+      - php
+      - node
+    networks:
+      - app-network
+
+  # PHP backend - Laravel application (Blade rendering)
+  php:
+    image: registry.gitlab.com/zairakai/docker-ecosystem/php:8.3-test
+    volumes:
+      - ./laravel:/var/www/html
+    environment:
+      - APP_ENV=testing
+      - DB_HOST=mysql
+      - REDIS_HOST=redis
+    depends_on:
+      - mysql
+      - redis
+    networks:
+      - app-network
+
+  # Node.js frontend - Vue.js application (SPA)
+  node:
+    image: registry.gitlab.com/zairakai/docker-ecosystem/node:20-test
+    volumes:
+      - ./vuejs:/app
+    environment:
+      - NODE_ENV=test
+      - API_URL=http://nginx/api
+    command: npm run dev
+    networks:
+      - app-network
+
+  # MySQL database
+  mysql:
+    image: registry.gitlab.com/zairakai/docker-ecosystem/database:mysql-8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+      - MYSQL_DATABASE=testing
+      - MYSQL_USER=laravel
+      - MYSQL_PASSWORD=secret
+    networks:
+      - app-network
+
+  # Redis cache
+  redis:
+    image: registry.gitlab.com/zairakai/docker-ecosystem/database:redis-7
+    networks:
+      - app-network
+
+  # E2E Testing with Gherkin - Tests both Blade and Vue.js
+  e2e-testing:
+    image: registry.gitlab.com/zairakai/docker-ecosystem/services:e2e-testing
+    volumes:
+      - ./tests/e2e/features:/app/features
+      - ./tests/e2e/step-definitions:/app/step-definitions
+      - ./tests/e2e/reports:/app/reports
+    environment:
+      # Target Nginx, which routes to PHP (Blade) or Node.js (Vue.js)
+      - BASE_URL=http://nginx
+      - HEADLESS=true
+    depends_on:
+      - nginx
+      - php
+      - node
+    networks:
+      - app-network
+    command: /usr/local/bin/run-tests.sh
+
+  # Performance Testing - Load tests via Nginx
+  performance-testing:
+    image: registry.gitlab.com/zairakai/docker-ecosystem/services:performance-testing
+    volumes:
+      - ./tests/performance:/app/tests
+      - ./tests/performance/reports:/app/reports
+    environment:
+      # Target Nginx entry point
+      - TARGET_URL=http://nginx
+      - TEST_TYPE=k6
+    depends_on:
+      - nginx
+      - php
+      - node
+    networks:
+      - app-network
+    command: /usr/local/bin/run-load-test.sh
+
+volumes:
+  laravel-public:
+  vuejs-dist:
+
+networks:
+  app-network:
+    driver: bridge

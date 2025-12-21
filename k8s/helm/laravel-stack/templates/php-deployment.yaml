@@ -1,0 +1,65 @@
+{{- if .Values.php.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "laravel-stack.fullname" . }}-php
+  labels:
+    {{- include "laravel-stack.labels" . | nindent 4 }}
+    app.kubernetes.io/component: php
+spec:
+  {{- if not .Values.php.autoscaling.enabled }}
+  replicas: {{ .Values.php.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "laravel-stack.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: php
+  template:
+    metadata:
+      labels:
+        {{- include "laravel-stack.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: php
+    spec:
+      {{- include "laravel-stack.imagePullSecrets" . | nindent 6 }}
+      containers:
+        - name: php
+          image: {{ include "laravel-stack.image" (dict "Values" .Values "image" .Values.php.image) }}
+          imagePullPolicy: {{ .Values.php.image.pullPolicy }}
+          ports:
+            - name: php-fpm
+              containerPort: 9000
+              protocol: TCP
+          env:
+            {{- range $key, $value := .Values.php.environment }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+            {{- end }}
+            {{- range $key, $value := .Values.php.secrets }}
+            - name: {{ $key }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "laravel-stack.fullname" $ }}-php
+                  key: {{ $key }}
+            {{- end }}
+          {{- if .Values.php.livenessProbe }}
+          livenessProbe:
+            {{- toYaml .Values.php.livenessProbe | nindent 12 }}
+          {{- end }}
+          {{- if .Values.php.readinessProbe }}
+          readinessProbe:
+            {{- toYaml .Values.php.readinessProbe | nindent 12 }}
+          {{- end }}
+          resources:
+            {{- toYaml .Values.php.resources | nindent 12 }}
+          {{- if .Values.php.persistence.enabled }}
+          volumeMounts:
+            - name: storage
+              mountPath: {{ .Values.php.persistence.mountPath }}
+          {{- end }}
+      {{- if .Values.php.persistence.enabled }}
+      volumes:
+        - name: storage
+          persistentVolumeClaim:
+            claimName: {{ include "laravel-stack.fullname" . }}-php-storage
+      {{- end }}
+{{- end }}

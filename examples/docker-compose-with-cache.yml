@@ -1,0 +1,92 @@
+# Docker Compose example with persistent cache volumes
+# This configuration adds cache volumes for Composer and npm/yarn/pnpm
+# to avoid re-downloading packages on every container restart
+
+version: '3.8'
+
+services:
+  # PHP Development container with Composer cache
+  php-dev:
+    image: registry.gitlab.com/zairakai/docker-ecosystem/php:8.3-dev
+    volumes:
+      # Application code
+      - ./app:/var/www/html
+
+      # Persistent Composer cache (global cache directory)
+      - composer-cache:/home/www/.composer/cache
+
+      # Persistent Composer vendor (optional - per-project)
+      - ./app/vendor:/var/www/html/vendor
+
+    environment:
+      - COMPOSER_CACHE_DIR=/home/www/.composer/cache
+      - COMPOSER_HOME=/home/www/.composer
+    working_dir: /var/www/html
+
+  # Node.js Development container with npm/yarn/pnpm cache
+  node-dev:
+    image: registry.gitlab.com/zairakai/docker-ecosystem/node:20-dev
+    volumes:
+      # Application code
+      - ./frontend:/app
+
+      # Persistent npm cache
+      - npm-cache:/home/node/.npm
+
+      # Persistent Yarn cache
+      - yarn-cache:/home/node/.cache/yarn
+
+      # Persistent pnpm store
+      - pnpm-store:/home/node/.local/share/pnpm/store
+
+      # Node modules (optional - per-project)
+      - ./frontend/node_modules:/app/node_modules
+
+    environment:
+      - NPM_CONFIG_CACHE=/home/node/.npm
+      - YARN_CACHE_FOLDER=/home/node/.cache/yarn
+      - PNPM_HOME=/home/node/.local/share/pnpm
+    working_dir: /app
+    user: node
+
+# Named volumes for persistent cache storage
+volumes:
+  # Composer cache - stores downloaded packages
+  composer-cache:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      # Optional: bind to host directory for inspection
+      device: ${CACHE_DIR:-./docker-cache}/composer
+
+  # npm cache - stores downloaded packages
+  npm-cache:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${CACHE_DIR:-./docker-cache}/npm
+
+  # Yarn cache - stores downloaded packages
+  yarn-cache:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${CACHE_DIR:-./docker-cache}/yarn
+
+  # pnpm store - stores downloaded packages (content-addressable)
+  pnpm-store:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${CACHE_DIR:-./docker-cache}/pnpm
+
+# Alternative: Use Docker managed volumes (no host binding)
+# volumes:
+#   composer-cache:
+#   npm-cache:
+#   yarn-cache:
+#   pnpm-store:

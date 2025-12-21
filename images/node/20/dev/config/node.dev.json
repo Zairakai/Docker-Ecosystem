@@ -1,0 +1,142 @@
+{
+  "name": "node-development-config",
+  "version": "1.0.0",
+  "description": "Development Node.js configuration",
+  "environment": "development",
+  "node": {
+    "version": "22.9.0",
+    "options": {
+      "max-old-space-size": 1024,
+      "max-semi-space-size": 8,
+      "optimize-for-size": false,
+      "gc-interval": 1000,
+      "harmony": true,
+      "use-strict": true,
+      "inspect": "0.0.0.0:9229",
+      "inspect-brk": false
+    },
+    "flags": [
+      "--enable-source-maps",
+      "--stack-trace-limit=100",
+      "--trace-warnings",
+      "--trace-deprecation",
+      "--unhandled-rejections=strict",
+      "--experimental-modules"
+    ]
+  },
+  "performance": {
+    "memory": {
+      "heap_size_limit": "1024MB",
+      "max_old_generation_size": "800MB",
+      "max_young_generation_size": "128MB"
+    },
+    "cpu": {
+      "max_workers": 4,
+      "worker_threads": true
+    },
+    "gc": {
+      "type": "adaptive",
+      "interval": 1000,
+      "aggressive": false
+    }
+  },
+  "development": {
+    "hot_reload": {
+      "enabled": true,
+      "watch_options": {
+        "ignored": ["node_modules", ".git", "dist", "build"],
+        "use_polling": true,
+        "poll_interval": 1000
+      }
+    },
+    "debugging": {
+      "enabled": true,
+      "inspect_port": 9229,
+      "inspect_host": "0.0.0.0",
+      "break_on_start": false,
+      "source_maps": true
+    },
+    "auto_restart": {
+      "enabled": true,
+      "delay": 1000,
+      "max_restarts": 100,
+      "watch_extensions": [".js", ".ts", ".json", ".env"]
+    }
+  },
+  "security": {
+    "tls": {
+      "min_version": "TLSv1.2",
+      "max_version": "TLSv1.3",
+      "ciphers": "ECDHE+AESGCM:ECDHE+CHACHA20:DHE+AESGCM:DHE+CHACHA20:!aNULL:!MD5:!DSS",
+      "reject_unauthorized": false
+    },
+    "headers": {
+      "x-powered-by": true,
+      "x-frame-options": "SAMEORIGIN",
+      "x-content-type-options": "nosniff"
+    },
+    "cors": {
+      "enabled": true,
+      "origin": "*",
+      "credentials": true
+    }
+  },
+  "logging": {
+    "level": "debug",
+    "format": "pretty",
+    "timestamp": true,
+    "max_files": 10,
+    "max_size": "50MB",
+    "console": {
+      "colorize": true,
+      "json": false
+    }
+  },
+  "networking": {
+    "keep_alive": true,
+    "keep_alive_initial_delay": 30000,
+    "timeout": 60000,
+    "max_sockets": 50,
+    "max_free_sockets": 10
+  },
+  "tools": {
+    "eslint": {
+      "enabled": true,
+      "config_path": "/usr/local/etc/eslint.config.js",
+      "auto_fix": true
+    },
+    "prettier": {
+      "enabled": true,
+      "format_on_save": true
+    },
+    "typescript": {
+      "enabled": true,
+      "check_on_save": true,
+      "incremental": true
+    },
+    "nodemon": {
+      "enabled": true,
+      "watch": ["src", "lib"],
+      "ignore": ["node_modules", "test", "dist"],
+      "ext": "js,ts,json"
+    }
+  },
+  "monitoring": {
+    "health_check": {
+      "enabled": true,
+      "interval": 30000,
+      "timeout": 15000,
+      "path": "/health"
+    },
+    "metrics": {
+      "enabled": true,
+      "interval": 30000,
+      "path": "/metrics"
+    },
+    "performance": {
+      "enabled": true,
+      "collect_gc_stats": true,
+      "collect_memory_stats": true
+    }
+  }
+}

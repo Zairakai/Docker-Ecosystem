@@ -1,0 +1,46 @@
+# MySQL Master Configuration for Replication
+# ============================================
+# High Availability setup for production environments
+
+[mysqld]
+# Server identification
+server-id = 1
+log-bin = mysql-bin
+binlog-format = ROW
+binlog-do-db = app
+binlog-ignore-db = mysql
+binlog-ignore-db = information_schema
+binlog-ignore-db = performance_schema
+binlog-ignore-db = sys
+
+# Replication settings
+sync_binlog = 1
+innodb_flush_log_at_trx_commit = 1
+expire_logs_days = 7
+max_binlog_size = 100M
+
+# GTID (Global Transaction Identifier) for easier failover
+gtid_mode = ON
+enforce_gtid_consistency = ON
+
+# Performance
+max_connections = 200
+thread_cache_size = 16
+table_open_cache = 2000
+query_cache_size = 0
+query_cache_type = 0
+
+# InnoDB settings
+innodb_buffer_pool_size = 1G
+innodb_log_file_size = 256M
+innodb_flush_method = O_DIRECT
+
+# Character set
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+
+# Logging
+slow_query_log = 1
+slow_query_log_file = /var/log/mysql/slow-query.log
+long_query_time = 2
+log_error = /var/log/mysql/error.log

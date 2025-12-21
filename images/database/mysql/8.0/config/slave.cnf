@@ -1,0 +1,53 @@
+# MySQL Slave Configuration for Replication
+# ============================================
+# Read replica configuration for high availability
+
+[mysqld]
+# Server identification (must be unique)
+server-id = 2
+relay-log = mysql-relay-bin
+log-bin = mysql-bin
+binlog-format = ROW
+
+# Read-only mode (prevents writes on slave)
+read_only = 1
+super_read_only = 1
+
+# GTID for easier failover
+gtid_mode = ON
+enforce_gtid_consistency = ON
+
+# Replication settings
+relay_log_recovery = ON
+sync_relay_log = 1
+slave_parallel_workers = 4
+slave_parallel_type = LOGICAL_CLOCK
+
+# Binary log retention (for slave promotion)
+expire_logs_days = 7
+max_binlog_size = 100M
+
+# Performance
+max_connections = 200
+thread_cache_size = 16
+table_open_cache = 2000
+query_cache_size = 0
+query_cache_type = 0
+
+# InnoDB settings
+innodb_buffer_pool_size = 1G
+innodb_log_file_size = 256M
+innodb_flush_method = O_DIRECT
+
+# Character set
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+
+# Logging
+slow_query_log = 1
+slow_query_log_file = /var/log/mysql/slow-query.log
+long_query_time = 2
+log_error = /var/log/mysql/error.log
+
+# Skip replication errors (use with caution in production)
+# slave_skip_errors = 1062,1032

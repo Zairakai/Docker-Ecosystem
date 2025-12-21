@@ -1,0 +1,55 @@
+version: '3.8'
+
+# ================================
+# MINIMAL LARAVEL SETUP
+# ================================
+# Simple Laravel backend development environment
+# Includes: PHP-dev, MySQL, Redis
+
+services:
+  # Laravel Application
+  app:
+    image: registry.gitlab.com/zairakai/docker-ecosystem/php:8.3-dev
+    container_name: laravel-app
+    volumes:
+      - ./:/var/www/html
+    environment:
+      - APP_ENV=local
+      - APP_DEBUG=true
+      - XDEBUG_MODE=develop,debug
+    depends_on:
+      - mysql
+      - redis
+    networks:
+      - laravel-network
+
+  # MySQL Database
+  mysql:
+    image: registry.gitlab.com/zairakai/docker-ecosystem/database:mysql-8.0
+    container_name: laravel-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: secret
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - laravel-network
+
+  # Redis Cache
+  redis:
+    image: registry.gitlab.com/zairakai/docker-ecosystem/database:redis-7
+    container_name: laravel-redis
+    volumes:
+      - redis_data:/data
+    networks:
+      - laravel-network
+
+networks:
+  laravel-network:
+    driver: bridge
+
+volumes:
+  mysql_data:
+  redis_data:

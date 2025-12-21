@@ -1,0 +1,73 @@
+# ================================
+# ZAIRAKAI DOCKER ECOSYSTEM
+# Grafana Data Sources Configuration
+# ================================
+# Connects Grafana to Prometheus, Jaeger, and Zipkin
+
+apiVersion: 1
+
+datasources:
+  # Prometheus - Metrics
+  - name: Prometheus
+    type: prometheus
+    access: proxy
+    url: http://prometheus:9090
+    isDefault: true
+    editable: true
+    jsonData:
+      timeInterval: "15s"
+      httpMethod: POST
+    version: 1
+
+  # Jaeger - Distributed Tracing
+  - name: Jaeger
+    type: jaeger
+    access: proxy
+    url: http://jaeger:16686
+    editable: true
+    jsonData:
+      tracesToLogs:
+        datasourceUid: 'loki'
+        tags: ['job', 'instance', 'pod', 'namespace']
+        mappedTags: [{ key: 'service.name', value: 'service' }]
+        mapTagNamesEnabled: false
+        spanStartTimeShift: '1h'
+        spanEndTimeShift: '-1h'
+        filterByTraceID: false
+        filterBySpanID: false
+    version: 1
+
+  # Zipkin - Alternative Distributed Tracing
+  - name: Zipkin
+    type: zipkin
+    access: proxy
+    url: http://zipkin:9411
+    editable: true
+    jsonData:
+      timeout: 60
+    version: 1
+
+  # Optional: Loki - Logs (if you add Loki to the stack)
+  # - name: Loki
+  #   type: loki
+  #   access: proxy
+  #   url: http://loki:3100
+  #   editable: true
+  #   jsonData:
+  #     maxLines: 1000
+  #   version: 1
+
+  # Optional: Tempo - Traces (alternative to Jaeger/Zipkin)
+  # - name: Tempo
+  #   type: tempo
+  #   access: proxy
+  #   url: http://tempo:3200
+  #   editable: true
+  #   jsonData:
+  #     tracesToLogs:
+  #       datasourceUid: 'loki'
+  #     serviceMap:
+  #       datasourceUid: 'prometheus'
+  #     nodeGraph:
+  #       enabled: true
+  #   version: 1

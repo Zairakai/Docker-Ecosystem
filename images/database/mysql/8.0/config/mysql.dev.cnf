@@ -1,0 +1,72 @@
+[mysqld]
+# Development-specific overrides for MySQL 8.4
+# This file extends the main my.cnf for development environments
+
+# Relaxed logging for development
+log-error = /var/log/mysql/error.log
+slow_query_log = 1
+slow_query_log_file = /var/log/mysql/slow.log
+long_query_time = 1
+log_queries_not_using_indexes = 1
+log_slow_admin_statements = 1
+
+# More permissive connection settings
+max_connections = 100
+max_user_connections = 90
+max_connect_errors = 100
+
+# Smaller buffer sizes for development
+innodb_buffer_pool_size = 256M
+innodb_buffer_pool_instances = 1
+innodb_redo_log_capacity = 128M
+innodb_log_buffer_size = 8M
+
+# Faster but less durable settings for development
+innodb_flush_log_at_trx_commit = 2
+sync_binlog = 0
+
+# Disable binary logging in development (optional)
+# log-bin =
+# server-id =
+
+# More verbose error reporting
+log_error_verbosity = 3
+
+# Enable general query log for debugging (use sparingly)
+# general_log = 1
+# general_log_file = /var/log/mysql/general.log
+
+# Performance Schema with more detailed monitoring
+performance_schema = ON
+performance_schema_consumer_events_statements_current = ON
+performance_schema_consumer_events_statements_history = ON
+performance_schema_consumer_events_statements_history_long = ON
+
+# Development SQL mode (slightly more permissive)
+sql_mode = STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO
+
+# Allow local data loading for development
+local_infile = 1
+
+# Larger sort buffer for development queries
+sort_buffer_size = 4M
+read_buffer_size = 4M
+read_rnd_buffer_size = 8M
+
+# MySQL 8.4 development-specific settings
+# Enable hypergraph optimizer for testing (MySQL 8.4 feature)
+# optimizer_switch = 'hypergraph_optimizer=on'
+
+# Faster GTID processing for development
+binlog_expire_logs_seconds = 86400  # 1 day instead of 7
+
+# Information schema faster refresh for development
+information_schema_stats_expiry = 3600  # 1 hour instead of 24
+
+# Lower regex limits for development testing
+regexp_time_limit = 16
+regexp_stack_limit = 4000000
+
+# Development authentication (less secure but convenient)
+# Note: Only use in development environments
+# default_authentication_plugin = mysql_native_password

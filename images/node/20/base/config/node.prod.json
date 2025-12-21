@@ -1,0 +1,84 @@
+{
+  "name": "node-production-config",
+  "version": "1.0.0",
+  "description": "Production Node.js configuration",
+  "environment": "production",
+  "node": {
+    "version": "22.9.0",
+    "options": {
+      "max-old-space-size": 512,
+      "max-semi-space-size": 2,
+      "optimize-for-size": true,
+      "gc-interval": 100,
+      "harmony": false,
+      "use-strict": true
+    },
+    "flags": [
+      "--enable-source-maps",
+      "--no-warnings",
+      "--unhandled-rejections=strict"
+    ]
+  },
+  "performance": {
+    "memory": {
+      "heap_size_limit": "512MB",
+      "max_old_generation_size": "400MB",
+      "max_young_generation_size": "64MB"
+    },
+    "cpu": {
+      "max_workers": 2,
+      "worker_threads": true
+    },
+    "gc": {
+      "type": "incremental",
+      "interval": 100,
+      "aggressive": false
+    }
+  },
+  "security": {
+    "tls": {
+      "min_version": "TLSv1.2",
+      "max_version": "TLSv1.3",
+      "ciphers": "ECDHE+AESGCM:ECDHE+CHACHA20:DHE+AESGCM:DHE+CHACHA20:!aNULL:!MD5:!DSS",
+      "reject_unauthorized": true
+    },
+    "headers": {
+      "x-powered-by": false,
+      "x-frame-options": "DENY",
+      "x-content-type-options": "nosniff"
+    }
+  },
+  "logging": {
+    "level": "warn",
+    "format": "json",
+    "timestamp": true,
+    "max_files": 5,
+    "max_size": "10MB"
+  },
+  "networking": {
+    "keep_alive": true,
+    "keep_alive_initial_delay": 60000,
+    "timeout": 30000,
+    "max_sockets": 15,
+    "max_free_sockets": 5
+  },
+  "cluster": {
+    "enabled": false,
+    "workers": "auto",
+    "restart_delay": 1000,
+    "max_restarts": 10
+  },
+  "monitoring": {
+    "health_check": {
+      "enabled": true,
+      "interval": 30000,
+      "timeout": 10000,
+      "path": "/health"
+    },
+    "metrics": {
+      "enabled": true,
+      "interval": 60000,
+      "path": "/metrics"
+    }
+  }
+}

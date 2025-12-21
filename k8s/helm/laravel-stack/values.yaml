@@ -1,0 +1,313 @@
+# ================================
+# ZAIRAKAI DOCKER ECOSYSTEM
+# Helm Chart Values - Laravel Stack
+# ================================
+
+# Global configuration
+global:
+  imageRegistry: registry.gitlab.com/zairakai/docker-ecosystem
+  imagePullSecrets:
+    - name: gitlab-registry
+  storageClass: ""
+
+# ================================
+# PHP (Laravel Backend)
+# ================================
+php:
+  enabled: true
+  image:
+    repository: php
+    tag: 8.3-prod
+    pullPolicy: IfNotPresent
+
+  replicaCount: 3
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 70
+    targetMemoryUtilizationPercentage: 80
+
+  service:
+    type: ClusterIP
+    port: 9000
+
+  environment:
+    APP_NAME: "Laravel App"
+    APP_ENV: production
+    APP_DEBUG: "false"
+    LOG_CHANNEL: json
+    LOG_LEVEL: info
+    DB_CONNECTION: mysql
+    DB_HOST: laravel-stack-mysql
+    DB_PORT: "3306"
+    DB_DATABASE: app
+    REDIS_HOST: laravel-stack-redis
+    REDIS_PORT: "6379"
+
+  # Secrets (use external secrets or sealed secrets)
+  secrets: {}
+    # DB_PASSWORD: ""
+    # APP_KEY: ""
+    # JWT_SECRET: ""
+
+  persistence:
+    enabled: true
+    storageClass: ""
+    accessMode: ReadWriteMany
+    size: 10Gi
+    mountPath: /var/www/html/storage
+
+  livenessProbe:
+    httpGet:
+      path: /health
+      port: 9000
+    initialDelaySeconds: 30
+    periodSeconds: 10
+
+  readinessProbe:
+    httpGet:
+      path: /health
+      port: 9000
+    initialDelaySeconds: 10
+    periodSeconds: 5
+
+# ================================
+# Node.js (Vue Frontend)
+# ================================
+node:
+  enabled: true
+  image:
+    repository: node
+    tag: 20-prod
+    pullPolicy: IfNotPresent
+
+  replicaCount: 2
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 8
+    targetCPUUtilizationPercentage: 70
+
+  service:
+    type: ClusterIP
+    port: 3000
+
+  environment:
+    NODE_ENV: production
+    API_URL: "http://laravel-stack-php:9000"
+    REDIS_HOST: laravel-stack-redis
+    REDIS_PORT: "6379"
+
+  livenessProbe:
+    httpGet:
+      path: /health
+      port: 3000
+    initialDelaySeconds: 30
+    periodSeconds: 10
+
+  readinessProbe:
+    httpGet:
+      path: /health
+      port: 3000
+    initialDelaySeconds: 10
+    periodSeconds: 5
+
+# ================================
+# Nginx (Web Server)
+# ================================
+nginx:
+  enabled: true
+  image:
+    repository: web
+    tag: nginx-1.26
+    pullPolicy: IfNotPresent
+
+  replicaCount: 2
+
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      cpu: 200m
+      memory: 128Mi
+
+  service:
+    type: LoadBalancer
+    port: 80
+    targetPort: 80
+
+  ingress:
+    enabled: true
+    className: nginx
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    hosts:
+      - host: app.example.com
+        paths:
+          - path: /
+            pathType: Prefix
+    tls:
+      - secretName: laravel-stack-tls
+        hosts:
+          - app.example.com
+
+# ================================
+# MySQL Database
+# ================================
+mysql:
+  enabled: true
+  image:
+    repository: database
+    tag: mysql-8.0
+    pullPolicy: IfNotPresent
+
+  replicaCount: 1
+
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+    limits:
+      cpu: 1000m
+      memory: 2Gi
+
+  service:
+    type: ClusterIP
+    port: 3306
+
+  persistence:
+    enabled: true
+    storageClass: ""
+    accessMode: ReadWriteOnce
+    size: 20Gi
+
+  environment:
+    MYSQL_DATABASE: app
+    MYSQL_USER: app_user
+    # MYSQL_ROOT_PASSWORD: set via secret
+    # MYSQL_PASSWORD: set via secret
+
+  # High Availability (optional)
+  replication:
+    enabled: false
+    replicaCount: 2
+
+# ================================
+# Redis Cache
+# ================================
+redis:
+  enabled: true
+  image:
+    repository: database
+    tag: redis-7
+    pullPolicy: IfNotPresent
+
+  replicaCount: 1
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+  service:
+    type: ClusterIP
+    port: 6379
+
+  persistence:
+    enabled: true
+    storageClass: ""
+    accessMode: ReadWriteOnce
+    size: 5Gi
+
+  # High Availability (Sentinel)
+  sentinel:
+    enabled: false
+    replicaCount: 3
+
+# ================================
+# Observability
+# ================================
+monitoring:
+  enabled: true
+
+  prometheus:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+      interval: 30s
+
+  grafana:
+    enabled: true
+    dashboards:
+      enabled: true
+
+  tracing:
+    enabled: false
+    jaeger:
+      endpoint: "http://jaeger-collector:14268/api/traces"
+
+# ================================
+# Security
+# ================================
+security:
+  podSecurityPolicy:
+    enabled: false
+
+  networkPolicy:
+    enabled: true
+    ingress:
+      - from:
+        - namespaceSelector:
+            matchLabels:
+              name: ingress-nginx
+
+  imageSigning:
+    verify: true
+    cosignPublicKey: |
+      -----BEGIN PUBLIC KEY-----
+      # Add your Cosign public key here
+      -----END PUBLIC KEY-----
+
+# ================================
+# Backups
+# ================================
+backups:
+  enabled: false
+  schedule: "0 2 * * *"  # Daily at 2 AM
+  retention: 7
+  storage:
+    type: s3
+    bucket: ""
+    region: ""
+
+# ================================
+# Pod Disruption Budgets
+# ================================
+podDisruptionBudget:
+  enabled: true
+  minAvailable: 1

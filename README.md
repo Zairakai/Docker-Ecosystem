@@ -1,93 +1,308 @@
-# Docker Ecosystem
+# Zairakai Docker Ecosystem
 
+![Zairakai Docker Ecosystem][banner]
 
+[![Main][pipeline-main-badge]][pipeline-main-link]
+[![Develop][pipeline-develop-badge]][pipeline-develop-link]
+[![License][license-badge]][license]
+[![Docker][docker-badge]][docker]
+[![PHP][php-badge]][php]
+[![Node.js][nodejs-badge]][nodejs]
+[![MySQL][mysql-badge]][mysql]
+[![Security][security-badge]][security]
 
-## Getting started
+**12 lightweight images** with progressive architecture (prod → dev → test) and comprehensive security scanning.
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+> 📦 **This is an image repository**  
+> These images are intended to be **consumed by application repositories** (via Docker Compose, CI/CD, or orchestration), not for direct development inside this repository.
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+## Quick Start
 
-## Add your files
+```bash
+# 1. Create docker-compose.yml in your Laravel project
+cat > docker-compose.yml <<'EOF'
+version: '3.8'
+services:
+  app:
+    image: zairakai/php:8.3-dev
+    volumes:
+      - .:/var/www/html
+    environment:
+      - APP_ENV=local
 
-* [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-* [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
+  mysql:
+    image: zairakai/database:mysql-8.0
+    environment:
+      - MYSQL_DATABASE=laravel
+      - MYSQL_USER=laravel
+      - MYSQL_PASSWORD=secret
 
+  redis:
+    image: zairakai/database:redis-7
+EOF
+
+# 2. Start your stack (images pulled automatically from registry)
+docker-compose up -d
+
+# 3. Setup Laravel
+docker-compose exec app composer install
+docker-compose exec app php artisan migrate
 ```
-cd existing_repo
-git remote add origin https://gitlab.com/zairakai/docker-ecosystem.git
-git branch -M develop
-git push -uf origin develop
+
+**[📚 Documentation Index](docs/INDEX.md)** | **[5-Minute Tutorial][quickstart]** | **[Examples][examples]** | **[Architecture Guide][architecture]**
+
+## CI/CD Release Flow (Quality-Gated)
+
+- Trigger: pushing a tag `vX.Y.Z` starts the release pipeline.
+- Build (staging): all images are built and pushed with a `-$CI_COMMIT_SHORT_SHA` suffix.
+  - Examples: `php:8.3-<sha>-prod`, `web:nginx-1.26-<sha>`, `services:minio-<sha>`.
+- Tests: **quality-gated validation** using container readiness checks
+  (`docker inspect`, HTTP/CLI probes), crash-loop detection and timeouts.
+- Promotion: if all checks pass, tags are re‑tagged to stable without the suffix (e.g., `php:8.3-prod`).
+- Cleanup: staging tags are removed from the registry (on success or failure) to keep it clean.
+
+Notes:
+
+- MailHog/MinIO are thin wrappers on top of official images, with versions pinned in their Dockerfiles.
+- Staging tags are ephemeral and should not be consumed by downstream projects.
+
+## Repository Structure
+
+```tree
+docker-ecosystem/
+├── images/                          # Docker image definitions
+│   ├── php/8.3/                     # PHP 8.3 multi-stage (prod/dev/test)
+│   │   ├── Dockerfile               # Multi-stage build definition
+│   │   ├── base/                    # Production stage configs
+│   │   ├── dev/                     # Development stage configs
+│   │   └── test/                    # Testing stage configs
+│   ├── node/20/                     # Node.js 20 LTS multi-stage
+│   │   ├── Dockerfile               # Multi-stage build definition
+│   │   ├── base/                    # Production stage configs
+│   │   ├── dev/                     # Development stage configs
+│   │   └── test/                    # Testing stage configs
+│   ├── database/                    # Database images
+│   │   ├── mysql/8.0/               # MySQL 8.0 with HA support
+│   │   └── redis/7/                 # Redis 7 with Sentinel
+│   ├── web/                         # Web server images
+│   │   └── nginx/1.26/              # Nginx 1.26 for Laravel
+│   └── services/                    # Support services
+│       ├── mailhog/                 # Email testing
+│       ├── minio/                   # S3-compatible storage
+│       └── e2e-testing/             # E2E testing tools
+│
+├── scripts/                         # Build automation
+│   ├── build-all-images.sh          # Main build script
+│   ├── docker-functions.sh          # Docker build functions
+│   ├── common.sh                    # Shared utilities
+│   └── backup/                      # Backup/restore scripts
+│
+├── examples/                        # Docker Compose examples
+│   ├── testing-modes/               # 3 testing architectures (Blade/SPA/Hybrid)
+│   ├── compose/                     # Docker Compose configurations
+│   ├── nginx/                       # Nginx configuration examples
+│   ├── monitoring/                  # Monitoring stack configs
+│   └── README.md                    # Examples documentation
+│
+├── k8s/                             # Kubernetes deployment
+│   └── helm/laravel-stack/          # Helm chart for K8s
+│
+├── swarm/                           # Docker Swarm deployment
+│   └── stack-laravel.yml            # Swarm stack file
+│
+├── docs/                            # Documentation
+│   ├── ARCHITECTURE.md              # System architecture
+│   ├── QUICKSTART.md                # Getting started guide
+│   ├── KUBERNETES.md                # K8s deployment guide
+│   ├── SWARM.md                     # Swarm deployment guide
+│   ├── MONITORING.md                # Observability setup
+│   ├── DISASTER_RECOVERY.md         # DR procedures
+│   └── REFERENCE.md                 # Complete reference
+│
+├── .gitlab-ci.yml                   # CI/CD pipeline
+├── .dockerignore                    # Docker build exclusions
+├── SECURITY.md                      # Security policies
+├── CONTRIBUTING.md                  # Contribution guidelines
+└── README.md                        # This file
 ```
 
-## Integrate with your tools
+## 📦 Available Images
 
-* [Set up project integrations](https://gitlab.com/zairakai/docker-ecosystem/-/settings/integrations)
+### Core Stack
 
-## Collaborate with your team
+- **PHP 8.3**: `prod` _(45MB)_, `dev` _(85MB)_, `test` _(180MB)_ - Laravel backend
+- **Node.js 20 LTS**: `prod` _(35MB)_, `dev` _(120MB)_, `test` _(240MB)_ - Vue.js frontend
+- **MySQL 8.0 + Redis 7**: Database and caching
+- **Nginx 1.26**: Reverse proxy and static files
 
-* [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-* [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-* [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-* [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-* [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
+### Services
 
-## Test and Deploy
+- **MailHog**: Email testing with web interface
+- **MinIO**: S3-compatible object storage
+- **E2E Testing**: Playwright + Gherkin/Cucumber for Blade and Vue.js testing
+- **Performance Testing**: Artillery, k6, Locust for load and stress testing
 
-Use the built-in continuous integration in GitLab.
+## Security & Quality
 
-* [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/)
-* [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-* [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-* [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-* [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+Security practices are documented in detail in [SECURITY.md][security], following the same disclosure and hardening principles as `zairakai/laravel-dev-tools`.
 
-***
+**Comprehensive security scanning** integrated into CI/CD:
 
-# Editing this README
+- **SAST** (Static Application Security Testing)
+- **Container Scanning** (Trivy)
+- **Dependency Scanning** (Composer + npm)
+- **License Compliance** monitoring
+- **Infrastructure as Code** scanning
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+**Quality features**:
 
-## Suggestions for a good README
+- Non-root execution (`www:www`, `node:node`)
+- Health checks at every layer
+- Alpine Linux minimal base (70% smaller images)
+- 80% faster setup than traditional stacks
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+## Key Features
 
-## Name
-Choose a self-explaining name for your project.
+### Progressive Architecture
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+```txt
+prod (minimal) → dev (+ tools) → test (+ testing frameworks)
+```
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+### Deployment Options
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+**Docker Compose** (Development & Single Server)
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+```bash
+examples/compose/minimal-laravel.yml        # Basic Laravel + MySQL + Redis
+examples/compose/frontend-only.yml          # Vue.js frontend only
+examples/compose/api-only.yml               # Laravel API backend
+examples/compose/production-single.yml      # Production single server
+examples/compose/docker-compose-ha.yml      # High Availability setup
+examples/compose/docker-compose-tracing.yml # Distributed tracing
+```
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+**Kubernetes** (Production Orchestration)
+
+```bash
+k8s/helm/laravel-stack/             # Helm chart for K8s deployment
+# See docs/KUBERNETES.md for manifests
+```
+
+**Docker Swarm** (Cluster Deployment)
+
+```bash
+swarm/stack-laravel.yml             # Swarm stack configuration
+# See docs/SWARM.md for orchestration
+```
+
+### Multi-Tag Support
+
+```bash
+zairakai/php:8.3-prod         # Specific version
+zairakai/php:8.3.x-prod       # Minor version family
+zairakai/php:8.3-latest-prod  # Latest in major version
+```
+
+### Advanced Features
+
+**E2E Testing** with Playwright + Gherkin
+
+```gherkin
+Feature: User Authentication
+  Scenario: Successful login
+    Given I am on the login page
+    When I enter valid credentials
+    Then I should be redirected to dashboard
+```
+
+**Disaster Recovery** - Automated backup/restore
+
+```bash
+scripts/backup/backup-mysql.sh      # MySQL backup with compression
+scripts/backup/backup-redis.sh      # Redis persistence backup
+scripts/backup/restore-mysql.sh     # Point-in-time recovery
+```
+
+**Monitoring Stack** - Full observability
+
+- Prometheus metrics collection
+- Grafana dashboards
+- Distributed tracing (Jaeger/Zipkin)
+- Log aggregation
+
+## 📚 Documentation
+
+### Quick Start
+
+- **[Quick Start Guide][quickstart]** - 5-minute setup with Docker Compose
+- **[Examples][examples]** - Ready-to-use configurations for various use cases
+- **[Reference][reference]** - Complete image tags, commands, and environment variables
+
+### Architecture & Design
+
+- **[Architecture Overview][architecture]** - Multi-stage image design and philosophy
+- **[Security Policy][security]** - Security scanning and compliance
+
+### Production Deployment
+
+- **[Kubernetes Deployment][kubernetes]** - K8s manifests and Helm charts
+- **[Docker Swarm][swarm]** - Swarm stack files and orchestration
+- **[Disaster Recovery][disaster-recovery]** - Backup, restore, and failover strategies
+
+### Monitoring & Operations
+
+- **[Monitoring Stack][monitoring]** - Prometheus, Grafana, and observability
+- **[Reference Guide][reference]** - Complete operational reference
+
+### Contributing
+
+- **[Contributing Guidelines][contributing]** - Development workflow and standards
 
 ## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+- [Discord][discord] - Community discussions (_🖥️・Developers_ role)
+- [Report Issues][issues]
+- [Documentation][docs] - Architecture and reference guides
 
 ## License
-For open source projects, say how it is licensed.
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+MIT License - see [LICENSE][license] file for details.
+
+---
+
+_Built with ❤️ by the Zairakai team for Laravel + Vue.js developers_
+
+<!-- Reference Links -->
+
+[banner]: ./assets/banner.svg
+[license]: ./LICENSE
+[docker]: https://www.docker.com/
+[php]: https://www.php.net/
+[nodejs]: https://nodejs.org/
+[mysql]: https://www.mysql.com/
+[security]: ./SECURITY.md
+[contributing]: ./CONTRIBUTING.md
+[quickstart]: docs/QUICKSTART.md
+[architecture]: docs/ARCHITECTURE.md
+[reference]: docs/REFERENCE.md
+[kubernetes]: docs/KUBERNETES.md
+[swarm]: docs/SWARM.md
+[monitoring]: docs/MONITORING.md
+[disaster-recovery]: docs/DISASTER_RECOVERY.md
+[examples]: examples/
+[docs]: docs/
+[issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
+[discord]: https://discord.gg/MAmD5SG8Zu
+
+<!-- Badge Links -->
+[pipeline-main-badge]: https://gitlab.com/zairakai/docker-ecosystem/badges/main/pipeline.svg?ignore_skipped=true&key_text=Main
+[pipeline-main-link]: https://gitlab.com/zairakai/docker-ecosystem/commits/main
+[pipeline-develop-badge]: https://gitlab.com/zairakai/docker-ecosystem/badges/develop/pipeline.svg?ignore_skipped=true&key_text=Develop
+[pipeline-develop-link]: https://gitlab.com/zairakai/docker-ecosystem/commits/develop
+[license-badge]: https://img.shields.io/badge/license-MIT-blue.svg
+[docker-badge]: https://img.shields.io/badge/docker-ready-blue.svg
+[php-badge]: https://img.shields.io/badge/php-8.3-blue.svg
+[nodejs-badge]: https://img.shields.io/badge/node.js-20%20LTS-green.svg
+[mysql-badge]: https://img.shields.io/badge/mysql-8.0-blue.svg
+[security-badge]: https://img.shields.io/badge/security-scanned-green.svg
