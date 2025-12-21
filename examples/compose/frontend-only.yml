@@ -1,0 +1,28 @@
+version: '3.8'
+
+# ================================
+# FRONTEND ONLY SETUP
+# ================================
+# Vue.js development environment
+# Includes: Node-dev only
+
+services:
+  # Vue.js Frontend
+  frontend:
+    image: registry.gitlab.com/zairakai/docker-ecosystem/node:20-dev
+    container_name: vuejs-frontend
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - "5173:5173"  # Vite dev server
+      - "3000:3000"  # Alternative dev server
+    environment:
+      - NODE_ENV=development
+      - VITE_API_URL=http://localhost:8000
+    command: yarn dev --host 0.0.0.0
+    networks:
+      - frontend-network
+
+networks:
+  frontend-network:
+    driver: bridge

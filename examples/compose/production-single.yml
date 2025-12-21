@@ -1,0 +1,88 @@
+version: '3.8'
+
+# ================================
+# SINGLE SERVER PRODUCTION
+# ================================
+# Production deployment on single server
+# Includes: PHP-prod, Node-prod, MySQL, Redis, Nginx
+
+services:
+  # Laravel Application (Production)
+  app:
+    image: registry.gitlab.com/zairakai/docker-ecosystem/php:8.3-prod
+    container_name: laravel-prod
+    volumes:
+      - ./:/var/www/html:ro
+    environment:
+      - APP_ENV=production
+      - APP_DEBUG=false
+    depends_on:
+      - mysql
+      - redis
+    restart: unless-stopped
+    networks:
+      - app-network
+
+  # Vue.js Frontend (Production Build)
+  frontend:
+    image: registry.gitlab.com/zairakai/docker-ecosystem/node:20-prod
+    container_name: vuejs-prod
+    volumes:
+      - ./public:/var/www/html/public:ro
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+    networks:
+      - app-network
+
+  # Nginx Reverse Proxy
+  nginx:
+    image: registry.gitlab.com/zairakai/docker-ecosystem/web:nginx-1.26
+    container_name: nginx-prod
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./public:/var/www/html/public:ro
+      - ./ssl:/etc/ssl/certs:ro
+    depends_on:
+      - app
+    restart: unless-stopped
+    networks:
+      - app-network
+
+  # MySQL Database (Production)
+  mysql:
+    image: registry.gitlab.com/zairakai/docker-ecosystem/database:mysql-8.0
+    container_name: mysql-prod
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./mysql/my.cnf:/etc/mysql/conf.d/custom.cnf:ro
+    restart: unless-stopped
+    networks:
+      - app-network
+
+  # Redis Cache (Production)
+  redis:
+    image: registry.gitlab.com/zairakai/docker-ecosystem/database:redis-7
+    container_name: redis-prod
+    volumes:
+      - redis_data:/data
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf:ro
+    restart: unless-stopped
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mysql_data:
+  redis_data:

@@ -1,0 +1,251 @@
+{
+  "name": "node-testing-config",
+  "version": "1.0.0",
+  "description": "Testing Node.js configuration",
+  "environment": "test",
+  "node": {
+    "version": "22.9.0",
+    "options": {
+      "max-old-space-size": 2048,
+      "max-semi-space-size": 16,
+      "optimize-for-size": false,
+      "gc-interval": 100,
+      "harmony": true,
+      "use-strict": true,
+      "inspect": "0.0.0.0:9229",
+      "inspect-brk": false,
+      "expose-gc": true
+    },
+    "flags": [
+      "--enable-source-maps",
+      "--stack-trace-limit=1000",
+      "--trace-warnings",
+      "--trace-deprecation",
+      "--unhandled-rejections=strict",
+      "--experimental-modules",
+      "--experimental-vm-modules",
+      "--experimental-worker"
+    ]
+  },
+  "performance": {
+    "memory": {
+      "heap_size_limit": "2048MB",
+      "max_old_generation_size": "1600MB",
+      "max_young_generation_size": "256MB"
+    },
+    "cpu": {
+      "max_workers": 8,
+      "worker_threads": true
+    },
+    "gc": {
+      "type": "adaptive",
+      "interval": 100,
+      "aggressive": false
+    }
+  },
+  "testing": {
+    "frameworks": {
+      "jest": {
+        "enabled": true,
+        "config_path": "/usr/local/etc/jest.config.js",
+        "coverage": true,
+        "watch": false,
+        "parallel": true,
+        "max_workers": "50%"
+      },
+      "cypress": {
+        "enabled": true,
+        "config_path": "/usr/local/etc/cypress.config.js",
+        "headless": true,
+        "browser": "chromium",
+        "video": false,
+        "screenshots": true
+      },
+      "playwright": {
+        "enabled": true,
+        "browsers": ["chromium", "firefox", "webkit"],
+        "headless": true,
+        "video": false,
+        "screenshots": true
+      }
+    },
+    "coverage": {
+      "enabled": true,
+      "threshold": {
+        "lines": 70,
+        "functions": 70,
+        "branches": 70,
+        "statements": 70
+      },
+      "formats": ["html", "lcov", "text", "json"],
+      "directory": "coverage"
+    },
+    "reporting": {
+      "formats": ["json", "junit", "html"],
+      "directory": "test-results",
+      "merge_reports": true
+    },
+    "timeouts": {
+      "unit": 30000,
+      "integration": 60000,
+      "e2e": 120000,
+      "performance": 300000
+    },
+    "retry": {
+      "unit": 0,
+      "integration": 1,
+      "e2e": 2,
+      "performance": 0
+    }
+  },
+  "development": {
+    "hot_reload": {
+      "enabled": false,
+      "watch_options": {
+        "ignored": ["node_modules", ".git", "dist", "build", "test-results", "coverage"],
+        "use_polling": false,
+        "poll_interval": 1000
+      }
+    },
+    "debugging": {
+      "enabled": true,
+      "inspect_port": 9229,
+      "inspect_host": "0.0.0.0",
+      "break_on_start": false,
+      "source_maps": true
+    },
+    "auto_restart": {
+      "enabled": false,
+      "delay": 1000,
+      "max_restarts": 10,
+      "watch_extensions": [".js", ".ts", ".json"]
+    }
+  },
+  "security": {
+    "tls": {
+      "min_version": "TLSv1.2",
+      "max_version": "TLSv1.3",
+      "ciphers": "ECDHE+AESGCM:ECDHE+CHACHA20:DHE+AESGCM:DHE+CHACHA20:!aNULL:!MD5:!DSS",
+      "reject_unauthorized": false
+    },
+    "headers": {
+      "x-powered-by": false,
+      "x-frame-options": "SAMEORIGIN",
+      "x-content-type-options": "nosniff"
+    },
+    "cors": {
+      "enabled": true,
+      "origin": "*",
+      "credentials": true
+    }
+  },
+  "logging": {
+    "level": "info",
+    "format": "json",
+    "timestamp": true,
+    "max_files": 20,
+    "max_size": "100MB",
+    "console": {
+      "colorize": false,
+      "json": true
+    },
+    "test_output": {
+      "verbose": true,
+      "silent": false,
+      "capture_console": true
+    }
+  },
+  "networking": {
+    "keep_alive": true,
+    "keep_alive_initial_delay": 30000,
+    "timeout": 60000,
+    "max_sockets": 100,
+    "max_free_sockets": 20
+  },
+  "tools": {
+    "eslint": {
+      "enabled": true,
+      "config_path": "/usr/local/etc/eslint.config.js",
+      "auto_fix": false
+    },
+    "prettier": {
+      "enabled": true,
+      "format_on_save": false
+    },
+    "typescript": {
+      "enabled": true,
+      "check_on_save": true,
+      "incremental": false
+    }
+  },
+  "browser_testing": {
+    "display": ":99",
+    "xvfb": {
+      "enabled": true,
+      "screen": "1920x1080x24",
+      "dpi": 96
+    },
+    "chromium": {
+      "enabled": true,
+      "headless": true,
+      "sandbox": false,
+      "args": [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-dev-shm-usage",
+        "--disable-extensions",
+        "--disable-gpu",
+        "--disable-background-timer-throttling",
+        "--disable-backgrounding-occluded-windows",
+        "--disable-renderer-backgrounding"
+      ]
+    },
+    "firefox": {
+      "enabled": true,
+      "headless": true,
+      "args": [
+        "--headless",
+        "--no-sandbox",
+        "--disable-gpu"
+      ]
+    }
+  },
+  "performance_testing": {
+    "load_testing": {
+      "default_duration": "30s",
+      "default_rate": "10/s",
+      "max_duration": "300s",
+      "max_rate": "1000/s"
+    },
+    "stress_testing": {
+      "cpu_workers": 2,
+      "memory_mb": 512,
+      "io_workers": 4
+    },
+    "monitoring": {
+      "metrics_interval": 1000,
+      "collect_gc_stats": true,
+      "collect_memory_stats": true,
+      "collect_cpu_stats": true
+    }
+  },
+  "monitoring": {
+    "health_check": {
+      "enabled": true,
+      "interval": 30000,
+      "timeout": 20000,
+      "path": "/health"
+    },
+    "metrics": {
+      "enabled": true,
+      "interval": 30000,
+      "path": "/metrics"
+    },
+    "performance": {
+      "enabled": true,
+      "collect_gc_stats": true,
+      "collect_memory_stats": true,
+      "collect_test_stats": true
+    }
+  }
+}

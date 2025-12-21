@@ -1,0 +1,125 @@
+version: '3.8'
+
+# Testing Mode: Laravel + Vite Standard (Hybrid)
+# Laravel serves everything from public/ directory
+# Vue.js components compiled by Vite into public/build/
+# Supports both Blade SSR pages and Vue.js components in same app
+
+services:
+  # Nginx - Routes everything to PHP (Laravel serves compiled assets)
+  nginx:
+    image: registry.gitlab.com/zairakai/docker-ecosystem/web:nginx-1.26
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx-laravel-vite.conf:/etc/nginx/conf.d/default.conf
+      - laravel-app:/var/www/html
+    depends_on:
+      - php
+    networks:
+      - app-network
+
+  # PHP - Laravel serves everything (Blade + compiled Vue.js)
+  php:
+    image: registry.gitlab.com/zairakai/docker-ecosystem/php:8.3-test
+    volumes:
+      - laravel-app:/var/www/html
+    environment:
+      - APP_ENV=testing
+      - APP_MODE=hybrid
+      - DB_HOST=mysql
+      - REDIS_HOST=redis
+    depends_on:
+      - mysql
+      - redis
+      - node-build
+    networks:
+      - app-network
+
+  # Node.js - Build Vue.js assets into public/build/
+  # This is a build-only container that exits after compilation
+  node-build:
+    image: registry.gitlab.com/zairakai/docker-ecosystem/node:20-test
+    volumes:
+      - laravel-app:/var/www/html
+    working_dir: /var/www/html
+    command: >
+      sh -c "
+        npm install &&
+        npm run build &&
+        echo 'Vue.js assets built to public/build/'
+      "
+    networks:
+      - app-network
+
+  # Node.js - Vite dev server (HMR) - OPTIONAL for development
+  # Only needed during active development, not for testing compiled assets
+  node-dev:
+    image: registry.gitlab.com/zairakai/docker-ecosystem/node:20-dev
+    volumes:
+      - laravel-app:/var/www/html
+    working_dir: /var/www/html
+    environment:
+      - NODE_ENV=development
+    command: npm run dev
+    ports:
+      - "5173:5173"
+    networks:
+      - app-network
+    profiles:
+      - development  # Only starts with --profile development
+
+  mysql:
+    image: registry.gitlab.com/zairakai/docker-ecosystem/database:mysql-8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+      - MYSQL_DATABASE=testing
+      - MYSQL_USER=laravel
+      - MYSQL_PASSWORD=secret
+    networks:
+      - app-network
+
+  redis:
+    image: registry.gitlab.com/zairakai/docker-ecosystem/database:redis-7
+    networks:
+      - app-network
+
+  # E2E Testing - Gherkin tests for BOTH Blade and Vue.js
+  e2e-testing:
+    image: registry.gitlab.com/zairakai/docker-ecosystem/services:e2e-testing
+    volumes:
+      - ./tests/e2e/features-blade:/app/features/blade
+      - ./tests/e2e/features-spa:/app/features/spa
+      - ./tests/e2e/step-definitions:/app/step-definitions
+      - ./tests/e2e/reports:/app/reports
+    environment:
+      - BASE_URL=http://nginx
+      - TEST_MODE=hybrid
+      - HEADLESS=true
+    depends_on:
+      - nginx
+    networks:
+      - app-network
+    command: /usr/local/bin/run-tests.sh
+
+  # Performance Testing - Load test entire hybrid stack
+  performance-testing:
+    image: registry.gitlab.com/zairakai/docker-ecosystem/services:performance-testing
+    volumes:
+      - ./tests/performance:/app/tests
+      - ./tests/performance/reports:/app/reports
+    environment:
+      - TARGET_URL=http://nginx
+      - TEST_TYPE=k6
+    depends_on:
+      - nginx
+    networks:
+      - app-network
+    command: /usr/local/bin/run-load-test.sh
+
+volumes:
+  laravel-app:  # Single volume with Laravel app + compiled Vue.js in public/build/
+
+networks:
+  app-network:
+    driver: bridge

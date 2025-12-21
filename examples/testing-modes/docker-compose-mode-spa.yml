@@ -1,0 +1,116 @@
+version: '3.8'
+
+# Testing Mode: SPA-only
+# Separate Laravel API backend + Vue.js SPA frontend
+# Frontend and backend are completely decoupled
+# Vue.js served as static files, Laravel provides JSON API only
+
+services:
+  # Nginx - SPA configuration (serves Vue.js static, proxies /api to PHP)
+  nginx:
+    image: registry.gitlab.com/zairakai/docker-ecosystem/web:nginx-1.26
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx-mode-spa-only.conf:/etc/nginx/conf.d/default.conf
+      - vuejs-dist:/var/www/html/dist
+    depends_on:
+      - php-api
+      - node-build
+    networks:
+      - app-network
+
+  # PHP API - Laravel JSON API only (no Blade views, no frontend assets)
+  php-api:
+    image: registry.gitlab.com/zairakai/docker-ecosystem/php:8.3-test
+    volumes:
+      - laravel-api:/var/www/html
+    environment:
+      - APP_ENV=testing
+      - APP_MODE=api-only
+      - DB_HOST=mysql
+      - REDIS_HOST=redis
+      - CORS_ALLOWED_ORIGINS=*
+    depends_on:
+      - mysql
+      - redis
+    networks:
+      - app-network
+
+  # Node.js - Build Vue.js SPA into static files
+  node-build:
+    image: registry.gitlab.com/zairakai/docker-ecosystem/node:20-test
+    volumes:
+      - vuejs-app:/app
+      - vuejs-dist:/app/dist
+    working_dir: /app
+    command: >
+      sh -c "
+        npm install &&
+        npm run build &&
+        echo 'Vue.js SPA built to dist/'
+      "
+    environment:
+      - NODE_ENV=production
+      - VITE_API_URL=http://localhost/api
+    networks:
+      - app-network
+
+  # Node.js - Vite dev server (HMR) - OPTIONAL for development
+  node-dev:
+    image: registry.gitlab.com/zairakai/docker-ecosystem/node:20-dev
+    volumes:
+      - vuejs-app:/app
+    working_dir: /app
+    environment:
+      - NODE_ENV=development
+      - VITE_API_URL=http://localhost/api
+    command: npm run dev
+    ports:
+      - "5173:5173"
+    networks:
+      - app-network
+    profiles:
+      - development  # Only starts with --profile development
+
+  mysql:
+    image: registry.gitlab.com/zairakai/docker-ecosystem/database:mysql-8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+      - MYSQL_DATABASE=testing
+      - MYSQL_USER=laravel
+      - MYSQL_PASSWORD=secret
+    networks:
+      - app-network
+
+  redis:
+    image: registry.gitlab.com/zairakai/docker-ecosystem/database:redis-7
+    networks:
+      - app-network
+
+  # E2E Testing - Gherkin tests for Vue.js SPA
+  e2e-testing:
+    image: registry.gitlab.com/zairakai/docker-ecosystem/services:e2e-testing
+    volumes:
+      - ./tests/e2e/features-spa:/app/features
+      - ./tests/e2e/step-definitions:/app/step-definitions
+      - ./tests/e2e/reports:/app/reports
+    environment:
+      - BASE_URL=http://nginx
+      - TEST_MODE=spa-vue
+      - HEADLESS=true
+      - WAIT_FOR_HYDRATION=true
+    depends_on:
+      - nginx
+    networks:
+      - app-network
+    command: /usr/local/bin/run-tests.sh
+
+volumes:
+  laravel-api:  # Laravel API backend (routes/api.php only)
+  vuejs-app:    # Vue.js source code
+  vuejs-dist:   # Vue.js compiled static files (served by Nginx)
+
+networks:
+  app-network:
+    driver: bridge

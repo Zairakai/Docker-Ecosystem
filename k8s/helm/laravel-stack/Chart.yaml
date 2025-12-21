@@ -1,0 +1,33 @@
+apiVersion: v2
+name: laravel-stack
+description: |
+  Complete Laravel + Vue.js application stack for Kubernetes
+  Includes PHP-FPM, Node.js, Nginx, MySQL, and Redis
+
+type: application
+version: 1.0.0
+appVersion: "8.3"
+
+keywords:
+  - laravel
+  - vuejs
+  - php
+  - nodejs
+  - mysql
+  - redis
+  - nginx
+
+home: https://gitlab.com/zairakai/docker-ecosystem
+sources:
+  - https://gitlab.com/zairakai/docker-ecosystem
+
+maintainers:
+  - name: Stanislas Poisson
+    email: stanislas.p@the-white-rabbits.com
+    url: https://the-white-rabbits.com
+
+icon: https://gitlab.com/zairakai/docker-ecosystem/assets/logo.svg
+
+annotations:
+  category: Application
+  licenses: MIT
