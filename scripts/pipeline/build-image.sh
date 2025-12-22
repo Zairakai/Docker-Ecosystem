@@ -51,7 +51,8 @@ export IMAGES_DIR="${PROJECT_ROOT}/images"
 export DOCKER_REGISTRY="${CI_REGISTRY_IMAGE:-registry.gitlab.com/zairakai/docker-ecosystem}"
 export PLATFORM="${PLATFORM:-linux/amd64}"
 export CACHE_ENABLED=true
-export PUSH_TO_REGISTRY=true
+# Respect PUSH_TO_REGISTRY from CI/CD environment, default to true for local builds
+export PUSH_TO_REGISTRY="${PUSH_TO_REGISTRY:-true}"
 export DRY_RUN="${DRY_RUN:-false}"
 
 # Create unique builder name
