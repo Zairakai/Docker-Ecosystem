@@ -36,14 +36,41 @@ PROJECT_PATH="${CI_REGISTRY_IMAGE#*/}"
 log_info "Registry: ${REGISTRY_HOST}"
 log_info "Project: ${PROJECT_PATH}"
 
+# Cache for repository IDs to avoid repeated API calls
+declare -A REPO_ID_CACHE
+
+# Function to get repository ID by path
+get_repository_id() {
+  local repository="$1"
+
+  # Check cache first
+  if [[ -n "${REPO_ID_CACHE[$repository]:-}" ]]; then
+    echo "${REPO_ID_CACHE[$repository]}"
+    return 0
+  fi
+
+  local api_url="https://${REGISTRY_HOST}/api/v4/projects/${CI_PROJECT_ID}/registry/repositories"
+
+  # List all repositories and filter by path
+  local repo_id
+  repo_id=$(curl -sS --header "JOB-TOKEN: ${CI_JOB_TOKEN}" "${api_url}" 2>/dev/null \
+    | jq -r --arg path "${repository}" '.[] | select(.path == $path) | .id' \
+    | head -n 1)
+
+  if [[ -n "${repo_id}" ]]; then
+    # Cache the result
+    REPO_ID_CACHE[$repository]="${repo_id}"
+    echo "${repo_id}"
+    return 0
+  fi
+
+  return 1
+}
+
 # Function to delete a specific tag using GitLab API
 delete_tag() {
   local repository="$1"
   local tag="$2"
-
-  # URL-encode the repository name
-  local encoded_repo
-  encoded_repo=$(printf %s "${repository}" | jq -sRr @uri)
 
   local api_url="https://${REGISTRY_HOST}/api/v4/projects/${CI_PROJECT_ID}/registry/repositories"
 
@@ -51,10 +78,7 @@ delete_tag() {
   log_info "Finding repository ID for ${repository}…"
 
   local repo_id
-  repo_id=$(curl -sS --fail \
-    --header "JOB-TOKEN: ${CI_JOB_TOKEN}" \
-    "${api_url}?tags=true&tags_count=true&name=${encoded_repo}" \
-    | jq -r '.[0].id // empty' 2>/dev/null || echo "")
+  repo_id=$(get_repository_id "${repository}")
 
   if [[ -z "${repo_id}" ]]; then
     log_warning "Repository not found: ${repository}"
