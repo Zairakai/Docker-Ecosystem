@@ -59,69 +59,72 @@ Quick reference for images, tags, commands, and configurations.
 
 ```bash
 # Production
-registry.gitlab.com/zairakai/docker-ecosystem/php:8.3-prod
-registry.gitlab.com/zairakai/docker-ecosystem/php:8.3.x-prod
-registry.gitlab.com/zairakai/docker-ecosystem/php:8.3-latest-prod
+registry.gitlab.com/zairakai/docker-ecosystem/php:8.3-prod         # Technical version (PHP 8.3)
+registry.gitlab.com/zairakai/docker-ecosystem/php:1.1.0-prod       # Release version
+registry.gitlab.com/zairakai/docker-ecosystem/php:latest-prod      # Latest stable
 
 # Development
-registry.gitlab.com/zairakai/docker-ecosystem/php:8.3-dev
-registry.gitlab.com/zairakai/docker-ecosystem/php:8.3.x-dev
-registry.gitlab.com/zairakai/docker-ecosystem/php:8.3-latest-dev
+registry.gitlab.com/zairakai/docker-ecosystem/php:8.3-dev          # Technical version (PHP 8.3)
+registry.gitlab.com/zairakai/docker-ecosystem/php:1.1.0-dev        # Release version
+registry.gitlab.com/zairakai/docker-ecosystem/php:latest-dev       # Latest stable
 
 # Testing
-registry.gitlab.com/zairakai/docker-ecosystem/php:8.3-test
-registry.gitlab.com/zairakai/docker-ecosystem/php:8.3.x-test
-registry.gitlab.com/zairakai/docker-ecosystem/php:8.3-latest-test
+registry.gitlab.com/zairakai/docker-ecosystem/php:8.3-test         # Technical version (PHP 8.3)
+registry.gitlab.com/zairakai/docker-ecosystem/php:1.1.0-test       # Release version
+registry.gitlab.com/zairakai/docker-ecosystem/php:latest-test      # Latest stable
 ```
 
 ### Node.js Stack
 
 ```bash
 # Production
-registry.gitlab.com/zairakai/docker-ecosystem/node:20-prod
-registry.gitlab.com/zairakai/docker-ecosystem/node:20.x-prod
-registry.gitlab.com/zairakai/docker-ecosystem/node:20-latest-prod
+registry.gitlab.com/zairakai/docker-ecosystem/node:20-prod        # Technical version (Node 20 LTS)
+registry.gitlab.com/zairakai/docker-ecosystem/node:1.1.0-prod     # Release version
+registry.gitlab.com/zairakai/docker-ecosystem/node:latest-prod    # Latest stable
 
 # Development
-registry.gitlab.com/zairakai/docker-ecosystem/node:20-dev
-registry.gitlab.com/zairakai/docker-ecosystem/node:20.x-dev
-registry.gitlab.com/zairakai/docker-ecosystem/node:20-latest-dev
+registry.gitlab.com/zairakai/docker-ecosystem/node:20-dev         # Technical version (Node 20 LTS)
+registry.gitlab.com/zairakai/docker-ecosystem/node:1.1.0-dev      # Release version
+registry.gitlab.com/zairakai/docker-ecosystem/node:latest-dev     # Latest stable
 
 # Testing
-registry.gitlab.com/zairakai/docker-ecosystem/node:20-test
-registry.gitlab.com/zairakai/docker-ecosystem/node:20.x-test
-registry.gitlab.com/zairakai/docker-ecosystem/node:20-latest-test
+registry.gitlab.com/zairakai/docker-ecosystem/node:20-test        # Technical version (Node 20 LTS)
+registry.gitlab.com/zairakai/docker-ecosystem/node:1.1.0-test     # Release version
+registry.gitlab.com/zairakai/docker-ecosystem/node:latest-test    # Latest stable
 ```
 
 ### Database Services
 
 ```bash
-registry.gitlab.com/zairakai/docker-ecosystem/database:mysql-8.0
-registry.gitlab.com/zairakai/docker-ecosystem/database:mysql-8.0.x
-registry.gitlab.com/zairakai/docker-ecosystem/database:mysql-latest
+registry.gitlab.com/zairakai/docker-ecosystem/database:mysql-8.0           # Service version
+registry.gitlab.com/zairakai/docker-ecosystem/database:mysql-8.0-1.1.0     # Release version
+registry.gitlab.com/zairakai/docker-ecosystem/database:mysql-8.0-latest    # Latest stable
 
-registry.gitlab.com/zairakai/docker-ecosystem/database:redis-7
-registry.gitlab.com/zairakai/docker-ecosystem/database:redis-7.x
-registry.gitlab.com/zairakai/docker-ecosystem/database:redis-latest
+registry.gitlab.com/zairakai/docker-ecosystem/database:redis-7             # Service version
+registry.gitlab.com/zairakai/docker-ecosystem/database:redis-7-1.1.0       # Release version
+registry.gitlab.com/zairakai/docker-ecosystem/database:redis-7-latest      # Latest stable
 ```
 
 ### Web & Services
 
 ```bash
 # Web Server
-registry.gitlab.com/zairakai/docker-ecosystem/web:nginx-1.26
-registry.gitlab.com/zairakai/docker-ecosystem/web:nginx-1.26.x
-registry.gitlab.com/zairakai/docker-ecosystem/web:nginx-latest
+registry.gitlab.com/zairakai/docker-ecosystem/web:nginx-1.26               # Service version
+registry.gitlab.com/zairakai/docker-ecosystem/web:nginx-1.26-1.1.0         # Release version
+registry.gitlab.com/zairakai/docker-ecosystem/web:nginx-1.26-latest        # Latest stable
 
 # Development Services
-registry.gitlab.com/zairakai/docker-ecosystem/services:mailhog
-registry.gitlab.com/zairakai/docker-ecosystem/services:mailhog-latest
+registry.gitlab.com/zairakai/docker-ecosystem/services:mailhog             # Service name
+registry.gitlab.com/zairakai/docker-ecosystem/services:mailhog-1.1.0       # Release version
+registry.gitlab.com/zairakai/docker-ecosystem/services:mailhog-latest      # Latest stable
 
-registry.gitlab.com/zairakai/docker-ecosystem/services:minio
-registry.gitlab.com/zairakai/docker-ecosystem/services:minio-latest
+registry.gitlab.com/zairakai/docker-ecosystem/services:minio               # Service name
+registry.gitlab.com/zairakai/docker-ecosystem/services:minio-1.1.0         # Release version
+registry.gitlab.com/zairakai/docker-ecosystem/services:minio-latest        # Latest stable
 
-registry.gitlab.com/zairakai/docker-ecosystem/services:e2e-testing
-registry.gitlab.com/zairakai/docker-ecosystem/services:e2e-latest
+registry.gitlab.com/zairakai/docker-ecosystem/services:e2e-testing         # Service name
+registry.gitlab.com/zairakai/docker-ecosystem/services:e2e-testing-1.1.0   # Release version
+registry.gitlab.com/zairakai/docker-ecosystem/services:e2e-testing-latest  # Latest stable
 ```
 
 ## Build Commands
@@ -427,7 +430,14 @@ PUSH_TO_REGISTRY=true|false
 
 ### GitLab CI/CD Variables
 
-Required variables for GitLab CI/CD pipeline (Settings > CI/CD > Variables):
+**Automatic Variables** (no configuration needed):
+
+The pipeline automatically uses GitLab's built-in CI/CD variables:
+- `CI_JOB_TOKEN` - Used for GitLab API authentication (tag cleanup, registry management)
+- `CI_REGISTRY`, `CI_REGISTRY_USER`, `CI_REGISTRY_PASSWORD` - Docker registry authentication
+- `CI_COMMIT_SHORT_SHA`, `CI_PROJECT_ID` - Pipeline metadata
+
+**Optional Variables** (Settings > CI/CD > Variables):
 
 ```env
 # Image Signing with Cosign (optional - allows image signature verification)

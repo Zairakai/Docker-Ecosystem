@@ -311,6 +311,13 @@ test:multi-stage-integrity:
     - build:node:prod
     - build:node:dev
     - build:node:test
+    - build:mysql
+    - build:redis
+    - build:nginx
+    - build:mailhog
+    - build:minio
+    - build:e2e-testing
+    - build:performance-testing
   before_script:
     - apk add --no-cache bash
     - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY

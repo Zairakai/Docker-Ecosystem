@@ -17,7 +17,7 @@ required_vars=(
   "CI_REGISTRY_IMAGE"
   "IMAGE_SUFFIX"
   "CI_PROJECT_ID"
-  "CI_REGISTRY_PASSWORD"
+  "CI_JOB_TOKEN"
 )
 
 for var in "${required_vars[@]}"; do
@@ -52,7 +52,7 @@ delete_tag() {
 
   local repo_id
   repo_id=$(curl -sS --fail \
-    --header "PRIVATE-TOKEN: ${CI_REGISTRY_PASSWORD}" \
+    --header "JOB-TOKEN: ${CI_JOB_TOKEN}" \
     "${api_url}?tags=true&tags_count=true&name=${encoded_repo}" \
     | jq -r '.[0].id // empty' 2>/dev/null || echo "")
 
@@ -70,7 +70,7 @@ delete_tag() {
   # Delete the tag
   log_info "Deleting tag: ${repository}:${tag}"
   if curl -sS --fail -X DELETE \
-    --header "PRIVATE-TOKEN: ${CI_REGISTRY_PASSWORD}" \
+    --header "JOB-TOKEN: ${CI_JOB_TOKEN}" \
     "${api_url}/${repo_id}/tags/${encoded_tag}" 2>/dev/null; then
     log_success "  ✓ Deleted ${repository}:${tag}"
     return 0
@@ -136,7 +136,7 @@ log_section "Cleaning up untagged images"
 
 # Get all repositories
 repos=$(curl -sS --fail \
-  --header "PRIVATE-TOKEN: ${CI_REGISTRY_PASSWORD}" \
+  --header "JOB-TOKEN: ${CI_JOB_TOKEN}" \
   "https://${REGISTRY_HOST}/api/v4/projects/${CI_PROJECT_ID}/registry/repositories" \
   2>/dev/null | jq -r '.[].id' || echo "")
 
@@ -146,7 +146,7 @@ if [[ -n "${repos}" ]]; then
     log_info "Checking repository ID ${repo_id} for untagged images…"
 
     untagged=$(curl -sS --fail \
-      --header "PRIVATE-TOKEN: ${CI_REGISTRY_PASSWORD}" \
+      --header "JOB-TOKEN: ${CI_JOB_TOKEN}" \
       "https://${REGISTRY_HOST}/api/v4/projects/${CI_PROJECT_ID}/registry/repositories/${repo_id}/tags?per_page=100" \
       2>/dev/null | jq -r '.[] | select(.name == null) | .digest' || echo "")
 
@@ -154,7 +154,7 @@ if [[ -n "${repos}" ]]; then
       while IFS= read -r digest; do
         log_info "Deleting untagged digest: ${digest}"
         curl -sS --fail -X DELETE \
-          --header "PRIVATE-TOKEN: ${CI_REGISTRY_PASSWORD}" \
+          --header "JOB-TOKEN: ${CI_JOB_TOKEN}" \
           "https://${REGISTRY_HOST}/api/v4/projects/${CI_PROJECT_ID}/registry/repositories/${repo_id}/tags/${digest}" 2>/dev/null || true
       done <<< "${untagged}"
     fi
@@ -172,7 +172,7 @@ if [[ -n "${repos}" ]]; then
     repo_count=$((repo_count + 1))
 
     tags=$(curl -sS --fail \
-      --header "PRIVATE-TOKEN: ${CI_REGISTRY_PASSWORD}" \
+      --header "JOB-TOKEN: ${CI_JOB_TOKEN}" \
       "https://${REGISTRY_HOST}/api/v4/projects/${CI_PROJECT_ID}/registry/repositories/${repo_id}/tags?per_page=100" \
       2>/dev/null | jq -r '.[].total_size' || echo "0")
 

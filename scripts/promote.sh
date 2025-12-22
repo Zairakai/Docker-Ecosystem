@@ -52,13 +52,11 @@ promote_image() {
       return 1
     fi
 
-    # Tag with version-specific tags
+    # Tag with version-specific tags (reduced to 3 essential tags)
     local tags=(
-      "${CI_REGISTRY_IMAGE}/${target_base}:${source_tag}-${stage}"
-      "${CI_REGISTRY_IMAGE}/${target_base}:${VERSION_FULL}-${stage}"
-      "${CI_REGISTRY_IMAGE}/${target_base}:${VERSION_MAJOR_MINOR}-${stage}"
-      "${CI_REGISTRY_IMAGE}/${target_base}:${VERSION_MAJOR}-${stage}"
-      "${CI_REGISTRY_IMAGE}/${target_base}:latest-${stage}"
+      "${CI_REGISTRY_IMAGE}/${target_base}:${source_tag}-${stage}"      # Technical version (e.g., 8.3-prod)
+      "${CI_REGISTRY_IMAGE}/${target_base}:${VERSION_FULL}-${stage}"    # Release version (e.g., 1.1.0-prod)
+      "${CI_REGISTRY_IMAGE}/${target_base}:latest-${stage}"             # Latest (e.g., latest-prod)
     )
 
     for tag in "${tags[@]}"; do
@@ -90,13 +88,11 @@ promote_service() {
     return 1
   fi
 
-  # Tag with version-specific tags
+  # Tag with version-specific tags (reduced to 3 essential tags)
   local tags=(
-    "${CI_REGISTRY_IMAGE}/${target_base}:${service_name}"
-    "${CI_REGISTRY_IMAGE}/${target_base}:${service_name}-${VERSION_FULL}"
-    "${CI_REGISTRY_IMAGE}/${target_base}:${service_name}-${VERSION_MAJOR_MINOR}"
-    "${CI_REGISTRY_IMAGE}/${target_base}:${service_name}-${VERSION_MAJOR}"
-    "${CI_REGISTRY_IMAGE}/${target_base}:${service_name}-latest"
+    "${CI_REGISTRY_IMAGE}/${target_base}:${service_name}"                      # Service name (e.g., mysql-8.0)
+    "${CI_REGISTRY_IMAGE}/${target_base}:${service_name}-${VERSION_FULL}"      # Release version (e.g., mysql-8.0-1.1.0)
+    "${CI_REGISTRY_IMAGE}/${target_base}:${service_name}-latest"               # Latest (e.g., mysql-8.0-latest)
   )
 
   for tag in "${tags[@]}"; do
@@ -163,7 +159,6 @@ done
 
 log_success "All images promoted successfully to version ${PROMOTED_VERSION}"
 log_info "Stable tags available:"
-log_info "  - ${VERSION_FULL}"
-log_info "  - ${VERSION_MAJOR_MINOR}"
-log_info "  - ${VERSION_MAJOR}"
-log_info "  - latest"
+log_info "  - Technical version (8.3-prod, 20-dev, mysql-8.0, etc.)"
+log_info "  - Release version (${VERSION_FULL})"
+log_info "  - Latest (latest-prod, latest-dev, etc.)"

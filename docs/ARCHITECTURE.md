@@ -244,15 +244,15 @@ Each image supports multiple tag levels for flexibility:
 
 ```bash
 # Example for PHP 8.3 production
-registry.gitlab.com/zairakai/docker-ecosystem/php:8.3-prod         # Specific version
-registry.gitlab.com/zairakai/docker-ecosystem/php:8.3.x-prod       # Minor version family
-registry.gitlab.com/zairakai/docker-ecosystem/php:8.3-latest-prod  # Latest in major version
+registry.gitlab.com/zairakai/docker-ecosystem/php:8.3-prod       # Technical version (PHP 8.3)
+registry.gitlab.com/zairakai/docker-ecosystem/php:1.1.0-prod     # Release version (ecosystem v1.1.0)
+registry.gitlab.com/zairakai/docker-ecosystem/php:latest-prod    # Latest stable release
 ```
 
 **Tag Levels:**
-- `8.3-prod` → Pinned to PHP 8.3.x minor version
-- `8.3.x-prod` → Auto-updated for security patches
-- `8.3-latest-prod` → Latest stable 8.3 release
+- `8.3-prod` → Technical PHP version (8.3), stable across ecosystem releases
+- `1.1.0-prod` → Specific ecosystem release version for reproducibility
+- `latest-prod` → Latest stable ecosystem release
 
 ### Version Selection
 

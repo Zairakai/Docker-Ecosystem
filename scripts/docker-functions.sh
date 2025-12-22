@@ -114,7 +114,8 @@ build_image_with_buildx() {
     if [[ -n "${stage}" ]]; then
         tag_suffix="-${stage}"
     fi
-    local full_tag="${DOCKER_REGISTRY}/${image_name}:${version_tag}${tag_suffix}"
+    # Include IMAGE_SUFFIX from CI/CD (e.g., -$CI_COMMIT_SHORT_SHA)
+    local full_tag="${DOCKER_REGISTRY}/${image_name}:${version_tag}${IMAGE_SUFFIX:-}${tag_suffix}"
 
     # Validate Dockerfile exists
     check_dockerfile "${dockerfile}" || return 1
@@ -152,6 +153,7 @@ build_image_with_buildx() {
         log_debug "  Cache: enabled (inline + registry)"
 
         # Try to use previous build as cache
+        # Use stable tags (without suffix) for cache to leverage previous builds
         local cache_tags=(
             "${DOCKER_REGISTRY}/${image_name}:${version_tag}${tag_suffix}"
             "${DOCKER_REGISTRY}/${image_name}:latest${tag_suffix}"
