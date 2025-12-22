@@ -33,16 +33,16 @@ RUN mkdir -p /var/cache/nginx/client_temp \
 RUN chown -R nginx:nginx /var/cache/nginx /var/log/nginx /etc/nginx/ssl
 
 # Copy configuration files
-COPY config/nginx.conf /etc/nginx/nginx.conf
-COPY config/default.conf /etc/nginx/conf.d/default.conf
-COPY config/ssl.conf /etc/nginx/conf.d/ssl.conf
-COPY config/security.conf /etc/nginx/conf.d/security.conf
+COPY --chown=root:root config/nginx.conf /etc/nginx/nginx.conf
+COPY --chown=root:root config/default.conf /etc/nginx/conf.d/default.conf
+COPY --chown=root:root config/ssl.conf /etc/nginx/conf.d/ssl.conf
+COPY --chown=root:root config/security.conf /etc/nginx/conf.d/security.conf
 
 # Copy scripts
-COPY scripts/entrypoint.sh /docker-entrypoint.sh
-COPY scripts/healthcheck.sh /usr/local/bin/healthcheck.sh
-COPY scripts/reload.sh /usr/local/bin/reload.sh
-COPY scripts/ssl-setup.sh /usr/local/bin/ssl-setup.sh
+COPY --chown=root:root scripts/entrypoint.sh /docker-entrypoint.sh
+COPY --chown=root:root scripts/healthcheck.sh /usr/local/bin/healthcheck.sh
+COPY --chown=root:root scripts/reload.sh /usr/local/bin/reload.sh
+COPY --chown=root:root scripts/ssl-setup.sh /usr/local/bin/ssl-setup.sh
 
 # Make scripts executable
 RUN chmod +x /docker-entrypoint.sh \

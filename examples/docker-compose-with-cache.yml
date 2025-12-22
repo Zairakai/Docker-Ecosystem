@@ -2,8 +2,6 @@
 # This configuration adds cache volumes for Composer and npm/yarn/pnpm
 # to avoid re-downloading packages on every container restart
 
-version: '3.8'
-
 services:
   # PHP Development container with Composer cache
   php-dev:

@@ -73,13 +73,13 @@ COPY --from=composer-bin /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www/html
 
 # Copy configuration files (from base structure)
-COPY base/config/fpm.conf /usr/local/etc/php-fpm.d/zz-custom.conf
-COPY base/config/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
-COPY base/config/php.prod.ini /usr/local/etc/php/conf.d/php.ini
+COPY --chown=root:root base/config/fpm.conf /usr/local/etc/php-fpm.d/zz-custom.conf
+COPY --chown=root:root base/config/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
+COPY --chown=root:root base/config/php.prod.ini /usr/local/etc/php/conf.d/php.ini
 
 # Copy scripts
-COPY base/scripts/entrypoint.sh /usr/local/bin/entrypoint.sh
-COPY base/scripts/healthcheck.sh /usr/local/bin/healthcheck.sh
+COPY --chown=root:root base/scripts/entrypoint.sh /usr/local/bin/entrypoint.sh
+COPY --chown=root:root base/scripts/healthcheck.sh /usr/local/bin/healthcheck.sh
 
 # Make scripts executable
 RUN chmod +x /usr/local/bin/entrypoint.sh /usr/local/bin/healthcheck.sh
@@ -168,13 +168,13 @@ RUN apk del autoconf g++ make linux-headers \
   && rm -rf /var/cache/apk/* /tmp/pear
 
 # Copy development configuration files (overrides production config)
-COPY dev/config/php.dev.ini /usr/local/etc/php/conf.d/php-dev.ini
-COPY dev/config/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
+COPY --chown=root:root dev/config/php.dev.ini /usr/local/etc/php/conf.d/php-dev.ini
+COPY --chown=root:root dev/config/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 
 # Copy development scripts
-COPY dev/scripts/composer-install.sh /usr/local/bin/composer-install.sh
-COPY dev/scripts/dev-setup.sh /usr/local/bin/dev-setup.sh
-COPY dev/scripts/healthcheck-dev.sh /usr/local/bin/healthcheck-dev.sh
+COPY --chown=root:root dev/scripts/composer-install.sh /usr/local/bin/composer-install.sh
+COPY --chown=root:root dev/scripts/dev-setup.sh /usr/local/bin/dev-setup.sh
+COPY --chown=root:root dev/scripts/healthcheck-dev.sh /usr/local/bin/healthcheck-dev.sh
 
 # Make scripts executable
 RUN chmod +x /usr/local/bin/composer-install.sh \
@@ -242,17 +242,17 @@ RUN apk del autoconf g++ make linux-headers \
   && rm -rf /var/cache/apk/* /tmp/pear
 
 # Copy testing configuration files
-COPY test/config/pcov.ini /usr/local/etc/php/conf.d/pcov.ini
-COPY test/config/php.test.ini /usr/local/etc/php/conf.d/php-test.ini
-COPY test/config/xhprof.ini /usr/local/etc/php/conf.d/xhprof.ini
+COPY --chown=root:root test/config/pcov.ini /usr/local/etc/php/conf.d/pcov.ini
+COPY --chown=root:root test/config/php.test.ini /usr/local/etc/php/conf.d/php-test.ini
+COPY --chown=root:root test/config/xhprof.ini /usr/local/etc/php/conf.d/xhprof.ini
 
 # Copy testing scripts
-COPY test/scripts/healthcheck-test.sh /usr/local/bin/healthcheck-test.sh
-COPY test/scripts/run-all-tests.sh /usr/local/bin/run-all-tests.sh
-COPY test/scripts/run-coverage.sh /usr/local/bin/run-coverage.sh
-COPY test/scripts/run-e2e.sh /usr/local/bin/run-e2e.sh
-COPY test/scripts/run-performance.sh /usr/local/bin/run-performance.sh
-COPY test/scripts/wait-for-services.sh /usr/local/bin/wait-for-services.sh
+COPY --chown=root:root test/scripts/healthcheck-test.sh /usr/local/bin/healthcheck-test.sh
+COPY --chown=root:root test/scripts/run-all-tests.sh /usr/local/bin/run-all-tests.sh
+COPY --chown=root:root test/scripts/run-coverage.sh /usr/local/bin/run-coverage.sh
+COPY --chown=root:root test/scripts/run-e2e.sh /usr/local/bin/run-e2e.sh
+COPY --chown=root:root test/scripts/run-performance.sh /usr/local/bin/run-performance.sh
+COPY --chown=root:root test/scripts/wait-for-services.sh /usr/local/bin/wait-for-services.sh
 
 # Make scripts executable
 RUN chmod +x /usr/local/bin/healthcheck-test.sh \

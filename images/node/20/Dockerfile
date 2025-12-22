@@ -53,12 +53,12 @@ RUN apk add --no-cache \
   && rm -rf /tmp/* /var/cache/apk/*
 
 # Copy configuration files (from base structure)
-COPY base/config/npm.conf /etc/npmrc
-COPY base/config/node.prod.json /usr/local/etc/node-config.json
+COPY --chown=root:root base/config/npm.conf /etc/npmrc
+COPY --chown=root:root base/config/node.prod.json /usr/local/etc/node-config.json
 
 # Copy scripts
-COPY base/scripts/entrypoint.sh /usr/local/bin/entrypoint.sh
-COPY base/scripts/healthcheck.sh /usr/local/bin/healthcheck.sh
+COPY --chown=root:root base/scripts/entrypoint.sh /usr/local/bin/entrypoint.sh
+COPY --chown=root:root base/scripts/healthcheck.sh /usr/local/bin/healthcheck.sh
 
 # Set permissions
 RUN chmod +x /usr/local/bin/entrypoint.sh /usr/local/bin/healthcheck.sh
@@ -151,15 +151,15 @@ RUN apk add --no-cache \
   && npm cache clean --force
 
 # Copy development configuration files
-COPY dev/config/node.dev.json /usr/local/etc/node-config.json
+COPY --chown=root:root dev/config/node.dev.json /usr/local/etc/node-config.json
 
 # Note: ESLint/Prettier configs should be managed per-project
 # Each project has its own .eslintrc.js, .prettierrc, etc.
 
 # Copy development scripts
-COPY dev/scripts/yarn-install.sh /usr/local/bin/yarn-install.sh
-COPY dev/scripts/dev-setup.sh /usr/local/bin/dev-setup.sh
-COPY dev/scripts/healthcheck-dev.sh /usr/local/bin/healthcheck-dev.sh
+COPY --chown=root:root dev/scripts/yarn-install.sh /usr/local/bin/yarn-install.sh
+COPY --chown=root:root dev/scripts/dev-setup.sh /usr/local/bin/dev-setup.sh
+COPY --chown=root:root dev/scripts/healthcheck-dev.sh /usr/local/bin/healthcheck-dev.sh
 
 # Set permissions for scripts
 RUN chmod +x /usr/local/bin/yarn-install.sh \
@@ -271,17 +271,17 @@ RUN apk add --no-cache \
   && npm cache clean --force
 
 # Copy testing configuration files
-COPY test/config/jest.config.js /usr/local/etc/jest.config.js
-COPY test/config/node.test.json /usr/local/etc/node-config.json
-COPY test/config/cypress.config.js /usr/local/etc/cypress.config.js
+COPY --chown=root:root test/config/jest.config.js /usr/local/etc/jest.config.js
+COPY --chown=root:root test/config/node.test.json /usr/local/etc/node-config.json
+COPY --chown=root:root test/config/cypress.config.js /usr/local/etc/cypress.config.js
 
 # Copy testing scripts
-COPY test/scripts/healthcheck-test.sh /usr/local/bin/healthcheck-test.sh
-COPY test/scripts/run-all-tests.sh /usr/local/bin/run-all-tests.sh
-COPY test/scripts/run-coverage.sh /usr/local/bin/run-coverage.sh
-COPY test/scripts/run-e2e.sh /usr/local/bin/run-e2e.sh
-COPY test/scripts/run-performance.sh /usr/local/bin/run-performance.sh
-COPY test/scripts/wait-for-services.sh /usr/local/bin/wait-for-services.sh
+COPY --chown=root:root test/scripts/healthcheck-test.sh /usr/local/bin/healthcheck-test.sh
+COPY --chown=root:root test/scripts/run-all-tests.sh /usr/local/bin/run-all-tests.sh
+COPY --chown=root:root test/scripts/run-coverage.sh /usr/local/bin/run-coverage.sh
+COPY --chown=root:root test/scripts/run-e2e.sh /usr/local/bin/run-e2e.sh
+COPY --chown=root:root test/scripts/run-performance.sh /usr/local/bin/run-performance.sh
+COPY --chown=root:root test/scripts/wait-for-services.sh /usr/local/bin/wait-for-services.sh
 
 # Set permissions for scripts
 RUN chmod +x /usr/local/bin/healthcheck-test.sh \

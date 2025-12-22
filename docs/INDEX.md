@@ -1,129 +1,175 @@
-# Documentation Index
+# 📚 Documentation Index
 
-Welcome to the Zairakai Docker Ecosystem documentation.
+[🏠 Home][home] > Documentation Index
+
+Welcome to the Zairakai Docker Ecosystem documentation - your complete guide to production-ready Docker images
+for Laravel + Vue.js development.
+
+## Table of Contents
+
+- [📚 Documentation Index](#-documentation-index)
+  - [Table of Contents](#table-of-contents)
+  - [Getting Started](#getting-started)
+    - [For Beginners](#for-beginners)
+    - [For Intermediate Users](#for-intermediate-users)
+    - [For Advanced Users](#for-advanced-users)
+  - [Core Documentation](#core-documentation)
+    - [CI/CD Release Flow](#cicd-release-flow)
+    - [Architecture \& Design](#architecture--design)
+    - [Testing Strategies](#testing-strategies)
+    - [Operations](#operations)
+    - [Deployment](#deployment)
+  - [Examples \& Tutorials](#examples--tutorials)
+    - [Quick Examples](#quick-examples)
+    - [Docker Compose Configurations](#docker-compose-configurations)
+    - [Nginx Configurations](#nginx-configurations)
+    - [Monitoring Configurations](#monitoring-configurations)
+  - [By Use Case](#by-use-case)
+    - ["I want to deploy a traditional Laravel app"](#i-want-to-deploy-a-traditional-laravel-app)
+    - ["I want to deploy a modern SPA with Laravel API"](#i-want-to-deploy-a-modern-spa-with-laravel-api)
+    - ["I want to deploy Laravel with Vue.js components"](#i-want-to-deploy-laravel-with-vuejs-components)
+    - ["I need high availability for production"](#i-need-high-availability-for-production)
+    - ["I want to add monitoring and observability"](#i-want-to-add-monitoring-and-observability)
+    - ["I want to deploy to Kubernetes"](#i-want-to-deploy-to-kubernetes)
+    - ["I want to deploy to Docker Swarm"](#i-want-to-deploy-to-docker-swarm)
+  - [Skill Level Requirements](#skill-level-requirements)
+    - [Beginner Level](#beginner-level)
+    - [Intermediate Level](#intermediate-level)
+    - [Advanced Level](#advanced-level)
+  - [Contributing \& Support](#contributing--support)
+    - [Contributing](#contributing)
+    - [Getting Help](#getting-help)
+  - [Navigation](#navigation)
 
 ## Getting Started
 
-> **First time here?** Check the **[Prerequisites Guide](PREREQUISITES.md)** to see if you're ready.
+> **First time here?** Check the **[Prerequisites Guide][prerequisites]** to see if you're ready.
 
 ### For Beginners
 
-👉 **[Quick Start Guide](QUICKSTART.md)** - Get up and running in 5 minutes
+👉 **[Quick Start Guide][quickstart]** - Get up and running in 5 minutes
 
 **Prerequisites:**
 
-- Basic Docker knowledge (docker run, docker-compose up)
-- Laravel project ready
+- Basic Docker knowledge (`docker run`, `docker-compose up`)
+- Laravel project ready (or create a new one)
 - 10GB disk space for images
 
-**Check your readiness:** [Prerequisites Guide](PREREQUISITES.md)
+**Check your readiness:** [Prerequisites Guide][prerequisites]
 
 **What you'll learn:**
 
 - Pull pre-built images from registry
-- Start a basic Laravel stack
-- Connect to databases
-- Access your application
+- Start a basic Laravel stack with Docker Compose
+- Connect to MySQL and Redis databases
+- Access and configure your application
+- Basic development workflow
 
 ### For Intermediate Users
 
-👉 **[Architecture Overview](ARCHITECTURE.md)** - Understand the ecosystem
+👉 **[Architecture Overview][architecture]** - Understand the ecosystem design
 
 **Prerequisites:**
 
 - Comfortable with Docker Compose
 - Understanding of multi-container applications
-- Familiarity with Laravel structure
+- Familiarity with Laravel project structure
 
 **What you'll learn:**
 
-- Image architecture (prod/dev/test stages)
-- Service organization
-- Networking and volumes
-- Health checks and monitoring
+- Progressive architecture (prod → dev → test stages)
+- Multi-stage Docker builds
+- Service organization and networking
+- Health checks and container monitoring
+- Image optimization techniques
 
 ### For Advanced Users
 
-👉 **[Testing Modes](TESTING_MODES.md)** - Three testing architectures
+👉 **[Testing Modes][testing-modes]** - Three testing architectures
 
 **Prerequisites:**
 
 - Experience with Laravel + Vue.js
-- Understanding of SSR vs SPA
-- Docker networking knowledge
+- Understanding of SSR vs SPA patterns
+- Docker networking and volumes knowledge
 
 **What you'll learn:**
 
-- Blade-only mode (pure SSR)
-- SPA-only mode (decoupled architecture)
-- Hybrid mode (Laravel + Vite standard)
-- Switching between modes
+- **Blade-only mode** (pure Server-Side Rendering)
+- **SPA-only mode** (decoupled Vue.js + Laravel API)
+- **Hybrid mode** (Laravel + Vite standard)
+- How to switch between testing modes
+- Performance implications of each architecture
 
 ## Core Documentation
 
 ### CI/CD Release Flow
 
-- Overview: see README section CI/CD Release Flow (staging tags, probes, promotion, cleanup)
-  - ../README.md#ci-cd-release-flow
-- Detailed reference: configuration and image tags
-  - REFERENCE.md#ci-cd-release-flow
+- **Overview**: See [README - CI/CD Release Flow][README-cicd-release-flow-quality-gated]
+  - Staging tags with commit SHA
+  - Quality-gated validation
+  - Automatic promotion and cleanup
+- **Detailed Reference**: [Configuration and Image Tags][reference]
 
 ### Architecture & Design
 
-- **[Architecture Overview](ARCHITECTURE.md)** - System design and patterns
-- **[Architecture Comparison](ARCHITECTURE_COMPARISON.md)** - Detailed comparison of 3 testing modes
-- **[Reference Guide](REFERENCE.md)** - Complete configuration reference
+- **[Architecture Overview][architecture]** - System design patterns and philosophy
+- **[Architecture Comparison][architecture-comparison]** - Detailed comparison of 3 testing modes
+- **[Reference Guide][reference]** - Complete configuration reference
 
 ### Testing Strategies
 
-- **[Testing Modes](TESTING_MODES.md)** - How to test Blade, SPA, and Hybrid architectures
-- **Build Workflow** - See `examples/testing-modes/BUILD_WORKFLOW.md`
+- **[Testing Modes][testing-modes]** - How to test Blade, SPA, and Hybrid architectures
+- **[Build Workflow][build_workflow]** - Detailed build workflow for each mode
 
 ### Operations
 
-- **[Monitoring & Observability](MONITORING.md)** - Prometheus, Grafana, Jaeger, Zipkin
-- **[Disaster Recovery](DISASTER_RECOVERY.md)** - Backup, restore, HA procedures
-- **[Security Guide](../SECURITY.md)** - Security best practices
+- **[Monitoring & Observability][monitoring]** - Prometheus, Grafana, Jaeger, Zipkin setup
+- **[Disaster Recovery][disaster-recovery]** - Backup, restore, and High Availability procedures
+- **[Security Guide][security]** - Security scanning and best practices
 
 ### Deployment
 
-- **[Kubernetes Deployment](KUBERNETES.md)** - Helm charts and K8s deployment
-- **[Docker Swarm Deployment](SWARM.md)** - Swarm orchestration guide
+- **[Kubernetes Deployment][kubernetes]** - Helm charts and K8s manifests
+- **[Docker Swarm Deployment][swarm]** - Swarm orchestration guide
 
 ## Examples & Tutorials
 
 ### Quick Examples
 
-Located in `examples/` directory:
+All examples are located in the [`examples/`][examples] directory.
 
-**Testing Modes** (`examples/testing-modes/`)
+### Docker Compose Configurations
 
-- `docker-compose-mode-blade.yml` - Pure Blade SSR
-- `docker-compose-mode-spa.yml` - Decoupled SPA + API
-- `docker-compose-mode-hybrid.yml` - Laravel + Vite
-- `BUILD_WORKFLOW.md` - Detailed build workflow
+Located in [`examples/compose/`][examples-compose]:
 
-**Compose Configurations** (`examples/compose/`)
+| File | Description | Use Case |
+| ---- | ----------- | -------- |
+| `minimal-laravel.yml` | Basic Laravel setup | Simple development |
+| `docker-compose-ha.yml` | High Availability | Production with HA |
+| `docker-compose-testing.yml` | Testing environment | CI/CD testing |
+| `docker-compose-tracing.yml` | Distributed tracing | Observability |
+| `production-single.yml` | Single-server production | Small production |
+| `api-only.yml` | API-only backend | Headless backend |
+| `frontend-only.yml` | Frontend-only SPA | Separate frontend |
 
-- `minimal-laravel.yml` - Basic Laravel setup
-- `docker-compose-ha.yml` - High Availability
-- `docker-compose-testing.yml` - Testing environment
-- `docker-compose-tracing.yml` - Distributed tracing
-- `production-single.yml` - Single-server production
-- `api-only.yml` - API-only backend
-- `frontend-only.yml` - Frontend-only SPA
+### Nginx Configurations
 
-**Nginx Configurations** (`examples/nginx/`)
+Located in [`examples/nginx/`][examples-nginx]
 
-- `nginx-laravel-vite.conf` - Standard Laravel + Vite
-- `nginx-mode-blade-only.conf` - Blade SSR only
-- `nginx-mode-spa-only.conf` - SPA with API proxy
-- `nginx-mode-hybrid.conf` - Hybrid SSR + SPA
-- `nginx-testing.conf` - Testing environment
+| File | Description | Mode |
+| ---- | ----------- | ---- |
+| `nginx-laravel-vite.conf` | Standard Laravel + Vite | Hybrid |
+| `nginx-mode-blade-only.conf` | Blade SSR only | Blade |
+| `nginx-mode-spa-only.conf` | SPA with API proxy | SPA |
+| `nginx-mode-hybrid.conf` | Hybrid SSR + SPA | Hybrid |
+| `nginx-testing.conf` | Testing environment | Testing |
 
-**Monitoring** (`examples/monitoring/`)
+### Monitoring Configurations
 
-- `prometheus.yml` - Prometheus configuration
+Located in [`examples/monitoring/`][examples-monitoring]z:
+
+- `prometheus.yml` - Prometheus scrape configuration
 - `grafana-datasources.yml` - Grafana datasources
 - `otel-collector-config.yml` - OpenTelemetry Collector
 - `redis-sentinel.conf` - Redis HA with Sentinel
@@ -132,46 +178,62 @@ Located in `examples/` directory:
 
 ### "I want to deploy a traditional Laravel app"
 
-1. Read: [Quick Start](QUICKSTART.md)
-2. Use: `examples/testing-modes/docker-compose-mode-blade.yml`
-3. Nginx: `examples/nginx/nginx-mode-blade-only.conf`
+**Stack**: Laravel with Blade templates (Server-Side Rendering)
+
+1. **Read**: [Quick Start Guide][quickstart]
+2. **Use**: [`examples/testing-modes/docker-compose-mode-blade.yml`][examples-testing-blade]
+3. **Nginx**: [`examples/nginx/nginx-mode-blade-only.conf`](../examples/nginx/nginx-mode-blade-only.conf)
 
 ### "I want to deploy a modern SPA with Laravel API"
 
-1. Read: [Architecture Comparison](ARCHITECTURE_COMPARISON.md) - SPA-only section
-2. Use: `examples/testing-modes/docker-compose-mode-spa.yml`
-3. Nginx: `examples/nginx/nginx-mode-spa-only.conf`
+**Stack**: Decoupled Vue.js frontend + Laravel API backend
+
+1. **Read**: [Architecture Comparison][architecture-comparison] - SPA-only section
+2. **Use**: [`examples/testing-modes/docker-compose-mode-spa.yml`][examples-testing-spa]
+3. **Nginx**: [`examples/nginx/nginx-mode-spa-only.conf`][examples-nginx-spa]
 
 ### "I want to deploy Laravel with Vue.js components"
 
-1. Read: [Architecture Comparison](ARCHITECTURE_COMPARISON.md) - Hybrid section
-2. Read: `examples/testing-modes/BUILD_WORKFLOW.md`
-3. Use: `examples/testing-modes/docker-compose-mode-hybrid.yml`
-4. Nginx: `examples/nginx/nginx-laravel-vite.conf`
+**Stack**: Laravel + Vite (standard modern Laravel setup)
+
+1. **Read**: [Architecture Comparison][architecture-comparison] - Hybrid section
+2. **Read**: [`examples/testing-modes/BUILD_WORKFLOW.md`][examples-testing-build_workflow]
+3. **Use**: [`examples/testing-modes/docker-compose-mode-hybrid.yml`][examples-testing-hybrid]
+4. **Nginx**: [`examples/nginx/nginx-laravel-vite.conf`][examples-nginx-laravel-vite]
 
 ### "I need high availability for production"
 
-1. Read: [Disaster Recovery](DISASTER_RECOVERY.md)
-2. Use: `examples/compose/docker-compose-ha.yml`
-3. Config: `examples/monitoring/redis-sentinel.conf`
+**Stack**: MySQL replication + Redis Sentinel
+
+1. **Read**: [Disaster Recovery Guide][disaster-recovery]
+2. **Use**: [`examples/compose/docker-compose-ha.yml`][examples-compose-ha]
+3. **Config**: [`examples/monitoring/redis-sentinel.conf`][examples-monitoring-redis-sentinel]
 
 ### "I want to add monitoring and observability"
 
-1. Read: [Monitoring Guide](MONITORING.md)
-2. Use: `examples/compose/docker-compose-tracing.yml`
-3. Configs: `examples/monitoring/prometheus.yml`, `otel-collector-config.yml`
+**Stack**: Prometheus + Grafana + Jaeger
+
+1. **Read**: [Monitoring Guide][monitoring]
+2. **Use**: [`examples/compose/docker-compose-tracing.yml`][examples-compose-tracing]
+3. **Configs**:
+   - [`examples/monitoring/prometheus.yml`][examples-monitoring-prometheus]
+   - [`examples/monitoring/otel-collector-config.yml`][examples-monitoring-otel]
 
 ### "I want to deploy to Kubernetes"
 
-1. Read: [Kubernetes Deployment](KUBERNETES.md)
-2. Use: Helm charts in `k8s/helm/laravel-stack/`
-3. Customize: `values.yaml` for your needs
+**Stack**: Kubernetes with Helm
+
+1. **Read**: [Kubernetes Deployment Guide][kubernetes]
+2. **Use**: Helm charts in [`k8s/helm/laravel-stack/`][k8s-helm-laravel]
+3. **Customize**: `values.yaml` for your environment
 
 ### "I want to deploy to Docker Swarm"
 
-1. Read: [Docker Swarm Deployment](SWARM.md)
-2. Use: `swarm/stack-laravel.yml`
-3. Deploy: `docker stack deploy -c swarm/stack-laravel.yml laravel`
+**Stack**: Docker Swarm orchestration
+
+1. **Read**: [Docker Swarm Deployment Guide][swarm]
+2. **Use**: [`swarm/stack-laravel.yml`][swarm-stack-laravel]
+3. **Deploy**: `docker stack deploy -c swarm/stack-laravel.yml laravel`
 
 ## Skill Level Requirements
 
@@ -180,57 +242,110 @@ Located in `examples/` directory:
 **Docker knowledge needed:**
 
 - Running containers with `docker run`
-- Using docker-compose
+- Using `docker-compose up` and `docker-compose down`
 - Basic volume and network concepts
+- Reading Docker Compose YAML files
 
-**Recommended docs:**
+**Recommended documentation:**
 
-- [Quick Start](QUICKSTART.md)
-- `examples/compose/minimal-laravel.yml`
+- [Prerequisites Guide][prerequisites]
+- [Quick Start Guide][quickstart]
+- [`examples/compose/minimal-laravel.yml`][examples-compose-laravel]
 
 ### Intermediate Level
 
 **Docker knowledge needed:**
 
-- Multi-stage builds
-- Docker networking (bridge, overlay)
+- Multi-stage Docker builds
+- Docker networking (bridge, overlay networks)
 - Health checks and restart policies
-- Environment variables and secrets
+- Environment variables and secrets management
+- Volume mounting and persistence
 
-**Recommended docs:**
+**Recommended documentation:**
 
-- [Architecture Overview](ARCHITECTURE.md)
-- [Testing Modes](TESTING_MODES.md)
-- [Reference Guide](REFERENCE.md)
+- [Architecture Overview][architecture]
+- [Testing Modes][testing-modes]
+- [Reference Guide][reference]
 
 ### Advanced Level
 
 **Docker knowledge needed:**
 
-- Orchestration (K8s or Swarm)
+- Container orchestration (Kubernetes or Swarm)
 - Service mesh and distributed tracing
-- High availability patterns
-- Security hardening
+- High availability and failover patterns
+- Security hardening and image scanning
+- CI/CD pipeline integration
 
-**Recommended docs:**
+**Recommended documentation:**
 
-- [Kubernetes Deployment](KUBERNETES.md)
-- [Docker Swarm Deployment](SWARM.md)
-- [Monitoring & Observability](MONITORING.md)
-- [Disaster Recovery](DISASTER_RECOVERY.md)
+- [Kubernetes Deployment][kubernetes]
+- [Docker Swarm Deployment][swarm]
+- [Monitoring & Observability][monitoring]
+- [Disaster Recovery][disaster-recovery]
 
-## Contributing
+## Contributing & Support
 
-Want to contribute? See **[Contributing Guide](../CONTRIBUTING.md)**
+### Contributing
 
-## Support
+Want to contribute to the Zairakai Docker Ecosystem?
 
-- **Issues**: [GitLab Issues](https://gitlab.com/zairakai/docker-ecosystem/-/issues)
-- **Discord**: [Zairakai Community](https://discord.gg/MAmD5SG8Zu) (*🖥️・Developers* role)
-- **Security**: See [SECURITY.md](../SECURITY.md)
+📖 **See [Contributing Guide][contributing]** for:
 
----
+- Development workflow
+- Quality standards (ShellCheck 100%, multi-stage builds)
+- Git commit format (Conventional Commits)
+- Security guidelines
 
-**Navigation:**
-- [← Back to README](../README.md)
-- [Quick Start →](QUICKSTART.md)
+### Getting Help
+
+- **💬 Discord**: [Zairakai Community][discord] (*🖥️・Developers* role)
+- **🐛 Issues**: [GitLab Issues][issues]
+- **🔒 Security**: See [Security Policy][security] for responsible disclosure
+
+## Navigation
+
+- [← Back to Home][home]
+- [Quick Start Guide →][quickstart]
+
+_Built with ❤️ by the Zairakai team for Laravel + Vue.js developers_
+
+<!-- Reference Links -->
+
+[home]: ../README.md
+[prerequisites]: PREREQUISITES.md
+[quickstart]: QUICKSTART.md
+[architecture]: ARCHITECTURE.md
+[architecture-comparison]: ARCHITECTURE_COMPARISON.md
+[testing-modes]: TESTING_MODES.md
+[reference]: REFERENCE.md
+[monitoring]: MONITORING.md
+[disaster-recovery]: DISASTER_RECOVERY.md
+[security]: ../SECURITY.md
+[kubernetes]: KUBERNETES.md
+[swarm]: SWARM.md
+[contributing]: ../CONTRIBUTING.md
+[examples]: ../examples/
+[discord]: https://discord.gg/MAmD5SG8Zu
+[issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
+
+[README-cicd-release-flow-quality-gated]: ../README.md#cicd-release-flow-quality-gated
+[build_workflow]: ../examples/testing-modes/BUILD_WORKFLOW.md
+[examples-compose]: ../examples/compose/
+[examples-nginx]: ../examples/nginx/
+[examples-monitoring]: ../examples/monitoring/
+[examples-testing-blade]: ../examples/testing-modes/docker-compose-mode-blade.yml
+[examples-testing-spa]: ../examples/testing-modes/docker-compose-mode-spa.yml
+[examples-nginx-spa]: ../examples/nginx/nginx-mode-spa-only.conf
+[examples-testing-build_workflow]: ../examples/testing-modes/BUILD_WORKFLOW.md
+[examples-testing-hybrid]: ../examples/testing-modes/docker-compose-mode-hybrid.yml
+[examples-nginx-laravel-vite]: ../examples/nginx/nginx-laravel-vite.conf
+[examples-compose-ha]: ../examples/compose/docker-compose-ha.yml
+[examples-monitoring-redis-sentinel]: ../examples/monitoring/redis-sentinel.conf
+[examples-compose-tracing]: ../examples/compose/docker-compose-tracing.yml
+[examples-monitoring-prometheus]: ../examples/monitoring/prometheus.yml
+[examples-monitoring-otel]: ../examples/monitoring/otel-collector-config.yml
+[k8s-helm-laravel]: ../k8s/helm/laravel-stack/
+[swarm-stack-laravel]: ../swarm/stack-laravel.yml
+[examples-compose-laravel]: ../examples/compose/minimal-laravel.yml

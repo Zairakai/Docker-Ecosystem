@@ -6,10 +6,10 @@ This guide explains how to configure persistent cache volumes for Composer and n
 
 **Benefits:**
 
-- ✅ **Faster container restarts** - No need to re-download packages
-- ✅ **Reduced network usage** - Packages downloaded once and reused
-- ✅ **Offline development** - Work with cached packages even without internet
-- ✅ **CI/CD optimization** - Share cache between pipeline jobs
+- [x] **Faster container restarts** - No need to re-download packages
+- [x] **Reduced network usage** - Packages downloaded once and reused
+- [x] **Offline development** - Work with cached packages even without internet
+- [x] **CI/CD optimization** - Share cache between pipeline jobs
 
 ## Composer Cache Configuration
 
@@ -227,8 +227,6 @@ environment:
   - NPM_CONFIG_CACHE_MAX=500
   - COMPOSER_CACHE_FILES_MAXSIZE=500M
 ```
-
----
 
 **Need help?** Join our [Discord][discord] community or check the [Reference Guide][reference].
 

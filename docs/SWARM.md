@@ -1,23 +1,59 @@
 # Docker Swarm Deployment Guide
 
+[🏠 Home][home] > [📚 Documentation][docs] > Docker Swarm Deployment Guide
+
 Complete guide for deploying Zairakai Docker Ecosystem on Docker Swarm for production high-availability setups.
 
 ## Table of Contents
 
 - [Overview](#overview)
+  - [Why Docker Swarm?](#why-docker-swarm)
+  - [Architecture](#architecture)
 - [Prerequisites](#prerequisites)
+  - [Hardware Requirements](#hardware-requirements)
+  - [Software Requirements](#software-requirements)
 - [Swarm Setup](#swarm-setup)
+  - [Initialize Swarm (Manager Node)](#initialize-swarm-manager-node)
+  - [Add Manager Nodes (High Availability)](#add-manager-nodes-high-availability)
+  - [Add Worker Nodes](#add-worker-nodes)
+  - [Label Nodes](#label-nodes)
 - [Deployment](#deployment)
+  - [1. Create Docker Registry Secret](#1-create-docker-registry-secret)
+  - [2. Create Application Secrets](#2-create-application-secrets)
+  - [3. Create Configs](#3-create-configs)
+  - [4. Deploy Stack](#4-deploy-stack)
+  - [5. Verify Deployment](#5-verify-deployment)
 - [High Availability](#high-availability)
+  - [Scaling Services](#scaling-services)
+  - [Rolling Updates](#rolling-updates)
+  - [Rollback Deployment](#rollback-deployment)
+  - [MySQL Replication (HA)](#mysql-replication-ha)
+  - [Redis Sentinel (HA)](#redis-sentinel-ha)
+  - [Health Checks](#health-checks)
 - [Secrets Management](#secrets-management)
+  - [Best Practices](#best-practices)
+  - [Viewing Secret Metadata](#viewing-secret-metadata)
 - [Monitoring](#monitoring)
+  - [Service Status](#service-status)
+  - [Resource Usage](#resource-usage)
+  - [Logs](#logs)
+  - [Prometheus Monitoring](#prometheus-monitoring)
 - [Troubleshooting](#troubleshooting)
-
----
+  - [Service Won't Start](#service-wont-start)
+  - [Network Issues](#network-issues)
+  - [Node Issues](#node-issues)
+  - [Service Update Failures](#service-update-failures)
+  - [Storage Issues](#storage-issues)
+- [Backup & Restore](#backup--restore)
+  - [Backup](#backup)
+  - [Restore](#restore)
+- [Production Checklist](#production-checklist)
+- [Additional Resources](#additional-resources)
 
 ## Overview
 
-Docker Swarm provides native orchestration for Docker containers with built-in load balancing, service discovery, and rolling updates.
+Docker Swarm provides native orchestration for Docker containers with built-in load balancing, service
+discovery, and rolling updates.
 
 ### Why Docker Swarm?
 
@@ -55,8 +91,6 @@ Docker Swarm provides native orchestration for Docker containers with built-in l
 └────────────────────────────────────────────────────────────┘
 ```
 
----
-
 ## Prerequisites
 
 ### Hardware Requirements
@@ -84,8 +118,6 @@ Docker Swarm provides native orchestration for Docker containers with built-in l
   - `7946/tcp` - Container network discovery
   - `7946/udp` - Container network discovery
   - `4789/udp` - Overlay network traffic
-
----
 
 ## Swarm Setup
 
@@ -134,8 +166,6 @@ docker node update --label-add compute=true worker-3
 # Verify labels
 docker node inspect worker-1 --format '{{ .Spec.Labels }}'
 ```
-
----
 
 ## Deployment
 
@@ -244,8 +274,6 @@ docker secret ls
 curl http://<SWARM-NODE-IP>
 ```
 
----
-
 ## High Availability
 
 ### Scaling Services
@@ -344,8 +372,6 @@ docker service ps myapp_php --filter "desired-state=running"
 docker service inspect myapp_php --format '{{json .Spec.TaskTemplate.ContainerSpec.Healthcheck}}'
 ```
 
----
-
 ## Secrets Management
 
 ### Best Practices
@@ -376,8 +402,6 @@ docker secret inspect db_password
 # Check which services use a secret
 docker service ls --format '{{.Name}}' | xargs -I {} sh -c 'docker service inspect {} | grep -q "db_password" && echo {}'
 ```
-
----
 
 ## Monitoring
 
@@ -431,8 +455,6 @@ curl http://<MANAGER-IP>:9090
 # php_fpm_active_processes
 # php_fpm_accepted_connections_total
 ```
-
----
 
 ## Troubleshooting
 
@@ -513,8 +535,6 @@ docker volume inspect myapp_mysql_data
 docker volume prune
 ```
 
----
-
 ## Backup & Restore
 
 ### Backup
@@ -549,8 +569,6 @@ docker cp redis-backup.rdb $(docker ps -q -f name=myapp_redis):/data/dump.rdb
 docker service update --force myapp_redis
 ```
 
----
-
 ## Production Checklist
 
 - [ ] Swarm cluster with 3+ manager nodes
@@ -570,19 +588,36 @@ docker service update --force myapp_redis
 - [ ] Load testing performed
 - [ ] Security hardening applied
 
----
-
 ## Additional Resources
 
 - **Stack File**: `swarm/stack-laravel.yml`
-- [**Docker Swarm Docs**](https://docs.docker.com/engine/swarm)
-- **Monitoring Guide**: `docs/MONITORING.md`
-- **Security Guide**: `SECURITY.md`
+- **[Docker Swarm Docs][docker-swarm-docs]** - Official documentation
+- **[Monitoring Guide][monitoring]** - Prometheus, Grafana, observability
+- **[Security Guide][security]** - Security scanning and best practices
 
----
+## Navigation
 
-**Need help?** Join our [Discord][discord] community or check the [Reference Guide][reference].
+- [← Kubernetes Deployment][kubernetes]
+- [📚 Documentation Index][docs]
+- [Architecture Comparison →][architecture-comparison]
+
+**Learn More:**
+
+- **[Monitoring Guide][monitoring]** - Prometheus, Grafana, Jaeger setup
+- **[Kubernetes Deployment][kubernetes]** - K8s deployment guide
+- **[Reference Guide][reference]** - Complete configuration reference
+
+**Need help?** Join our [Discord][discord] community or report issues on [GitLab][issues].
 
 <!-- Reference Links -->
+
+[home]: ../README.md
+[docs]: INDEX.md
+[kubernetes]: KUBERNETES.md
+[architecture-comparison]: ARCHITECTURE_COMPARISON.md
+[monitoring]: MONITORING.md
 [reference]: REFERENCE.md
+[security]: ../SECURITY.md
 [discord]: https://discord.gg/MAmD5SG8Zu
+[issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
+[docker-swarm-docs]: https://docs.docker.com/engine/swarm/

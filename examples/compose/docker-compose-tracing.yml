@@ -4,8 +4,6 @@
 # ================================
 # Complete observability stack with Jaeger and Zipkin
 
-version: '3.8'
-
 services:
   # ================================
   # APPLICATION SERVICES

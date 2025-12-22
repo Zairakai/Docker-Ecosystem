@@ -13,8 +13,6 @@
 # Scale:
 #   docker service scale myapp_php=10 myapp_node=5
 
-version: "3.8"
-
 services:
   # ================================
   # PHP (Laravel Backend)

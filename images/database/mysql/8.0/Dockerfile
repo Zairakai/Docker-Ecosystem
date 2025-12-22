@@ -22,25 +22,24 @@ RUN mkdir -p /var/log/mysql \
   && mkdir -p /backups
 
 # Copy configuration files
-COPY config/my.cnf /etc/mysql/conf.d/my.cnf
-COPY config/mysql.dev.cnf /etc/mysql/conf.d/mysql.dev.cnf
+COPY --chown=root:root config/my.cnf /etc/mysql/conf.d/my.cnf
+COPY --chown=root:root config/mysql.dev.cnf /etc/mysql/conf.d/mysql.dev.cnf
 
 # Fix config file permissions (MySQL refuses world-writable configs)
 RUN chmod 644 /etc/mysql/conf.d/*.cnf
 
 # Copy scripts
-COPY scripts/entrypoint.sh /scripts/entrypoint.sh
-COPY scripts/healthcheck.sh /scripts/healthcheck.sh
-COPY scripts/backup.sh /scripts/backup.sh
-COPY scripts/restore.sh /scripts/restore.sh
+COPY --chown=mysql:mysql scripts/entrypoint.sh /scripts/entrypoint.sh
+COPY --chown=mysql:mysql scripts/healthcheck.sh /scripts/healthcheck.sh
+COPY --chown=mysql:mysql scripts/backup.sh /scripts/backup.sh
+COPY --chown=mysql:mysql scripts/restore.sh /scripts/restore.sh
 
 # Make scripts executable
 RUN chmod +x /scripts/*.sh
 
-# Set proper ownership
+# Set proper ownership (scripts already chowned via COPY --chown)
 RUN chown -R mysql:mysql /var/log/mysql \
   && chown -R mysql:mysql /var/lib/mysql-files \
-  && chown -R mysql:mysql /scripts \
   && chown -R mysql:mysql /backups
 
 # Health check configuration

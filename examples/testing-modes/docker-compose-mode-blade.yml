@@ -1,4 +1,3 @@
-version: '3.8'
 
 # Testing Mode: Blade-only (Pure SSR)
 # Traditional Laravel application with Blade templates only

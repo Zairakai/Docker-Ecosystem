@@ -1,23 +1,59 @@
 # Kubernetes Deployment Guide
 
+[🏠 Home][home] > [📚 Documentation][docs] > Kubernetes Deployment Guide
+
 Complete guide for deploying Zairakai Docker Ecosystem on Kubernetes using Helm.
 
 ## Table of Contents
 
 - [Overview](#overview)
+  - [Architecture](#architecture)
+  - [Components](#components)
 - [Prerequisites](#prerequisites)
+  - [Required Tools](#required-tools)
+  - [Kubernetes Cluster](#kubernetes-cluster)
+  - [Storage Provisioner](#storage-provisioner)
+  - [Ingress Controller](#ingress-controller)
 - [Installation](#installation)
+  - [1. Create Namespace](#1-create-namespace)
+  - [2. Create Image Pull Secret (GitLab Registry)](#2-create-image-pull-secret-gitlab-registry)
+  - [3. Create Application Secrets](#3-create-application-secrets)
+  - [4. Create values.yaml](#4-create-valuesyaml)
+  - [5. Install Helm Chart](#5-install-helm-chart)
+  - [6. Verify Deployment](#6-verify-deployment)
 - [Configuration](#configuration)
+  - [Resource Limits](#resource-limits)
+  - [Horizontal Pod Autoscaling](#horizontal-pod-autoscaling)
+  - [Storage Configuration](#storage-configuration)
 - [High Availability](#high-availability)
+  - [MySQL Replication](#mysql-replication)
+  - [Redis Sentinel](#redis-sentinel)
+  - [Pod Disruption Budgets](#pod-disruption-budgets)
+  - [Multi-Zone Deployment](#multi-zone-deployment)
 - [Monitoring](#monitoring)
+  - [Prometheus ServiceMonitor](#prometheus-servicemonitor)
+  - [Grafana Dashboards](#grafana-dashboards)
+  - [Check Metrics](#check-metrics)
 - [Security](#security)
+  - [Network Policies](#network-policies)
+  - [Pod Security Standards](#pod-security-standards)
+  - [Image Verification with Cosign](#image-verification-with-cosign)
 - [Troubleshooting](#troubleshooting)
-
----
+  - [Pods Stuck in Pending](#pods-stuck-in-pending)
+  - [Image Pull Errors](#image-pull-errors)
+  - [Database Connection Issues](#database-connection-issues)
+  - [Application Logs](#application-logs)
+  - [Performance Issues](#performance-issues)
+- [Backup & Restore](#backup--restore)
+  - [Manual Backup](#manual-backup)
+  - [Automated Backups with CronJob](#automated-backups-with-cronjob)
+- [Production Checklist](#production-checklist)
+- [Additional Resources](#additional-resources)
 
 ## Overview
 
-The Zairakai Docker Ecosystem provides production-ready Helm charts for deploying Laravel + Vue.js applications on Kubernetes.
+The Zairakai Docker Ecosystem provides production-ready Helm charts for deploying Laravel + Vue.js
+applications on Kubernetes.
 
 ### Architecture
 
@@ -60,8 +96,6 @@ The Zairakai Docker Ecosystem provides production-ready Helm charts for deployin
 | **Nginx** | Web server / Reverse proxy | 2 | - |
 | **MySQL** | Database | 1 (+ optional replicas) | 20Gi |
 | **Redis** | Cache & Sessions | 1 (+ optional sentinel) | 5Gi |
-
----
 
 ## Prerequisites
 
@@ -119,8 +153,6 @@ helm install ingress-nginx ingress-nginx/ingress-nginx \
   --create-namespace \
   --set controller.service.type=LoadBalancer
 ```
-
----
 
 ## Installation
 
@@ -243,8 +275,6 @@ kubectl get ingress -n production
 curl https://app.example.com
 ```
 
----
-
 ## Configuration
 
 ### Resource Limits
@@ -336,8 +366,6 @@ redis:
     size: 10Gi
 ```
 
----
-
 ## High Availability
 
 ### MySQL Replication
@@ -400,8 +428,6 @@ php:
             topologyKey: topology.kubernetes.io/zone
 ```
 
----
-
 ## Monitoring
 
 ### Prometheus ServiceMonitor
@@ -436,8 +462,6 @@ curl http://localhost:9253/metrics
 # Application logs
 kubectl logs -n production -l app.kubernetes.io/component=php --tail=100 -f
 ```
-
----
 
 ## Security
 
@@ -482,8 +506,6 @@ Use admission controller to enforce:
 # Install Sigstore Policy Controller
 kubectl apply -f https://github.com/sigstore/policy-controller/releases/latest/download/policy-controller.yaml
 ```
-
----
 
 ## Troubleshooting
 
@@ -556,8 +578,6 @@ kubectl get hpa -n production
 kubectl describe hpa my-laravel-app-php -n production
 ```
 
----
-
 ## Backup & Restore
 
 ### Manual Backup
@@ -611,8 +631,6 @@ spec:
           restartPolicy: OnFailure
 ```
 
----
-
 ## Production Checklist
 
 Before going to production:
@@ -634,19 +652,34 @@ Before going to production:
 - [ ] Load test application
 - [ ] Document runbooks and incident response procedures
 
----
-
 ## Additional Resources
 
 - **Helm Chart**: `k8s/helm/laravel-stack/`
 - **Examples**: `k8s/helm/laravel-stack/examples/`
-- **Monitoring Guide**: `docs/MONITORING.md`
-- **Security Guide**: `SECURITY.md`
+- **[Monitoring Guide][monitoring]** - Prometheus, Grafana, observability
+- **[Security Guide][security]** - Security scanning and best practices
 
----
+## Navigation
 
-**Need help?** Join our [Discord][discord] community or check the [Reference Guide][reference].
+- [← Monitoring & Observability][monitoring]
+- [📚 Documentation Index][docs]
+- [Docker Swarm Deployment →][swarm]
+
+**Learn More:**
+
+- **[Monitoring Guide][monitoring]** - Prometheus, Grafana, Jaeger setup
+- **[Docker Swarm Deployment][swarm]** - Swarm orchestration guide
+- **[Reference Guide][reference]** - Complete configuration reference
+
+**Need help?** Join our [Discord][discord] community or report issues on [GitLab][issues].
 
 <!-- Reference Links -->
+
+[home]: ../README.md
+[docs]: INDEX.md
+[monitoring]: MONITORING.md
+[swarm]: SWARM.md
 [reference]: REFERENCE.md
+[security]: ../SECURITY.md
 [discord]: https://discord.gg/MAmD5SG8Zu
+[issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues

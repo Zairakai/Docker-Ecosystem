@@ -44,18 +44,18 @@ RUN mkdir -p /app/tests /app/reports /app/results \
   && chown -R node:node /app
 
 # Copy configuration and scripts
-COPY config/artillery.yml /app/config/artillery.yml
-COPY config/k6-config.js /app/config/k6-config.js
-COPY scripts/run-load-test.sh /usr/local/bin/run-load-test.sh
-COPY scripts/run-stress-test.sh /usr/local/bin/run-stress-test.sh
-COPY scripts/healthcheck.sh /usr/local/bin/healthcheck.sh
+COPY --chown=root:root config/artillery.yml /app/config/artillery.yml
+COPY --chown=root:root config/k6-config.js /app/config/k6-config.js
+COPY --chown=root:root scripts/run-load-test.sh /usr/local/bin/run-load-test.sh
+COPY --chown=root:root scripts/run-stress-test.sh /usr/local/bin/run-stress-test.sh
+COPY --chown=root:root scripts/healthcheck.sh /usr/local/bin/healthcheck.sh
 
 RUN chmod +x /usr/local/bin/run-load-test.sh \
   /usr/local/bin/run-stress-test.sh \
   /usr/local/bin/healthcheck.sh
 
 # Copy example test files
-COPY examples/ /app/examples/
+COPY --chown=node:node examples/ /app/examples/
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \

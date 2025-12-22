@@ -1,6 +1,9 @@
 # Monitoring & Observability
 
-This document describes how to monitor the Zairakai Docker Ecosystem using Prometheus metrics, structured logging, and distributed tracing.
+[🏠 Home][home] > [📚 Documentation][docs] > Monitoring & Observability
+
+This document describes how to monitor the Zairakai Docker Ecosystem using Prometheus metrics, structured
+logging, and distributed tracing.
 
 ## Table of Contents
 
@@ -8,10 +11,19 @@ This document describes how to monitor the Zairakai Docker Ecosystem using Prome
   - [PHP-FPM Metrics](#php-fpm-metrics)
   - [Node.js Metrics](#nodejs-metrics)
 - [Structured Logging](#structured-logging)
+  - [PHP (Laravel)](#php-laravel)
+  - [Node.js (Winston)](#nodejs-winston)
+  - [Log Aggregation Integration](#log-aggregation-integration)
 - [Distributed Tracing (OpenTelemetry)](#distributed-tracing-opentelemetry)
+  - [Architecture Overview](#architecture-overview)
+  - [PHP (Laravel) Setup](#php-laravel-setup)
+  - [Node.js Setup](#nodejs-setup)
+  - [OpenTelemetry Collector Setup](#opentelemetry-collector-setup)
+  - [Docker Compose Example](#docker-compose-example)
+  - [Trace Context Propagation](#trace-context-propagation)
 - [Integration Examples](#integration-examples)
-
----
+  - [Complete Stack with Monitoring](#complete-stack-with-monitoring)
+  - [Alert Rules Example](#alert-rules-example)
 
 ## Prometheus Metrics
 
@@ -21,7 +33,8 @@ The Zairakai Docker images expose Prometheus-compatible metrics for monitoring a
 
 **Available in**: `php:8.3-dev`, `php:8.3-test`
 
-The development and testing PHP images include [php-fpm-exporter](https://github.com/hipages/php-fpm_exporter) to expose PHP-FPM pool metrics in Prometheus format.
+The development and testing PHP images include [php-fpm-exporter][php-fpm-exporter] to expose PHP-FPM pool
+metrics in Prometheus format.
 
 #### Exposed Metrics
 
@@ -41,7 +54,8 @@ The development and testing PHP images include [php-fpm-exporter](https://github
 
 ##### **1. Enable PHP-FPM status page**
 
-The PHP-FPM status page must be enabled in your pool configuration. Add to your `php-fpm.d/www.conf` or custom pool config:
+The PHP-FPM status page must be enabled in your pool configuration. Add to your `php-fpm.d/www.conf` or
+custom pool config:
 
 ```ini
 ; Enable status page
@@ -126,7 +140,8 @@ scrape_configs:
 
 #### Grafana Dashboard
 
-Import dashboard ID `14963` from grafana.com for pre-built PHP-FPM visualizations, or create custom queries:
+Import dashboard ID `14963` from [grafana.com][grafana-dashboards] for pre-built PHP-FPM visualizations,
+or create custom queries:
 
 ```promql
 # Active processes
@@ -141,8 +156,6 @@ rate(phpfpm_slow_requests_total[5m])
 # Process saturation (% of max children reached)
 rate(phpfpm_max_children_reached_total[5m]) > 0
 ```
-
----
 
 ### Node.js Metrics
 
@@ -203,11 +216,10 @@ scrape_configs:
 | `nodejs_active_handles_total` | Gauge | Number of active handles |
 | `nodejs_active_requests_total` | Gauge | Number of active requests |
 
----
-
 ## Structured Logging
 
-Structured logging with JSON format enables easier parsing, searching, and analysis with log aggregation tools like ELK, Loki, or CloudWatch.
+Structured logging with JSON format enables easier parsing, searching, and analysis with log aggregation tools
+like ELK, Loki, or CloudWatch.
 
 ### PHP (Laravel)
 
@@ -373,8 +385,6 @@ LOG_STDERR_DRIVER=json
 }
 ```
 
----
-
 ### Node.js (Winston)
 
 #### Configuration
@@ -537,8 +547,6 @@ SERVICE_NAME=frontend-api
 }
 ```
 
----
-
 ### Log Aggregation Integration
 
 #### Filebeat (ELK Stack)
@@ -623,11 +631,10 @@ services:
         labels: "service=node,env=production"
 ```
 
----
-
 ## Distributed Tracing (OpenTelemetry)
 
-OpenTelemetry provides distributed tracing capabilities to track requests across multiple services (PHP ↔ Node.js ↔ Databases).
+OpenTelemetry provides distributed tracing capabilities to track requests across multiple services
+(PHP ↔ Node.js ↔ Databases).
 
 ### Architecture Overview
 
@@ -650,8 +657,6 @@ OpenTelemetry provides distributed tracing capabilities to track requests across
                     │  Jaeger  │            │  Zipkin  │
                     └──────────┘            └──────────┘
 ```
-
----
 
 ### PHP (Laravel) Setup
 
@@ -886,8 +891,6 @@ class OrderService
 }
 ```
 
----
-
 ### Node.js Setup
 
 #### 1. Install OpenTelemetry Packages
@@ -1033,8 +1036,6 @@ NODE_ENV=production
 APP_VERSION=1.0.0
 ```
 
----
-
 ### OpenTelemetry Collector Setup
 
 Create `otel-collector-config.yml`:
@@ -1087,15 +1088,11 @@ service:
       exporters: [jaeger, zipkin, logging]
 ```
 
----
-
 ### Docker Compose Example
 
-Create `examples/docker-compose-tracing.yml`:
+Create `examples/compose/docker-compose-tracing.yml`:
 
 ```yaml
-version: '3.8'
-
 services:
   # PHP Laravel Application
   php:
@@ -1162,7 +1159,7 @@ services:
 
 ```bash
 # Start the complete tracing stack
-docker compose -f examples/docker-compose-tracing.yml up -d
+docker compose -f examples/compose/docker-compose-tracing.yml up -d
 
 # Access UIs
 # Jaeger: http://localhost:16686
@@ -1173,8 +1170,6 @@ curl http://localhost/api/orders
 
 # View traces in Jaeger or Zipkin
 ```
-
----
 
 ### Trace Context Propagation
 
@@ -1201,15 +1196,11 @@ app.get('/api/data', async (req, res) => {
 });
 ```
 
----
-
 ## Integration Examples
 
 ### Complete Stack with Monitoring
 
 ```yaml
-version: '3.8'
-
 services:
   php:
     image: registry.gitlab.com/zairakai/docker-ecosystem/php:8.3-dev
@@ -1278,10 +1269,29 @@ groups:
           description: "PHP-FPM reached max children limit, requests may be queued"
 ```
 
----
+## Navigation
 
-**Need help?** Join our [Discord][discord] community or check the [Reference Guide][reference].
+- [← Architecture Overview][architecture]
+- [📚 Documentation Index][docs]
+- [Kubernetes Deployment →][kubernetes]
+
+**Learn More:**
+
+- **[Disaster Recovery Guide][disaster-recovery]** - Backup and restore procedures
+- **[Kubernetes Deployment][kubernetes]** - K8s deployment with monitoring
+- **[Reference Guide][reference]** - Complete configuration reference
+
+**Need help?** Join our [Discord][discord] community or report issues on [GitLab][issues].
 
 <!-- Reference Links -->
+
+[home]: ../README.md
+[docs]: INDEX.md
+[architecture]: ARCHITECTURE.md
+[kubernetes]: KUBERNETES.md
+[disaster-recovery]: DISASTER_RECOVERY.md
 [reference]: REFERENCE.md
 [discord]: https://discord.gg/MAmD5SG8Zu
+[issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
+[php-fpm-exporter]: https://github.com/hipages/php-fpm_exporter
+[grafana-dashboards]: https://grafana.com/grafana/dashboards/

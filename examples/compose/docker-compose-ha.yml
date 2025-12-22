@@ -9,8 +9,6 @@
 #   docker-compose -f docker-compose-ha.yml exec mysql-master /scripts/setup-master.sh
 #   docker-compose -f docker-compose-ha.yml exec mysql-slave /scripts/setup-slave.sh
 
-version: '3.8'
-
 services:
   # ================================
   # PHP Application

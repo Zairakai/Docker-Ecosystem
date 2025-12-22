@@ -1,4 +1,3 @@
-version: '3.8'
 
 # Testing Mode: Laravel + Vite Standard (Hybrid)
 # Laravel serves everything from public/ directory

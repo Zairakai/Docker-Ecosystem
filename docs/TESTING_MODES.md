@@ -1,6 +1,54 @@
 # Testing Modes Architecture
 
-This document explains the three testing modes available in the Zairakai Docker Ecosystem and how to switch between them.
+[🏠 Home][home] > [📚 Documentation][docs] > Testing Modes Architecture
+
+Complete guide to the three testing modes available in the Zairakai Docker Ecosystem - Blade SSR, SPA-only,
+and Hybrid rendering strategies.
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Mode 1: Blade-only (Server-Side Rendering)](#mode-1-blade-only-server-side-rendering)
+  - [Architecture](#architecture)
+  - [Use Cases](#use-cases)
+  - [Files](#files)
+  - [Testing](#testing)
+  - [Gherkin Example (Blade)](#gherkin-example-blade)
+- [Mode 2: SPA-only (Single Page Application)](#mode-2-spa-only-single-page-application)
+  - [Architecture](#architecture-1)
+  - [Use Cases](#use-cases-1)
+  - [Files](#files-1)
+  - [Testing](#testing-1)
+  - [Gherkin Example (SPA)](#gherkin-example-spa)
+- [Mode 3: Hybrid (Laravel + Vite Standard)](#mode-3-hybrid-laravel--vite-standard)
+  - [Architecture](#architecture-2)
+  - [Build Process](#build-process)
+  - [Use Cases](#use-cases-2)
+  - [Files](#files-2)
+  - [Testing](#testing-2)
+  - [Example Blade + Vue.js Page](#example-blade--vuejs-page)
+  - [Gherkin Example (Hybrid)](#gherkin-example-hybrid)
+- [Switching Between Modes](#switching-between-modes)
+  - [Method 1: Docker Compose Files (Recommended)](#method-1-docker-compose-files-recommended)
+  - [Method 2: Environment Variables](#method-2-environment-variables)
+  - [Method 3: GitLab CI Matrix (Automated)](#method-3-gitlab-ci-matrix-automated)
+- [Test Organization](#test-organization)
+  - [Directory Structure](#directory-structure)
+- [Environment Variables](#environment-variables)
+  - [E2E Testing Container](#e2e-testing-container)
+  - [PHP Container](#php-container)
+  - [Node Container](#node-container)
+- [Performance Testing by Mode](#performance-testing-by-mode)
+  - [Blade-only Performance](#blade-only-performance)
+  - [SPA-only Performance](#spa-only-performance)
+  - [Hybrid Performance](#hybrid-performance)
+- [Best Practices](#best-practices)
+  - [Blade-only Mode](#blade-only-mode)
+  - [SPA-only Mode](#spa-only-mode)
+  - [Hybrid Mode](#hybrid-mode)
+- [Troubleshooting](#troubleshooting)
+- [Summary](#summary)
+- [Navigation](#navigation)
 
 ## Overview
 
@@ -29,9 +77,9 @@ Browser → Nginx → PHP (Laravel) → Blade Templates → HTML Response
 
 ### Files
 
-- Nginx config: `examples/nginx-mode-blade-only.conf`
-- Docker Compose: `examples/docker-compose-mode-blade.yml`
-- Gherkin features: `tests/e2e/features-blade/`
+- **Nginx config**: `examples/nginx-mode-blade-only.conf`
+- **Docker Compose**: `examples/docker-compose-mode-blade.yml`
+- **Gherkin features**: `tests/e2e/features-blade/`
 
 ### Testing
 
@@ -72,9 +120,9 @@ Browser → Nginx /api/* → PHP (Laravel) → JSON Response
 
 ### Files
 
-- Nginx config: `examples/nginx-mode-spa-only.conf`
-- Docker Compose: `examples/docker-compose-mode-spa.yml`
-- Gherkin features: `tests/e2e/features-spa/`
+- **Nginx config**: `examples/nginx-mode-spa-only.conf`
+- **Docker Compose**: `examples/docker-compose-mode-spa.yml`
+- **Gherkin features**: `tests/e2e/features-spa/`
 
 ### Testing
 
@@ -107,8 +155,8 @@ Browser → Nginx → PHP → Blade templates with @vite directive
                 public/build/ (compiled Vue.js assets by Vite)
 ```
 
-**Important**: In standard Laravel + Vite setup, PHP serves everything from `public/` directory.  
-Vue.js components are compiled by Vite into `public/build/` and served by Laravel/PHP.
+**Important**: In standard Laravel + Vite setup, PHP serves everything from `public/` directory. Vue.js components
+are compiled by Vite into `public/build/` and served by Laravel/PHP.
 
 ### Build Process
 
@@ -130,9 +178,9 @@ npm run build  # → public/build/assets/app-[hash].js
 
 ### Files
 
-- Nginx config: `examples/nginx-laravel-vite.conf`
-- Docker Compose: `examples/docker-compose-mode-hybrid.yml`
-- Build workflow: `examples/BUILD_WORKFLOW.md`
+- **Nginx config**: `examples/nginx-laravel-vite.conf`
+- **Docker Compose**: `examples/docker-compose-mode-hybrid.yml`
+- **Build workflow**: `examples/BUILD_WORKFLOW.md`
 
 ### Testing
 
@@ -329,20 +377,20 @@ TARGET_URL=http://nginx \
 
 ## Troubleshooting
 
-### Blade tests fail with JavaScript errors
+**Blade tests fail with JavaScript errors:**
 
 - Ensure `TEST_MODE=blade-ssr`
 - Check Nginx config uses `nginx-mode-blade-only.conf`
 - Verify no Vue.js build files are served
 
-### SPA tests timeout waiting for content
+**SPA tests timeout waiting for content:**
 
 - Increase `WAIT_FOR_HYDRATION` timeout
 - Check Vue.js build completed successfully
 - Verify API endpoints return JSON
 - Check browser console for errors
 
-### Hybrid mode routes conflict
+**Hybrid mode routes conflict:**
 
 - Review Nginx location priority
 - Ensure `/app` routes to Vue.js
@@ -359,10 +407,27 @@ TARGET_URL=http://nginx \
 
 Choose the mode that matches your application architecture and testing requirements.
 
----
+## Navigation
 
-**Need help?** Join our [Discord][discord] community or check the [Reference Guide][reference].
+- [← Architecture Overview][architecture]
+- [📚 Documentation Index][docs]
+- [Architecture Comparison →][architecture-comparison]
+
+**Learn More:**
+
+- **[Architecture Guide][architecture]** - System design patterns
+- **[Architecture Comparison][architecture-comparison]** - Detailed mode comparison
+- **[Examples][examples]** - Docker Compose configurations
+
+**Need help?** Join our [Discord][discord] community or report issues on [GitLab][issues].
 
 <!-- Reference Links -->
+
+[home]: ../README.md
+[docs]: INDEX.md
+[architecture]: ARCHITECTURE.md
+[architecture-comparison]: ARCHITECTURE_COMPARISON.md
 [reference]: REFERENCE.md
+[examples]: ../examples/
 [discord]: https://discord.gg/MAmD5SG8Zu
+[issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
