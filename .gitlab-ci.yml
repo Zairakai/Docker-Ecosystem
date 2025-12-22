@@ -299,12 +299,8 @@ promote:tags:
   stage: promote
   image: docker:27-cli
   needs:
-    - build:php:prod
-    - build:php:dev
-    - build:php:test
-    - build:node:prod
-    - build:node:dev
-    - build:node:test
+    - build:php
+    - build:node
     - build:mysql
     - build:redis
     - build:nginx
