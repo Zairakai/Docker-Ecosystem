@@ -21,7 +21,6 @@
 ```bash
 # 1. Create docker-compose.yml in your Laravel project
 cat > docker-compose.yml <<'EOF'
-version: '3.8'
 services:
   app:
     image: zairakai/php:8.3-dev
@@ -91,11 +90,22 @@ docker-ecosystem/
 │       ├── minio/                   # S3-compatible storage
 │       └── e2e-testing/             # E2E testing tools
 │
-├── scripts/                         # Build automation
-│   ├── build-all-images.sh          # Main build script
+├── scripts/                         # Build automation and CI/CD
+│   ├── build-all-images.sh          # Main build script (local)
 │   ├── docker-functions.sh          # Docker build functions
-│   ├── common.sh                    # Shared utilities
-│   └── backup/                      # Backup/restore scripts
+│   ├── common.sh                    # Shared utilities (logging, validation)
+│   ├── promote.sh                   # Promote staging tags to stable
+│   ├── cleanup.sh                   # Clean up staging tags
+│   ├── backup/                      # Backup/restore scripts
+│   │   ├── backup.sh                # MySQL + Redis backup
+│   │   └── restore.sh               # MySQL + Redis restore
+│   └── pipeline/                    # CI/CD pipeline scripts
+│       ├── build-image.sh           # Generic image builder (multi/single-stage)
+│       ├── validate-config.sh       # Validate Dockerfiles and configs
+│       ├── validate-shellcheck.sh   # ShellCheck validation (100% compliance)
+│       ├── test-image-sizes.sh      # Pull and track image sizes
+│       ├── test-multi-stage.sh      # Verify multi-stage integrity
+│       └── sync-dockerhub.sh        # Mirror images to Docker Hub
 │
 ├── examples/                        # Docker Compose examples
 │   ├── testing-modes/               # 3 testing architectures (Blade/SPA/Hybrid)
@@ -125,6 +135,60 @@ docker-ecosystem/
 ├── CONTRIBUTING.md                  # Contribution guidelines
 └── README.md                        # This file
 ```
+
+## 🔧 Pipeline Scripts (Local & CI)
+
+All CI/CD logic is **externalized in reusable scripts** for testability and maintainability:
+
+### Validation Scripts
+```bash
+# Validate configuration (Dockerfiles, scripts, directories)
+bash scripts/pipeline/validate-config.sh
+
+# Run ShellCheck on all shell scripts (100% compliance required)
+bash scripts/pipeline/validate-shellcheck.sh
+```
+
+### Build Scripts
+```bash
+# Build a single image (supports multi-stage and single-stage builds)
+bash scripts/pipeline/build-image.sh <image-path> <image-prefix> <image-tag>
+
+# Examples:
+bash scripts/pipeline/build-image.sh images/php/8.3 php 8.3-prod
+bash scripts/pipeline/build-image.sh images/database/mysql/8.0 database mysql-8.0
+bash scripts/pipeline/build-image.sh images/services/mailhog services mailhog
+```
+
+### Test Scripts
+```bash
+# Test image sizes (pull all images and generate report)
+CI_REGISTRY_IMAGE=registry.gitlab.com/zairakai/docker-ecosystem \
+  bash scripts/pipeline/test-image-sizes.sh
+
+# Test multi-stage integrity (Xdebug, PCOV, size progression)
+CI_REGISTRY_IMAGE=registry.gitlab.com/zairakai/docker-ecosystem \
+  bash scripts/pipeline/test-multi-stage.sh
+```
+
+### Release Scripts
+```bash
+# Promote staging tags to stable version tags
+PROMOTED_VERSION=v1.2.3 bash scripts/promote.sh
+
+# Sync stable images to Docker Hub
+bash scripts/pipeline/sync-dockerhub.sh
+
+# Cleanup staging tags from registry
+bash scripts/cleanup.sh
+```
+
+**Benefits:**
+- [x] **Local execution** - Test scripts before pushing to CI
+- [x] **DRY principle** - Zero code duplication in `.gitlab-ci.yml`
+- [x] **ShellCheck 100%** - All scripts pass strict validation
+- [x] **Maintainability** - Logic separated from CI configuration
+- [x] **Debuggability** - Clear logs via `common.sh` functions
 
 ## 📦 Available Images
 
@@ -219,9 +283,10 @@ Feature: User Authentication
 **Disaster Recovery** - Automated backup/restore
 
 ```bash
-scripts/backup/backup-mysql.sh      # MySQL backup with compression
-scripts/backup/backup-redis.sh      # Redis persistence backup
-scripts/backup/restore-mysql.sh     # Point-in-time recovery
+scripts/backup/backup.sh mysql      # MySQL backup with compression
+scripts/backup/backup.sh redis      # Redis persistence backup
+scripts/backup/restore.sh mysql     # Point-in-time recovery
+scripts/backup/restore.sh redis     # Point-in-time recovery
 ```
 
 **Monitoring Stack** - Full observability
@@ -268,8 +333,6 @@ scripts/backup/restore-mysql.sh     # Point-in-time recovery
 ## License
 
 MIT License - see [LICENSE][license] file for details.
-
----
 
 _Built with ❤️ by the Zairakai team for Laravel + Vue.js developers_
 

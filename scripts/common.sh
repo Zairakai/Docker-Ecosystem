@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # ================================
 # COMMON UTILITIES FOR CI/CD SCRIPTS
 # ================================

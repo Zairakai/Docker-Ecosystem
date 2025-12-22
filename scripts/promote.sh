@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # ================================
 # PROMOTE DOCKER IMAGES TO STABLE TAGS
 # ================================

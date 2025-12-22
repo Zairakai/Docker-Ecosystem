@@ -1,6 +1,43 @@
 # Architecture Comparison: 3 Testing Modes
 
+[🏠 Home][home] > [📚 Documentation][docs] > Architecture Comparison
+
 This document compares the three distinct architectural modes supported by the Zairakai Docker Ecosystem.
+
+## Table of Contents
+
+- [Quick Reference Table](#quick-reference-table)
+- [Mode 1: Blade-only (Pure SSR)](#mode-1-blade-only-pure-ssr)
+  - [Architecture Diagram](#architecture-diagram)
+  - [Key Characteristics](#key-characteristics)
+  - [Directory Structure](#directory-structure)
+  - [Example Blade Template](#example-blade-template)
+  - [Testing](#testing)
+  - [Gherkin Test Example](#gherkin-test-example)
+- [Mode 2: SPA-only (Decoupled Architecture)](#mode-2-spa-only-decoupled-architecture)
+  - [Architecture Diagram](#architecture-diagram-1)
+  - [Key Characteristics](#key-characteristics-1)
+  - [Directory Structure](#directory-structure-1)
+  - [Vue.js App Structure](#vuejs-app-structure)
+  - [Laravel API Routes](#laravel-api-routes)
+  - [Build & Testing Workflow](#build--testing-workflow)
+  - [Nginx Configuration](#nginx-configuration)
+  - [Gherkin Test Example](#gherkin-test-example-1)
+- [Mode 3: Hybrid (Laravel + Vite Standard)](#mode-3-hybrid-laravel--vite-standard)
+  - [Architecture Diagram](#architecture-diagram-2)
+  - [Key Characteristics](#key-characteristics-2)
+  - [Directory Structure](#directory-structure-2)
+  - [Blade Template with Vue.js](#blade-template-with-vuejs)
+  - [Vue.js Component](#vuejs-component)
+  - [Build & Testing Workflow](#build--testing-workflow-1)
+  - [Gherkin Test Example](#gherkin-test-example-2)
+- [Choosing the Right Mode](#choosing-the-right-mode)
+  - [Use Blade-only when:](#use-blade-only-when)
+  - [Use SPA-only when:](#use-spa-only-when)
+  - [Use Hybrid when:](#use-hybrid-when)
+- [Testing Strategy per Mode](#testing-strategy-per-mode)
+- [Performance Comparison](#performance-comparison)
+- [Conclusion](#conclusion)
 
 ## Quick Reference Table
 
@@ -440,4 +477,30 @@ Scenario: Hybrid page with SSR and Vue.js
 
 ## Conclusion
 
-All three modes are valid depending on your use case. The Docker ecosystem supports all three seamlessly with minimal configuration changes.
+All three modes are valid depending on your use case. The Docker ecosystem supports all three seamlessly
+with minimal configuration changes.
+
+## Navigation
+
+- [← Docker Swarm Deployment][swarm]
+- [📚 Documentation Index][docs]
+- [Reference Guide →][reference]
+
+**Learn More:**
+
+- **[Testing Modes][testing-modes]** - Detailed testing strategies
+- **[Architecture Guide][architecture]** - System design patterns
+- **[Reference Guide][reference]** - Complete configuration reference
+
+**Need help?** Join our [Discord][discord] community or report issues on [GitLab][issues].
+
+<!-- Reference Links -->
+
+[home]: ../README.md
+[docs]: INDEX.md
+[swarm]: SWARM.md
+[reference]: REFERENCE.md
+[testing-modes]: TESTING_MODES.md
+[architecture]: ARCHITECTURE.md
+[discord]: https://discord.gg/MAmD5SG8Zu
+[issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues

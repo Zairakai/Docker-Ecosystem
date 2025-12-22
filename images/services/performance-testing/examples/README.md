@@ -68,7 +68,6 @@ docker run --rm \
 ## Docker Compose Integration
 
 ```yaml
-version: '3.8'
 
 services:
   app:

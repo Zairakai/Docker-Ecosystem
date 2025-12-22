@@ -26,16 +26,7 @@ variables:
   SAST_IAC_EXCLUDED_PATHS: "examples/,docs/,tests/"
   SECRET_DETECTION_EXCLUDED_PATHS: "examples/,docs/,tests/"
 
-# ================================
-# GLOBAL DOCKER AUTH
-# ================================
-.docker_auth: &docker_auth
-  before_script:
-    - apk add --no-cache bash
-    - docker info
-    - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
-  after_script:
-    - docker logout $CI_REGISTRY
+# Note: docker_auth merged into build_base template for simplicity
 
 # ================================
 # SECURITY SCANNING
@@ -87,40 +78,15 @@ validate:config:
   before_script:
     - apk add --no-cache bash findutils
   script:
-    - echo "✓ Validating Docker Ecosystem configuration…"
-    - |
-      # Check Dockerfiles exist
-      echo "→ Checking Dockerfiles…"
-      find images/ -name "Dockerfile" | wc -l
-      test -f images/php/8.3/Dockerfile
-      test -f images/node/20/Dockerfile
-
-      # Check scripts exist
-      echo "→ Checking scripts…"
-      test -f scripts/build-all-images.sh
-      test -f scripts/common.sh
-      test -f scripts/docker-functions.sh
-      test -f scripts/promote.sh
-      test -f scripts/cleanup.sh
-
-      # Check directories
-      echo "→ Checking directories…"
-      test -d examples/
-      test -d images/database/mysql/8.0
-      test -d images/database/redis/7
-      test -d images/web/nginx/1.26
-      test -d images/services/
-    - echo "✅ Configuration validation passed"
+    - bash scripts/pipeline/validate-config.sh
 
 validate:shellcheck:
   stage: validate
   image: koalaman/shellcheck-alpine:stable
+  before_script:
+    - apk add --no-cache bash
   script:
-    - echo "✓ Running shellcheck on all shell scripts…"
-    - |
-      find . -name "*.sh" -type f -print0 | \
-      xargs -0 shellcheck --severity=warning --format=gcc
-    - echo "✅ Shellcheck validation passed"
+    - bash scripts/pipeline/validate-shellcheck.sh
   allow_failure: false
 
 # ================================
@@ -128,7 +94,14 @@ validate:shellcheck:
 # ================================
 .build_base: &build_base
   image: docker:27-cli
-  <<: *docker_auth
+  before_script:
+    - apk add --no-cache bash
+    - docker info
+    - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+    # Ensure all scripts are executable (defensive)
+    - chmod -R +x scripts/
+  after_script:
+    - docker logout $CI_REGISTRY
   retry:
     max: 2
     when:
@@ -148,38 +121,7 @@ build:php:prod:
     - validate:config
     - validate:shellcheck
   script:
-    - echo "🔨 Building PHP 8.3-prod (BASE IMAGE)…"
-    - export BUILD_STAGE="prod"
-    - export BUILD_TARGET="prod"
-    - chmod +x scripts/docker-functions.sh scripts/common.sh
-    - |
-      bash <<'EOSCRIPT'
-      set -euo pipefail
-      source scripts/common.sh
-      source scripts/docker-functions.sh
-
-      export CACHE_ENABLED=true
-      export PUSH_TO_REGISTRY=true
-      export DOCKER_REGISTRY="${CI_REGISTRY_IMAGE}"
-      export IMAGE_SUFFIX="${IMAGE_SUFFIX}"
-
-      # Build with cache optimization
-            BUILDER_NAME="builder-php-prod-${CI_PIPELINE_ID}"
-
-      docker buildx create --use --name "${BUILDER_NAME}" || true
-
-      docker buildx build \
-        --target prod \
-        --cache-from "${CI_REGISTRY_IMAGE}/php:8.3-prod" \
-        --cache-from "${CI_REGISTRY_IMAGE}/php:latest-prod" \
-        --build-arg BUILDKIT_INLINE_CACHE=1 \
-        --tag "${CI_REGISTRY_IMAGE}/php:8.3${IMAGE_SUFFIX}-prod" \
-        --push \
-        images/php/8.3/
-
-      docker buildx rm "${BUILDER_NAME}" || true
-      EOSCRIPT
-    - echo "✅ PHP 8.3-prod built successfully"
+    - bash scripts/pipeline/build-image.sh images/php/8.3 php 8.3-prod
   rules:
     - if: $CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/
 
@@ -190,37 +132,7 @@ build:node:prod:
     - validate:config
     - validate:shellcheck
   script:
-    - echo "🔨 Building Node.js 20-prod (BASE IMAGE)…"
-    - export BUILD_STAGE="prod"
-    - export BUILD_TARGET="prod"
-    - chmod +x scripts/docker-functions.sh scripts/common.sh
-    - |
-      bash <<'EOSCRIPT'
-      set -euo pipefail
-      source scripts/common.sh
-      source scripts/docker-functions.sh
-
-      export CACHE_ENABLED=true
-      export PUSH_TO_REGISTRY=true
-      export DOCKER_REGISTRY="${CI_REGISTRY_IMAGE}"
-      export IMAGE_SUFFIX="${IMAGE_SUFFIX}"
-
-      BUILDER_NAME="builder-node-prod-${CI_PIPELINE_ID}"
-
-      docker buildx create --use --name "${BUILDER_NAME}" || true
-
-      docker buildx build \
-        --target prod \
-        --cache-from "${CI_REGISTRY_IMAGE}/node:20-prod" \
-        --cache-from "${CI_REGISTRY_IMAGE}/node:latest-prod" \
-        --build-arg BUILDKIT_INLINE_CACHE=1 \
-        --tag "${CI_REGISTRY_IMAGE}/node:20${IMAGE_SUFFIX}-prod" \
-        --push \
-        images/node/20/
-
-      docker buildx rm "${BUILDER_NAME}" || true
-      EOSCRIPT
-    - echo "✅ Node.js 20-prod built successfully"
+    - bash scripts/pipeline/build-image.sh images/node/20 node 20-prod
   rules:
     - if: $CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/
 
@@ -233,38 +145,7 @@ build:php:dev:
   needs:
     - build:php:prod
   script:
-    - echo "🔨 Building PHP 8.3-dev (FROM prod stage)…"
-    - export BUILD_STAGE="dev"
-    - export BUILD_TARGET="dev"
-    - chmod +x scripts/docker-functions.sh scripts/common.sh
-    - |
-      bash <<'EOSCRIPT'
-      set -euo pipefail
-      source scripts/common.sh
-      source scripts/docker-functions.sh
-
-      export CACHE_ENABLED=true
-      export PUSH_TO_REGISTRY=true
-      export DOCKER_REGISTRY="${CI_REGISTRY_IMAGE}"
-      export IMAGE_SUFFIX="${IMAGE_SUFFIX}"
-
-      BUILDER_NAME="builder-php-dev-${CI_PIPELINE_ID}"
-
-      docker buildx create --use --name "${BUILDER_NAME}" || true
-
-      docker buildx build \
-        --target dev \
-        --cache-from "${CI_REGISTRY_IMAGE}/php:8.3${IMAGE_SUFFIX}-prod" \
-        --cache-from "${CI_REGISTRY_IMAGE}/php:8.3-dev" \
-        --cache-from "${CI_REGISTRY_IMAGE}/php:latest-dev" \
-        --build-arg BUILDKIT_INLINE_CACHE=1 \
-        --tag "${CI_REGISTRY_IMAGE}/php:8.3${IMAGE_SUFFIX}-dev" \
-        --push \
-        images/php/8.3/
-
-      docker buildx rm "${BUILDER_NAME}" || true
-      EOSCRIPT
-    - echo "✅ PHP 8.3-dev built successfully"
+    - bash scripts/pipeline/build-image.sh images/php/8.3 php 8.3-dev
   rules:
     - if: $CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/
 
@@ -274,38 +155,7 @@ build:node:dev:
   needs:
     - build:node:prod
   script:
-    - echo "🔨 Building Node.js 20-dev (FROM prod stage)…"
-    - export BUILD_STAGE="dev"
-    - export BUILD_TARGET="dev"
-    - chmod +x scripts/docker-functions.sh scripts/common.sh
-    - |
-      bash <<'EOSCRIPT'
-      set -euo pipefail
-      source scripts/common.sh
-      source scripts/docker-functions.sh
-
-      export CACHE_ENABLED=true
-      export PUSH_TO_REGISTRY=true
-      export DOCKER_REGISTRY="${CI_REGISTRY_IMAGE}"
-      export IMAGE_SUFFIX="${IMAGE_SUFFIX}"
-
-      BUILDER_NAME="builder-node-dev-${CI_PIPELINE_ID}"
-
-      docker buildx create --use --name "${BUILDER_NAME}" || true
-
-      docker buildx build \
-        --target dev \
-        --cache-from "${CI_REGISTRY_IMAGE}/node:20${IMAGE_SUFFIX}-prod" \
-        --cache-from "${CI_REGISTRY_IMAGE}/node:20-dev" \
-        --cache-from "${CI_REGISTRY_IMAGE}/node:latest-dev" \
-        --build-arg BUILDKIT_INLINE_CACHE=1 \
-        --tag "${CI_REGISTRY_IMAGE}/node:20${IMAGE_SUFFIX}-dev" \
-        --push \
-        images/node/20/
-
-      docker buildx rm "${BUILDER_NAME}" || true
-      EOSCRIPT
-    - echo "✅ Node.js 20-dev built successfully"
+    - bash scripts/pipeline/build-image.sh images/node/20 node 20-dev
   rules:
     - if: $CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/
 
@@ -318,38 +168,7 @@ build:php:test:
   needs:
     - build:php:dev
   script:
-    - echo "🔨 Building PHP 8.3-test (FROM dev stage)…"
-    - export BUILD_STAGE="test"
-    - export BUILD_TARGET="test"
-    - chmod +x scripts/docker-functions.sh scripts/common.sh
-    - |
-      bash <<'EOSCRIPT'
-      set -euo pipefail
-      source scripts/common.sh
-      source scripts/docker-functions.sh
-
-      export CACHE_ENABLED=true
-      export PUSH_TO_REGISTRY=true
-      export DOCKER_REGISTRY="${CI_REGISTRY_IMAGE}"
-      export IMAGE_SUFFIX="${IMAGE_SUFFIX}"
-
-      BUILDER_NAME="builder-php-test-${CI_PIPELINE_ID}"
-
-      docker buildx create --use --name "${BUILDER_NAME}" || true
-
-      docker buildx build \
-        --target test \
-        --cache-from "${CI_REGISTRY_IMAGE}/php:8.3${IMAGE_SUFFIX}-dev" \
-        --cache-from "${CI_REGISTRY_IMAGE}/php:8.3-test" \
-        --cache-from "${CI_REGISTRY_IMAGE}/php:latest-test" \
-        --build-arg BUILDKIT_INLINE_CACHE=1 \
-        --tag "${CI_REGISTRY_IMAGE}/php:8.3${IMAGE_SUFFIX}-test" \
-        --push \
-        images/php/8.3/
-
-      docker buildx rm "${BUILDER_NAME}" || true
-      EOSCRIPT
-    - echo "✅ PHP 8.3-test built successfully"
+    - bash scripts/pipeline/build-image.sh images/php/8.3 php 8.3-test
   rules:
     - if: $CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/
 
@@ -359,38 +178,7 @@ build:node:test:
   needs:
     - build:node:dev
   script:
-    - echo "🔨 Building Node.js 20-test (FROM dev stage)…"
-    - export BUILD_STAGE="test"
-    - export BUILD_TARGET="test"
-    - chmod +x scripts/docker-functions.sh scripts/common.sh
-    - |
-      bash <<'EOSCRIPT'
-      set -euo pipefail
-      source scripts/common.sh
-      source scripts/docker-functions.sh
-
-      export CACHE_ENABLED=true
-      export PUSH_TO_REGISTRY=true
-      export DOCKER_REGISTRY="${CI_REGISTRY_IMAGE}"
-      export IMAGE_SUFFIX="${IMAGE_SUFFIX}"
-
-      BUILDER_NAME="builder-node-test-${CI_PIPELINE_ID}"
-
-      docker buildx create --use --name "${BUILDER_NAME}" || true
-
-      docker buildx build \
-        --target test \
-        --cache-from "${CI_REGISTRY_IMAGE}/node:20${IMAGE_SUFFIX}-dev" \
-        --cache-from "${CI_REGISTRY_IMAGE}/node:20-test" \
-        --cache-from "${CI_REGISTRY_IMAGE}/node:latest-test" \
-        --build-arg BUILDKIT_INLINE_CACHE=1 \
-        --tag "${CI_REGISTRY_IMAGE}/node:20${IMAGE_SUFFIX}-test" \
-        --push \
-        images/node/20/
-
-      docker buildx rm "${BUILDER_NAME}" || true
-      EOSCRIPT
-    - echo "✅ Node.js 20-test built successfully"
+    - bash scripts/pipeline/build-image.sh images/node/20 node 20-test
   rules:
     - if: $CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/
 
@@ -404,33 +192,7 @@ build:mysql:
     - build:php:test
     - build:node:test
   script:
-    - echo "🔨 Building MySQL 8.0…"
-    - chmod +x scripts/docker-functions.sh scripts/common.sh
-    - |
-      bash <<'EOSCRIPT'
-      set -euo pipefail
-      source scripts/common.sh
-      source scripts/docker-functions.sh
-
-      export CACHE_ENABLED=true
-      export PUSH_TO_REGISTRY=true
-      export DOCKER_REGISTRY="${CI_REGISTRY_IMAGE}"
-      export IMAGE_SUFFIX="${IMAGE_SUFFIX}"
-
-      BUILDER_NAME="builder-mysql-${CI_PIPELINE_ID}"
-
-      docker buildx create --use --name "${BUILDER_NAME}" || true
-
-      docker buildx build \
-        --cache-from "${CI_REGISTRY_IMAGE}/database:mysql-8.0" \
-        --build-arg BUILDKIT_INLINE_CACHE=1 \
-        --tag "${CI_REGISTRY_IMAGE}/database:mysql-8.0${IMAGE_SUFFIX}" \
-        --push \
-        images/database/mysql/8.0/
-
-      docker buildx rm "${BUILDER_NAME}" || true
-      EOSCRIPT
-    - echo "✅ MySQL 8.0 built successfully"
+    - bash scripts/pipeline/build-image.sh images/database/mysql/8.0 database mysql-8.0
   rules:
     - if: $CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/
 
@@ -441,33 +203,7 @@ build:redis:
     - build:php:test
     - build:node:test
   script:
-    - echo "🔨 Building Redis 7…"
-    - chmod +x scripts/docker-functions.sh scripts/common.sh
-    - |
-      bash <<'EOSCRIPT'
-      set -euo pipefail
-      source scripts/common.sh
-      source scripts/docker-functions.sh
-
-      export CACHE_ENABLED=true
-      export PUSH_TO_REGISTRY=true
-      export DOCKER_REGISTRY="${CI_REGISTRY_IMAGE}"
-      export IMAGE_SUFFIX="${IMAGE_SUFFIX}"
-
-      BUILDER_NAME="builder-redis-${CI_PIPELINE_ID}"
-
-      docker buildx create --use --name "${BUILDER_NAME}" || true
-
-      docker buildx build \
-        --cache-from "${CI_REGISTRY_IMAGE}/database:redis-7" \
-        --build-arg BUILDKIT_INLINE_CACHE=1 \
-        --tag "${CI_REGISTRY_IMAGE}/database:redis-7${IMAGE_SUFFIX}" \
-        --push \
-        images/database/redis/7/
-
-      docker buildx rm "${BUILDER_NAME}" || true
-      EOSCRIPT
-    - echo "✅ Redis 7 built successfully"
+    - bash scripts/pipeline/build-image.sh images/database/redis/7 database redis-7
   rules:
     - if: $CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/
 
@@ -478,33 +214,7 @@ build:nginx:
     - build:php:test
     - build:node:test
   script:
-    - echo "🔨 Building Nginx 1.26…"
-    - chmod +x scripts/docker-functions.sh scripts/common.sh
-    - |
-      bash <<'EOSCRIPT'
-      set -euo pipefail
-      source scripts/common.sh
-      source scripts/docker-functions.sh
-
-      export CACHE_ENABLED=true
-      export PUSH_TO_REGISTRY=true
-      export DOCKER_REGISTRY="${CI_REGISTRY_IMAGE}"
-      export IMAGE_SUFFIX="${IMAGE_SUFFIX}"
-
-      BUILDER_NAME="builder-nginx-${CI_PIPELINE_ID}"
-
-      docker buildx create --use --name "${BUILDER_NAME}" || true
-
-      docker buildx build \
-        --cache-from "${CI_REGISTRY_IMAGE}/web:nginx-1.26" \
-        --build-arg BUILDKIT_INLINE_CACHE=1 \
-        --tag "${CI_REGISTRY_IMAGE}/web:nginx-1.26${IMAGE_SUFFIX}" \
-        --push \
-        images/web/nginx/1.26/
-
-      docker buildx rm "${BUILDER_NAME}" || true
-      EOSCRIPT
-    - echo "✅ Nginx 1.26 built successfully"
+    - bash scripts/pipeline/build-image.sh images/web/nginx/1.26 web nginx-1.26
   rules:
     - if: $CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/
 
@@ -519,33 +229,7 @@ build:mailhog:
     - build:redis
     - build:nginx
   script:
-    - echo "🔨 Building Mailhog…"
-    - chmod +x scripts/docker-functions.sh scripts/common.sh
-    - |
-      bash <<'EOSCRIPT'
-      set -euo pipefail
-      source scripts/common.sh
-      source scripts/docker-functions.sh
-
-      export CACHE_ENABLED=true
-      export PUSH_TO_REGISTRY=true
-      export DOCKER_REGISTRY="${CI_REGISTRY_IMAGE}"
-      export IMAGE_SUFFIX="${IMAGE_SUFFIX}"
-
-      BUILDER_NAME="builder-mailhog-${CI_PIPELINE_ID}"
-
-      docker buildx create --use --name "${BUILDER_NAME}" || true
-
-      docker buildx build \
-        --cache-from "${CI_REGISTRY_IMAGE}/services:mailhog" \
-        --build-arg BUILDKIT_INLINE_CACHE=1 \
-        --tag "${CI_REGISTRY_IMAGE}/services:mailhog${IMAGE_SUFFIX}" \
-        --push \
-        images/services/mailhog/
-
-      docker buildx rm "${BUILDER_NAME}" || true
-      EOSCRIPT
-    - echo "✅ Mailhog built successfully"
+    - bash scripts/pipeline/build-image.sh images/services/mailhog services mailhog
   rules:
     - if: $CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/
 
@@ -557,33 +241,7 @@ build:minio:
     - build:redis
     - build:nginx
   script:
-    - echo "🔨 Building MinIO…"
-    - chmod +x scripts/docker-functions.sh scripts/common.sh
-    - |
-      bash <<'EOSCRIPT'
-      set -euo pipefail
-      source scripts/common.sh
-      source scripts/docker-functions.sh
-
-      export CACHE_ENABLED=true
-      export PUSH_TO_REGISTRY=true
-      export DOCKER_REGISTRY="${CI_REGISTRY_IMAGE}"
-      export IMAGE_SUFFIX="${IMAGE_SUFFIX}"
-
-      BUILDER_NAME="builder-minio-${CI_PIPELINE_ID}"
-
-      docker buildx create --use --name "${BUILDER_NAME}" || true
-
-      docker buildx build \
-        --cache-from "${CI_REGISTRY_IMAGE}/services:minio" \
-        --build-arg BUILDKIT_INLINE_CACHE=1 \
-        --tag "${CI_REGISTRY_IMAGE}/services:minio${IMAGE_SUFFIX}" \
-        --push \
-        images/services/minio/
-
-      docker buildx rm "${BUILDER_NAME}" || true
-      EOSCRIPT
-    - echo "✅ MinIO built successfully"
+    - bash scripts/pipeline/build-image.sh images/services/minio services minio
   rules:
     - if: $CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/
 
@@ -595,33 +253,7 @@ build:e2e-testing:
     - build:redis
     - build:nginx
   script:
-    - echo "🔨 Building E2E Testing…"
-    - chmod +x scripts/docker-functions.sh scripts/common.sh
-    - |
-      bash <<'EOSCRIPT'
-      set -euo pipefail
-      source scripts/common.sh
-      source scripts/docker-functions.sh
-
-      export CACHE_ENABLED=true
-      export PUSH_TO_REGISTRY=true
-      export DOCKER_REGISTRY="${CI_REGISTRY_IMAGE}"
-      export IMAGE_SUFFIX="${IMAGE_SUFFIX}"
-
-      BUILDER_NAME="builder-e2e-testing-${CI_PIPELINE_ID}"
-
-      docker buildx create --use --name "${BUILDER_NAME}" || true
-
-      docker buildx build \
-        --cache-from "${CI_REGISTRY_IMAGE}/services:e2e-testing" \
-        --build-arg BUILDKIT_INLINE_CACHE=1 \
-        --tag "${CI_REGISTRY_IMAGE}/services:e2e-testing${IMAGE_SUFFIX}" \
-        --push \
-        images/services/e2e-testing/
-
-      docker buildx rm "${BUILDER_NAME}" || true
-      EOSCRIPT
-    - echo "✅ E2E Testing built successfully"
+    - bash scripts/pipeline/build-image.sh images/services/e2e-testing services e2e-testing
   rules:
     - if: $CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/
 
@@ -633,54 +265,7 @@ build:performance-testing:
     - build:redis
     - build:nginx
   script:
-    - echo "🔨 Building Performance Testing…"
-    - chmod +x scripts/docker-functions.sh scripts/common.sh
-    - |
-      bash <<'EOSCRIPT'
-      set -euo pipefail
-      source scripts/common.sh
-      source scripts/docker-functions.sh
-
-      export CACHE_ENABLED=true
-      export PUSH_TO_REGISTRY=true
-      export DOCKER_REGISTRY="${CI_REGISTRY_IMAGE}"
-      export IMAGE_SUFFIX="${IMAGE_SUFFIX}"
-
-      BUILDER_NAME="builder-performance-testing-${CI_PIPELINE_ID}"
-
-      MAX_ATTEMPTS=3
-      ATTEMPT=1
-
-      docker buildx create --use --name "${BUILDER_NAME}" || true
-
-      while [ $ATTEMPT -le $MAX_ATTEMPTS ]; do
-        echo "Build attempt ${ATTEMPT}/${MAX_ATTEMPTS}…"
-
-        if docker buildx build \
-          --cache-from "${CI_REGISTRY_IMAGE}/services:performance-testing" \
-          --build-arg BUILDKIT_INLINE_CACHE=1 \
-          --tag "${CI_REGISTRY_IMAGE}/services:performance-testing${IMAGE_SUFFIX}" \
-          --push \
-          images/services/performance-testing/; then
-          echo "✅ Build successful"
-          break
-        else
-          if [ $ATTEMPT -lt $MAX_ATTEMPTS ]; then
-            echo "⚠️ Build failed, retrying in 10s…"
-            sleep 10
-          else
-            echo "❌ Build failed after ${MAX_ATTEMPTS} attempts"
-            docker buildx rm "${BUILDER_NAME}" || true
-            exit 1
-          fi
-        fi
-
-        ATTEMPT=$((ATTEMPT + 1))
-      done
-
-      docker buildx rm "${BUILDER_NAME}" || true
-      EOSCRIPT
-    - echo "✅ Performance Testing built successfully"
+    - bash scripts/pipeline/build-image.sh images/services/performance-testing services performance-testing
   rules:
     - if: $CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/
 
@@ -705,55 +290,10 @@ test:image-sizes:
     - build:e2e-testing
     - build:performance-testing
   before_script:
+    - apk add --no-cache bash
     - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
   script:
-    - echo "📊 Tracking Docker image sizes…"
-    - |
-      cat > image-sizes.txt <<EOF
-      ========================================
-      ZAIRAKAI DOCKER ECOSYSTEM - IMAGE SIZES
-      ========================================
-      Generated: $(date -u +"%Y-%m-%d %H:%M:%S UTC")
-      Pipeline: $CI_PIPELINE_ID
-      Commit: $CI_COMMIT_SHORT_SHA
-      Tag: $CI_COMMIT_TAG
-      ========================================
-
-      EOF
-    - |
-      for image in \
-        "$CI_REGISTRY_IMAGE/php:8.3$IMAGE_SUFFIX-prod" \
-        "$CI_REGISTRY_IMAGE/php:8.3$IMAGE_SUFFIX-dev" \
-        "$CI_REGISTRY_IMAGE/php:8.3$IMAGE_SUFFIX-test" \
-        "$CI_REGISTRY_IMAGE/node:20$IMAGE_SUFFIX-prod" \
-        "$CI_REGISTRY_IMAGE/node:20$IMAGE_SUFFIX-dev" \
-        "$CI_REGISTRY_IMAGE/node:20$IMAGE_SUFFIX-test" \
-        "$CI_REGISTRY_IMAGE/database:mysql-8.0$IMAGE_SUFFIX" \
-        "$CI_REGISTRY_IMAGE/database:redis-7$IMAGE_SUFFIX" \
-        "$CI_REGISTRY_IMAGE/web:nginx-1.26$IMAGE_SUFFIX" \
-        "$CI_REGISTRY_IMAGE/services:mailhog$IMAGE_SUFFIX" \
-        "$CI_REGISTRY_IMAGE/services:minio$IMAGE_SUFFIX" \
-        "$CI_REGISTRY_IMAGE/services:e2e-testing$IMAGE_SUFFIX" \
-        "$CI_REGISTRY_IMAGE/services:performance-testing$IMAGE_SUFFIX"
-      do
-        echo "→ Pulling $image…"
-        if ! docker pull "$image"; then
-          echo "❌ Failed to pull $image"
-          exit 1
-        fi
-      done
-    - echo "" >> image-sizes.txt
-    - |
-      docker images --format "table {{.Repository}}\t{{.Tag}}\t{{.Size}}" \
-        | grep "$CI_COMMIT_SHORT_SHA" \
-        >> image-sizes.txt
-    - echo "" >> image-sizes.txt
-    - echo "========================================" >> image-sizes.txt
-    - |
-      TOTAL_IMAGES=$(docker images --format "{{.Repository}}:{{.Tag}}" | grep "$CI_COMMIT_SHORT_SHA" | wc -l)
-      echo "TOTAL IMAGES: $TOTAL_IMAGES" >> image-sizes.txt
-    - echo "========================================" >> image-sizes.txt
-    - cat image-sizes.txt
+    - bash scripts/pipeline/test-image-sizes.sh
   artifacts:
     paths:
       - image-sizes.txt
@@ -772,42 +312,10 @@ test:multi-stage-integrity:
     - build:node:dev
     - build:node:test
   before_script:
-    - apk add --no-cache bash jq
+    - apk add --no-cache bash
     - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
   script:
-    - echo "🔍 Verifying multi-stage build integrity…"
-    - |
-      echo "→ Checking PHP image stages…"
-      docker pull "$CI_REGISTRY_IMAGE/php:8.3$IMAGE_SUFFIX-prod"
-      docker pull "$CI_REGISTRY_IMAGE/php:8.3$IMAGE_SUFFIX-dev"
-      docker pull "$CI_REGISTRY_IMAGE/php:8.3$IMAGE_SUFFIX-test"
-
-      echo "→ Checking Xdebug in prod (should NOT be present)…"
-      if docker run --rm "$CI_REGISTRY_IMAGE/php:8.3$IMAGE_SUFFIX-prod" php -m 2>/dev/null | grep -i "xdebug"; then
-        echo "❌ Xdebug found in production image (should not be present)"
-        exit 1
-      fi
-      echo "✓ Xdebug correctly absent from prod"
-
-      echo "→ Checking Xdebug in dev (should be present)…"
-      if ! docker run --rm "$CI_REGISTRY_IMAGE/php:8.3$IMAGE_SUFFIX-dev" php -m 2>/dev/null | grep -i "xdebug"; then
-        echo "❌ Xdebug not found in dev image (should be present)"
-        exit 1
-      fi
-      echo "✓ Xdebug correctly present in dev"
-
-      echo "→ Checking PCOV in test (should be present)…"
-      PCOV_CHECK=$(docker run --rm "$CI_REGISTRY_IMAGE/php:8.3$IMAGE_SUFFIX-test" sh -c 'php -m 2>&1 | grep -i "pcov" || echo "NOT_FOUND"')
-
-      if echo "$PCOV_CHECK" | grep -q "NOT_FOUND"; then
-        echo "❌ PCOV not found in test image"
-        echo "Available extensions:"
-        docker run --rm "$CI_REGISTRY_IMAGE/php:8.3$IMAGE_SUFFIX-test" php -m 2>/dev/null || true
-        exit 1
-      fi
-      echo "✓ PCOV correctly present in test"
-
-      echo "✅ Multi-stage integrity verified"
+    - bash scripts/pipeline/test-multi-stage.sh
   rules:
     - if: $CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/
 
@@ -856,52 +364,11 @@ sync:dockerhub:
     - apk add --no-cache bash
     # Login GitLab Registry
     - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
-    # Login Docker Hub
-    - echo $DOCKERHUB_TOKEN | docker login -u $DOCKERHUB_USERNAME --password-stdin docker.io
   script:
-    - echo "🔄 Mirroring stable images to Docker Hub..."
-    - |
-      # Images à synchroniser (format GitLab → Docker Hub)
-      IMAGES=(
-        "php:8.3-prod:zairakai/php:8.3-prod"
-        "php:8.3-dev:zairakai/php:8.3-dev"
-        "php:8.3-test:zairakai/php:8.3-test"
-        "php:latest-prod:zairakai/php:latest-prod"
-        "php:latest-dev:zairakai/php:latest-dev"
-        "node:20-prod:zairakai/node:20-prod"
-        "node:20-dev:zairakai/node:20-dev"
-        "node:20-test:zairakai/node:20-test"
-        "node:latest-prod:zairakai/node:latest-prod"
-        "node:latest-dev:zairakai/node:latest-dev"
-        "database:mysql-8.0:zairakai/mysql:8.0"
-        "database:redis-7:zairakai/redis:7"
-        "web:nginx-1.26:zairakai/nginx:1.26"
-        "services:mailhog:zairakai/mailhog:latest"
-        "services:minio:zairakai/minio:latest"
-      )
-
-      for mapping in "${IMAGES[@]}"; do
-        GITLAB_TAG="${mapping%%:*}"
-        DOCKERHUB_TAG="${mapping##*:}"
-        
-        echo "→ Syncing ${GITLAB_TAG} to Docker Hub as ${DOCKERHUB_TAG}..."
-        
-        # Pull from GitLab
-        docker pull ${CI_REGISTRY_IMAGE}/${GITLAB_TAG}
-        
-        # Tag for Docker Hub
-        docker tag ${CI_REGISTRY_IMAGE}/${GITLAB_TAG} ${DOCKERHUB_TAG}
-        
-        # Push to Docker Hub
-        docker push ${DOCKERHUB_TAG}
-        
-        echo "✅ ${DOCKERHUB_TAG} synced"
-      done
-
-      echo "✅ All images mirrored to Docker Hub"
+    - bash scripts/pipeline/sync-dockerhub.sh
   after_script:
-    - docker logout $CI_REGISTRY
-    - docker logout docker.io
+    - docker logout $CI_REGISTRY || true
+    - docker logout docker.io || true
   rules:
     - if: $CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/
   allow_failure: true

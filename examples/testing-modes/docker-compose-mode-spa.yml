@@ -1,4 +1,3 @@
-version: '3.8'
 
 # Testing Mode: SPA-only
 # Separate Laravel API backend + Vue.js SPA frontend

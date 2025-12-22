@@ -356,8 +356,6 @@ Before deploying to production:
 
 See `values.yaml` for complete configuration options.
 
----
-
 **Need help?** Join our [Discord][discord] community or check the [Reference Guide][reference].
 
 <!-- Reference Links -->

@@ -1,5 +1,7 @@
 # Disaster Recovery Guide
 
+[🏠 Home][home] > [📚 Documentation][docs] > Disaster Recovery Guide
+
 Complete disaster recovery procedures for the Zairakai Docker Ecosystem.
 
 ## Table of Contents
@@ -12,11 +14,10 @@ Complete disaster recovery procedures for the Zairakai Docker Ecosystem.
 - [Incident Response](#incident-response)
 - [Runbooks](#runbooks)
 
----
-
 ## Overview
 
-Disaster Recovery (DR) ensures business continuity by enabling rapid recovery from data loss, system failures, or catastrophic events.
+Disaster Recovery (DR) ensures business continuity by enabling rapid recovery from data loss, system
+failures, or catastrophic events.
 
 ### Coverage
 
@@ -26,8 +27,6 @@ Disaster Recovery (DR) ensures business continuity by enabling rapid recovery fr
 | **Redis Cache** | Daily (3 AM UTC) | 7 days local, 30 days S3 | Local + S3/MinIO |
 | **Application Files** | Daily (4 AM UTC) | 7 days local, 30 days S3 | Local + S3/MinIO |
 | **Configuration** | On change | 90 days | Git + S3 |
-
----
 
 ## RTO and RPO
 
@@ -52,8 +51,6 @@ Disaster Recovery (DR) ensures business continuity by enabling rapid recovery fr
 | Redis | 1 hour | 1 hour (AOF persist) |
 | Application files | 24 hours | 24 hours (daily backup) |
 
----
-
 ## Backup Procedures
 
 ### MySQL Backup
@@ -62,20 +59,20 @@ Disaster Recovery (DR) ensures business continuity by enabling rapid recovery fr
 
 ```bash
 # Run backup script
-./scripts/backup/backup-mysql.sh
+bash ./scripts/backup/backup.sh mysql
 
 # With S3 upload
 S3_ENABLED=true \
 S3_BUCKET=my-backups \
 S3_ENDPOINT=https://s3.amazonaws.com \
-./scripts/backup/backup-mysql.sh
+./scripts/backup/backup.sh mysql
 ```
 
 #### Automated Backup (Cron)
 
 ```bash
 # Add to crontab
-0 2 * * * /path/to/scripts/backup/backup-mysql.sh >> /var/log/mysql-backup.log 2>&1
+0 2 * * * /path/to/scripts/backup/backup.sh mysql >> /var/log/mysql-backup.log 2>&1
 ```
 
 #### Automated Backup (Docker Compose)
@@ -93,7 +90,7 @@ services:
       BACKUP_DIR: /backups/mysql
       S3_ENABLED: "true"
       S3_BUCKET: my-backups
-    command: sh -c "while true; do /scripts/backup-mysql.sh; sleep 86400; done"
+    command: sh -c "while true; do bash /scripts/backup.sh mysql; sleep 86400; done"
 ```
 
 #### Automated Backup (Kubernetes CronJob)
@@ -113,7 +110,9 @@ spec:
           - name: backup
             image: registry.gitlab.com/zairakai/docker-ecosystem/database:mysql-8.0
             command:
-            - /scripts/backup-mysql.sh
+            - bash
+            - /scripts/backup.sh
+            - mysql
             env:
             - name: MYSQL_PASSWORD
               valueFrom:
@@ -135,20 +134,18 @@ spec:
           restartPolicy: OnFailure
 ```
 
----
-
 ### Redis Backup
 
 #### Manual Backup
 
 ```bash
 # Run backup script
-./scripts/backup/backup-redis.sh
+bash ./scripts/backup/backup.sh redis
 
 # With S3 upload
 S3_ENABLED=true \
 S3_BUCKET=my-backups \
-./scripts/backup/backup-redis.sh
+bash ./scripts/backup/backup.sh redis
 ```
 
 #### Docker Volume Backup
@@ -162,8 +159,6 @@ docker run --rm \
   tar czf /backup/redis-$(date +%Y%m%d).tar.gz -C /data .
 ```
 
----
-
 ## Restore Procedures
 
 ### MySQL Restore
@@ -172,10 +167,10 @@ docker run --rm \
 
 ```bash
 # Restore latest backup
-./scripts/backup/restore-mysql.sh
+bash ./scripts/backup/restore.sh mysql
 
 # Restore specific backup
-./scripts/backup/restore-mysql.sh mysql-backup-20250930-140000.sql.gz
+bash ./scripts/backup/restore.sh mysql mysql-backup-20250930-140000.sql.gz
 ```
 
 #### From S3 Backup
@@ -184,7 +179,7 @@ docker run --rm \
 # Download and restore
 S3_ENABLED=true \
 S3_BUCKET=my-backups \
-./scripts/backup/restore-mysql.sh mysql-backup-20250930-140000.sql.gz
+bash ./scripts/backup/restore.sh mysql mysql-backup-20250930-140000.sql.gz
 ```
 
 #### Step-by-Step Manual Restore
@@ -209,8 +204,6 @@ mysql -h mysql -u root -p"${MYSQL_ROOT_PASSWORD}" -e "SHOW DATABASES;"
 # 6. Restart application
 docker-compose start php
 ```
-
----
 
 ### Redis Restore
 
@@ -247,8 +240,6 @@ docker run --rm \
 docker-compose start redis
 ```
 
----
-
 ## Automated Testing
 
 ### CI/CD Integration
@@ -273,8 +264,8 @@ test:backup-restore:
 docker-compose -f examples/docker-compose-ha.yml up -d mysql-master redis-master
 
 # Run backup test
-./scripts/backup/backup-mysql.sh
-./scripts/backup/backup-redis.sh
+bash ./scripts/backup/backup.sh mysql
+bash ./scripts/backup/backup.sh redis
 
 # Simulate disaster
 docker-compose -f examples/docker-compose-ha.yml stop mysql-master redis-master
@@ -283,13 +274,11 @@ docker-compose -f examples/docker-compose-ha.yml rm -f mysql-master redis-master
 # Restore
 docker-compose -f examples/docker-compose-ha.yml up -d mysql-master redis-master
 sleep 10
-./scripts/backup/restore-mysql.sh latest.sql.gz
+bash ./scripts/backup/restore.sh mysql latest.sql.gz
 
 # Verify
 docker exec mysql-master mysql -u root -prootsecret -e "SHOW DATABASES;"
 ```
-
----
 
 ## Incident Response
 
@@ -383,8 +372,6 @@ Follow the restore procedures documented above.
 - **Response**: What went well? What didn't?
 - **Action Items**: How can we prevent this in the future?
 
----
-
 ## Runbooks
 
 ### Runbook 1: Complete MySQL Database Loss
@@ -417,7 +404,7 @@ sleep 20
 docker exec mysql mysqladmin ping
 
 # 6. Restore from latest backup
-./scripts/backup/restore-mysql.sh latest.sql.gz
+bash ./scripts/backup/restore.sh mysql latest.sql.gz
 
 # 7. Verify databases
 docker exec mysql mysql -u root -p"${MYSQL_ROOT_PASSWORD}" -e "SHOW DATABASES;"
@@ -434,8 +421,6 @@ docker-compose logs -f php
 
 **RTO**: 10-15 minutes
 **RPO**: Last backup (typically 24 hours)
-
----
 
 ### Runbook 2: Redis Cache Failure
 
@@ -478,8 +463,6 @@ docker exec redis redis-cli INFO stats
 **RTO**: 2-5 minutes
 **RPO**: 0 (cache can be rebuilt) or Last backup (1 hour with AOF)
 
----
-
 ### Runbook 3: Complete Infrastructure Failure
 
 **Scenario**: Complete data center or cloud region failure
@@ -508,7 +491,7 @@ aws s3 sync s3://my-backups/mysql/ ./backups/mysql/
 aws s3 sync s3://my-backups/redis/ ./backups/redis/
 
 # 3. Restore MySQL
-./scripts/backup/restore-mysql.sh latest.sql.gz
+bash ./scripts/backup/restore.sh mysql latest.sql.gz
 
 # 4. Restore Redis (optional)
 docker cp ./backups/redis/latest.rdb redis:/data/dump.rdb
@@ -527,31 +510,27 @@ curl https://app.example.com/health
 **RTO**: 20-30 minutes
 **RPO**: Last S3 backup (typically 24 hours)
 
----
-
 ## Best Practices
 
 ### Backup
 
-- ✅ **3-2-1 Rule**: 3 copies, 2 different media, 1 off-site
-- ✅ **Test backups** regularly (automated CI/CD testing)
-- ✅ **Encrypt backups** at rest and in transit
-- ✅ **Monitor backup** success/failure
-- ✅ **Document procedures** and keep updated
-- ✅ **Automate everything** possible
-- ✅ **Version backups** with timestamps
+- [x] **3-2-1 Rule**: 3 copies, 2 different media, 1 off-site
+- [x] **Test backups** regularly (automated CI/CD testing)
+- [x] **Encrypt backups** at rest and in transit
+- [x] **Monitor backup** success/failure
+- [x] **Document procedures** and keep updated
+- [x] **Automate everything** possible
+- [x] **Version backups** with timestamps
 
 ### Restore
 
-- ✅ **Practice restores** quarterly
-- ✅ **Document RTO/RPO** for each component
-- ✅ **Maintain runbooks** for common scenarios
-- ✅ **Test in staging** before production restore
-- ✅ **Have rollback plan** if restore fails
-- ✅ **Verify data integrity** after restore
-- ✅ **Communicate** with stakeholders
-
----
+- [x] **Practice restores** quarterly
+- [x] **Document RTO/RPO** for each component
+- [x] **Maintain runbooks** for common scenarios
+- [x] **Test in staging** before production restore
+- [x] **Have rollback plan** if restore fails
+- [x] **Verify data integrity** after restore
+- [x] **Communicate** with stakeholders
 
 ## Monitoring & Alerting
 
@@ -591,8 +570,6 @@ groups:
     summary: "DR test has not succeeded in 7 days"
 ```
 
----
-
 ## Additional Resources
 
 - **Backup Scripts**: `scripts/backup/`
@@ -600,8 +577,6 @@ groups:
 - **CI/CD Tests**: `.gitlab-ci.yml` (disaster-recovery stage)
 - **Kubernetes Guide**: `docs/KUBERNETES.md`
 - **Swarm Guide**: `docs/SWARM.md`
-
----
 
 **Need help?** Join our [Discord][discord] community or check the [Reference Guide][reference].
 

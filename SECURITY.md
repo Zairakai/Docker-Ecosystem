@@ -62,8 +62,6 @@ The Zairakai Docker Ecosystem implements comprehensive security scanning through
    └── Verify signatures
 ```
 
----
-
 ## 🔐 Image Signing with Cosign
 
 All Docker images are cryptographically signed using [Cosign](https://github.com/sigstore/cosign) to ensure authenticity and integrity.
@@ -100,7 +98,7 @@ cosign generate-key-pair
 Add these as **protected** and **masked** variables in GitLab Settings → CI/CD → Variables:
 
 | Variable | Type | Description |
-|----------|------|-------------|
+| -------- | ---- | ----------- |
 | `COSIGN_PRIVATE_KEY` | File | Contents of `cosign.key` |
 | `COSIGN_PUBLIC_KEY` | File | Contents of `cosign.pub` |
 | `COSIGN_PASSWORD` | Variable | Password for private key |
@@ -168,7 +166,6 @@ cosign verify \
 #### Docker Compose with Signature Verification
 
 ```yaml
-version: '3.8'
 
 services:
   php:
@@ -296,8 +293,6 @@ cosign verify --key cosign.pub registry.gitlab.com/zairakai/docker-ecosystem/php
 - **Don't skip** signature verification in production
 - **Don't use** unsigned images in production
 - **Don't disable** signature verification to "fix" deployment issues
-
----
 
 ## 📊 Security Reporting
 

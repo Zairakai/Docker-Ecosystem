@@ -27,14 +27,24 @@ git checkout -b feature/your-feature-name
 ### 3. Test Changes Locally
 
 ```bash
-# Test examples work with registry images
+# 1. Validate configuration and scripts
+make validate-all
+
+# 2. Build specific images locally (if needed)
+make build-php-prod      # Build PHP production image
+make build-php-dev       # Build PHP development image
+make build-node-prod     # Build Node production image
+make build-mysql         # Build MySQL image
+
+# 3. Test images (after building)
+make test-image-sizes    # Check image sizes
+make test-multi-stage    # Verify multi-stage integrity
+
+# 4. Test examples work with registry images
 cd examples
 docker-compose -f minimal-laravel.yml up -d
 docker-compose ps  # Verify all services are running
 docker-compose -f minimal-laravel.yml down
-
-# Test build scripts only if you modify them
-./scripts/build/build-all-images.sh
 ```
 
 ### 4. Submit Changes
@@ -74,9 +84,55 @@ git push origin feature/your-feature-name
 
 ### **Scripts & CI**
 
-- Improve build scripts
-- Enhance GitLab CI pipeline
-- Add new checks or tests
+- Improve build scripts in `scripts/pipeline/`
+- Enhance GitLab CI pipeline (`.gitlab-ci.yml`)
+- Add new validation or test scripts
+- Optimize existing scripts
+
+**Shell Script Requirements:**
+- [x] **ShellCheck 100% compliance** - ZERO warnings tolerated
+- [x] **Shebang**: Always use `#!/usr/bin/env bash` (NOT `#!/bin/sh`)
+- [x] **Error handling**: Use `set -euo pipefail` at script start
+- [x] **Logging**: Use functions from `scripts/common.sh` (`log_info`, `log_error`, etc.)
+- [x] **Documentation**: Include usage examples and environment variables
+- [x] **Testability**: Scripts must be executable locally (not just in CI)
+
+**Example script structure:**
+```bash
+#!/usr/bin/env bash
+# scripts/pipeline/example.sh
+# Brief description of what this script does
+#
+# Usage:
+#   example.sh <arg1> <arg2>
+#
+# Environment Variables:
+#   VAR_NAME - Description (required/optional, default: value)
+
+set -euo pipefail
+
+# Source common utilities
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "${SCRIPT_DIR}/../common.sh"
+
+# Script logic here
+log_section "Section Title"
+log_info "Processing…"
+log_success "Done!"
+```
+
+**Testing scripts:**
+```bash
+# Validate all scripts with ShellCheck
+make shellcheck
+
+# Run specific script locally
+bash scripts/pipeline/your-script.sh
+
+# Test with CI environment variables
+CI_REGISTRY_IMAGE=registry.gitlab.com/zairakai/docker-ecosystem \
+  bash scripts/pipeline/your-script.sh
+```
 
 ## Quality Standards
 
@@ -121,8 +177,6 @@ git push origin feature/your-feature-name
 - **[GitLab Issues][issues]** - Bug reports and feature requests
 - **[Documentation][docs]** - Architecture and reference guides
 - **[Examples][examples]** - Usage patterns and configurations
-
----
 
 **Let's build better Docker images together!**
 

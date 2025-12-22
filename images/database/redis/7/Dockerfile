@@ -22,24 +22,22 @@ RUN mkdir -p /var/log/redis \
   && mkdir -p /data
 
 # Copy configuration files
-COPY config/redis.conf /etc/redis/redis.conf
-COPY config/redis.dev.conf /etc/redis/redis.dev.conf
+COPY --chown=redis:redis config/redis.conf /etc/redis/redis.conf
+COPY --chown=redis:redis config/redis.dev.conf /etc/redis/redis.dev.conf
 
 # Copy scripts
-COPY scripts/entrypoint.sh /scripts/entrypoint.sh
-COPY scripts/healthcheck.sh /scripts/healthcheck.sh
-COPY scripts/backup.sh /scripts/backup.sh
-COPY scripts/restore.sh /scripts/restore.sh
+COPY --chown=redis:redis scripts/entrypoint.sh /scripts/entrypoint.sh
+COPY --chown=redis:redis scripts/healthcheck.sh /scripts/healthcheck.sh
+COPY --chown=redis:redis scripts/backup.sh /scripts/backup.sh
+COPY --chown=redis:redis scripts/restore.sh /scripts/restore.sh
 
 # Make scripts executable
 RUN chmod +x /scripts/*.sh
 
-# Set proper ownership
+# Set proper ownership (configs and scripts already chowned via COPY --chown)
 RUN chown -R redis:redis /var/log/redis \
-  && chown -R redis:redis /scripts \
   && chown -R redis:redis /backups \
-  && chown -R redis:redis /data \
-  && chown -R redis:redis /etc/redis
+  && chown -R redis:redis /data
 
 # Health check configuration
 # CI mode: simplified ping-only check for faster CI/CD feedback

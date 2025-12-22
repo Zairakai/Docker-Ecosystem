@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # ================================
 # ZAIRAKAI DOCKER ECOSYSTEM
 # Docker Build Functions (CI/CD Optimized)

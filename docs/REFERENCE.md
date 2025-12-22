@@ -1,17 +1,54 @@
 # Docker Ecosystem Reference
 
+[🏠 Home][home] > [📚 Documentation][docs] > Docker Ecosystem Reference
+
 Quick reference for images, tags, commands, and configurations.
+
+## Table of Contents
+
+- [CI/CD Release Flow](#cicd-release-flow)
+- [Image Tags](#image-tags)
+  - [PHP Stack](#php-stack)
+  - [Node.js Stack](#nodejs-stack)
+  - [Database Services](#database-services)
+  - [Web & Services](#web--services)
+- [Build Commands](#build-commands)
+  - [Build All Images](#build-all-images)
+  - [Build Individual Images](#build-individual-images)
+- [Docker Compose Configurations](#docker-compose-configurations)
+  - [Development Stack](#development-stack)
+  - [Production Stack](#production-stack)
+- [Common Commands](#common-commands)
+  - [Laravel Development](#laravel-development)
+  - [Vue.js Development](#vuejs-development)
+  - [Database Operations](#database-operations)
+  - [Health Checks](#health-checks)
+- [Security Commands](#security-commands)
+  - [Manual Security Scanning](#manual-security-scanning)
+- [Monitoring & Logs](#monitoring--logs)
+  - [Container Monitoring](#container-monitoring)
+  - [Performance Analysis](#performance-analysis)
+- [Environment Variables](#environment-variables)
+  - [PHP Configuration](#php-configuration)
+  - [Node.js Configuration](#nodejs-configuration)
+  - [Service Configuration](#service-configuration)
+  - [GitLab CI/CD Variables](#gitlab-cicd-variables)
+- [Useful Links](#useful-links)
 
 ## CI/CD Release Flow
 
-- Trigger: pushing a tag `vX.Y.Z` starts the release pipeline.
-- Build (staging): all images are built and pushed with a `-$CI_COMMIT_SHORT_SHA` suffix.
-  - Examples: `php:8.3-<sha>-prod`, `web:nginx-1.26-<sha>`, `services:minio-<sha>`.
-- Tests: readiness via `docker inspect` plus HTTP/CLI probes (Nginx, MailHog, MinIO, MySQL, Redis) with crash‑loop detection and timeouts.
-- Promotion: if checks pass, images are re‑tagged to stable without the suffix (e.g., `php:8.3-prod`).
-- Cleanup: staging tags are removed from the registry (on success or failure) to keep it clean.
+**Trigger**: pushing a tag `vX.Y.Z` starts the release pipeline.
 
-Notes:
+**Pipeline Stages:**
+
+- **Build (staging)**: all images are built and pushed with a `-$CI_COMMIT_SHORT_SHA` suffix.
+  - Examples: `php:8.3-<sha>-prod`, `web:nginx-1.26-<sha>`, `services:minio-<sha>`.
+- **Tests**: readiness via `docker inspect` plus HTTP/CLI probes (Nginx, MailHog, MinIO, MySQL, Redis) with
+  crash-loop detection and timeouts.
+- **Promotion**: if checks pass, images are re-tagged to stable without the suffix (e.g., `php:8.3-prod`).
+- **Cleanup**: staging tags are removed from the registry (on success or failure) to keep it clean.
+
+**Notes:**
 
 - MailHog/MinIO are thin wrappers on top of official images, with versions pinned in their Dockerfiles.
 - Staging tags are ephemeral and should not be consumed by downstream projects.
@@ -131,7 +168,6 @@ docker build -t registry.gitlab.com/zairakai/docker-ecosystem/services:e2e-testi
 ### Development Stack
 
 ```yaml
-version: "3.8"
 services:
   app:
     image: registry.gitlab.com/zairakai/docker-ecosystem/php:8.3-dev
@@ -174,7 +210,6 @@ services:
 ### Production Stack
 
 ```yaml
-version: "3.8"
 services:
   app:
     image: registry.gitlab.com/zairakai/docker-ecosystem/php:8.3-prod
@@ -199,7 +234,7 @@ services:
       - app
 ```
 
-## 🚀 Common Commands
+## Common Commands
 
 ### Laravel Development
 
@@ -405,7 +440,8 @@ COSIGN_PUBLIC_KEY=<your-cosign-public-key>
 
 **Docker Registry Mirror**:
 
-The CI/CD pipeline uses Google Container Registry mirror (`https://mirror.gcr.io`) for faster image pulls. This is optional and may not work in all regions.
+The CI/CD pipeline uses Google Container Registry mirror (`https://mirror.gcr.io`) for faster image pulls.
+This is optional and may not work in all regions.
 
 To disable or customize:
 
@@ -466,18 +502,30 @@ cosign generate-key-pair
 - **[Contributing][contributing]** - Development guidelines
 - **[Examples][examples]** - Ready-to-use configurations
 
----
+## Navigation
 
-**Need help?** Join our [Discord][discord] community or check the [Reference Guide][reference].
+- [← Architecture Comparison][architecture-comparison]
+- [📚 Documentation Index][docs]
+
+**Learn More:**
+
+- **[Architecture Guide][architecture]** - System design patterns
+- **[Testing Modes][testing-modes]** - Blade, SPA, and Hybrid architectures
+- **[Monitoring Guide][monitoring]** - Prometheus, Grafana, Jaeger setup
+
+**Need help?** Join our [Discord][discord] community or report issues on [GitLab][issues].
 
 <!-- Reference Links -->
-[reference]: REFERENCE.md
-[discord]: https://discord.gg/MAmD5SG8Zu
 
-<!-- Reference Links -->
-
+[home]: ../README.md
+[docs]: INDEX.md
+[architecture-comparison]: ARCHITECTURE_COMPARISON.md
 [architecture]: ARCHITECTURE.md
+[testing-modes]: TESTING_MODES.md
+[monitoring]: MONITORING.md
 [quickstart]: QUICKSTART.md
 [security]: ../SECURITY.md
 [contributing]: ../CONTRIBUTING.md
 [examples]: ../examples/
+[discord]: https://discord.gg/MAmD5SG8Zu
+[issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues

@@ -286,8 +286,6 @@ The Docker Ecosystem supports **3 distinct architectures** for Laravel + Vue.js:
 - **Discord**: [Zairakai Community](https://discord.gg/MAmD5SG8Zu)
 - **Issues**: [GitLab Issues](https://gitlab.com/zairakai/docker-ecosystem/-/issues)
 
----
-
 **Need help?** Join our [Discord][discord] community or check the [Reference Guide][reference].
 
 <!-- Reference Links -->

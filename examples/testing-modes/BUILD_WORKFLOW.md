@@ -353,8 +353,6 @@ docker-compose exec php php artisan config:clear
 
 **Key Point**: For tests, always use compiled assets from `public/build/`. The Vite dev server (HMR) is only for active development.
 
----
-
 **Need help?** Join our [Discord][discord] community or check the [Reference Guide][reference].
 
 <!-- Reference Links -->
