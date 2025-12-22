@@ -41,23 +41,23 @@ fi
 # ================================
 # DEFINE IMAGE MAPPINGS
 # ================================
-# Format: "gitlab_tag:dockerhub_tag"
+# Format: "gitlab_tag|dockerhub_tag" (pipe separator to avoid confusion with colons in tags)
 IMAGE_MAPPINGS=(
-  "php:8.3-prod:zairakai/php:8.3-prod"
-  "php:8.3-dev:zairakai/php:8.3-dev"
-  "php:8.3-test:zairakai/php:8.3-test"
-  "php:latest-prod:zairakai/php:latest-prod"
-  "php:latest-dev:zairakai/php:latest-dev"
-  "node:20-prod:zairakai/node:20-prod"
-  "node:20-dev:zairakai/node:20-dev"
-  "node:20-test:zairakai/node:20-test"
-  "node:latest-prod:zairakai/node:latest-prod"
-  "node:latest-dev:zairakai/node:latest-dev"
-  "database:mysql-8.0:zairakai/mysql:8.0"
-  "database:redis-7:zairakai/redis:7"
-  "web:nginx-1.26:zairakai/nginx:1.26"
-  "services:mailhog:zairakai/mailhog:latest"
-  "services:minio:zairakai/minio:latest"
+  "php:8.3-prod|zairakai/php:8.3-prod"
+  "php:8.3-dev|zairakai/php:8.3-dev"
+  "php:8.3-test|zairakai/php:8.3-test"
+  "php:latest-prod|zairakai/php:latest-prod"
+  "php:latest-dev|zairakai/php:latest-dev"
+  "node:20-prod|zairakai/node:20-prod"
+  "node:20-dev|zairakai/node:20-dev"
+  "node:20-test|zairakai/node:20-test"
+  "node:latest-prod|zairakai/node:latest-prod"
+  "node:latest-dev|zairakai/node:latest-dev"
+  "database:mysql-8.0|zairakai/mysql:8.0"
+  "database:redis-7|zairakai/redis:7"
+  "web:nginx-1.26|zairakai/nginx:1.26"
+  "services:mailhog|zairakai/mailhog:latest"
+  "services:minio|zairakai/minio:latest"
 )
 
 # ================================
@@ -69,11 +69,9 @@ SYNCED=0
 FAILED=0
 
 for mapping in "${IMAGE_MAPPINGS[@]}"; do
-  # Parse mapping (format: gitlab_tag:dockerhub_tag)
-  GITLAB_TAG="${mapping%%:*}"
-  # Extract dockerhub tag (everything after first ":")
-  TEMP="${mapping#*:}"
-  DOCKERHUB_TAG="${TEMP#*:}"
+  # Parse mapping (format: gitlab_tag|dockerhub_tag)
+  GITLAB_TAG="${mapping%%|*}"
+  DOCKERHUB_TAG="${mapping#*|}"
 
   GITLAB_IMAGE="${CI_REGISTRY_IMAGE}/${GITLAB_TAG}"
 
