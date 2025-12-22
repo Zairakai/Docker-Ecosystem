@@ -69,29 +69,30 @@ IMAGES=(
 )
 
 # ================================
-# PULL ALL IMAGES
+# VERIFY LOCAL IMAGES
 # ================================
-log_info "→ Pulling all images…"
+log_info "→ Verifying local images (built on runner)…"
 
-FAILED_PULLS=0
+MISSING_IMAGES=0
 
 for image in "${IMAGES[@]}"; do
-  log_info "Pulling: ${image}"
+  log_info "Checking: ${image}"
 
-  if docker pull "${image}"; then
-    log_success "  ✓ Pulled successfully"
+  if docker image inspect "${image}" &>/dev/null; then
+    log_success "  ✓ Found locally"
   else
-    log_error "  ✗ Failed to pull ${image}"
-    FAILED_PULLS=$((FAILED_PULLS + 1))
+    log_error "  ✗ Not found locally: ${image}"
+    MISSING_IMAGES=$((MISSING_IMAGES + 1))
   fi
 done
 
-if [[ ${FAILED_PULLS} -gt 0 ]]; then
-  log_error "${FAILED_PULLS} images failed to pull"
+if [[ ${MISSING_IMAGES} -gt 0 ]]; then
+  log_error "${MISSING_IMAGES} images not found locally"
+  log_error "Make sure all build jobs completed successfully on the same runner"
   exit 1
 fi
 
-log_success "All ${#IMAGES[@]} images pulled successfully"
+log_success "All ${#IMAGES[@]} images found locally"
 
 # ================================
 # GENERATE SIZE REPORT

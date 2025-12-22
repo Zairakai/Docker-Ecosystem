@@ -29,9 +29,9 @@ log_info "Registry: ${CI_REGISTRY_IMAGE}"
 log_info "Suffix: ${IMAGE_SUFFIX}"
 
 # ================================
-# PULL IMAGES
+# VERIFY LOCAL IMAGES
 # ================================
-log_info "→ Pulling images for testing…"
+log_info "→ Verifying local images (built on runner)…"
 
 PHP_PROD="${CI_REGISTRY_IMAGE}/php:8.3${IMAGE_SUFFIX}-prod"
 PHP_DEV="${CI_REGISTRY_IMAGE}/php:8.3${IMAGE_SUFFIX}-dev"
@@ -41,15 +41,23 @@ NODE_PROD="${CI_REGISTRY_IMAGE}/node:20${IMAGE_SUFFIX}-prod"
 NODE_DEV="${CI_REGISTRY_IMAGE}/node:20${IMAGE_SUFFIX}-dev"
 NODE_TEST="${CI_REGISTRY_IMAGE}/node:20${IMAGE_SUFFIX}-test"
 
+MISSING=0
 for image in "${PHP_PROD}" "${PHP_DEV}" "${PHP_TEST}" "${NODE_PROD}" "${NODE_DEV}" "${NODE_TEST}"; do
-  log_info "Pulling: ${image}"
-  if ! docker pull "${image}"; then
-    log_error "Failed to pull ${image}"
-    exit 1
+  log_info "Checking: ${image}"
+  if ! docker image inspect "${image}" &>/dev/null; then
+    log_error "  ✗ Not found locally: ${image}"
+    MISSING=$((MISSING + 1))
+  else
+    log_success "  ✓ Found locally"
   fi
 done
 
-log_success "All images pulled successfully"
+if [[ ${MISSING} -gt 0 ]]; then
+  log_error "${MISSING} images not found - make sure builds completed on same runner"
+  exit 1
+fi
+
+log_success "All images found locally"
 
 # ================================
 # TEST PHP STAGES

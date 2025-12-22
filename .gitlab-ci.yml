@@ -6,8 +6,6 @@ stages:
   - validate
   - security
   - build-prod
-  - build-dev
-  - build-test
   - build-services-core
   - build-services-extra
   - test
@@ -112,9 +110,9 @@ validate:shellcheck:
     GIT_DEPTH: 1
 
 # ================================
-# BUILD PRODUCTION STAGE (Base images)
+# BUILD CORE IMAGES (Multi-stage: prod → dev → test)
 # ================================
-build:php:prod:
+build:php:
   <<: *build_base
   stage: build-prod
   needs:
@@ -124,10 +122,12 @@ build:php:prod:
     PUSH_TO_REGISTRY: "false"
   script:
     - bash scripts/pipeline/build-image.sh images/php/8.3 php 8.3-prod
+    - bash scripts/pipeline/build-image.sh images/php/8.3 php 8.3-dev
+    - bash scripts/pipeline/build-image.sh images/php/8.3 php 8.3-test
   rules:
     - if: $CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/
 
-build:node:prod:
+build:node:
   <<: *build_base
   stage: build-prod
   needs:
@@ -137,59 +137,7 @@ build:node:prod:
     PUSH_TO_REGISTRY: "false"
   script:
     - bash scripts/pipeline/build-image.sh images/node/20 node 20-prod
-  rules:
-    - if: $CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/
-
-# ================================
-# BUILD DEVELOPMENT STAGE
-# ================================
-build:php:dev:
-  <<: *build_base
-  stage: build-dev
-  needs:
-    - build:php:prod
-  variables:
-    PUSH_TO_REGISTRY: "false"
-  script:
-    - bash scripts/pipeline/build-image.sh images/php/8.3 php 8.3-dev
-  rules:
-    - if: $CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/
-
-build:node:dev:
-  <<: *build_base
-  stage: build-dev
-  needs:
-    - build:node:prod
-  variables:
-    PUSH_TO_REGISTRY: "false"
-  script:
     - bash scripts/pipeline/build-image.sh images/node/20 node 20-dev
-  rules:
-    - if: $CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/
-
-# ================================
-# BUILD TESTING STAGE
-# ================================
-build:php:test:
-  <<: *build_base
-  stage: build-test
-  needs:
-    - build:php:dev
-  variables:
-    PUSH_TO_REGISTRY: "false"
-  script:
-    - bash scripts/pipeline/build-image.sh images/php/8.3 php 8.3-test
-  rules:
-    - if: $CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/
-
-build:node:test:
-  <<: *build_base
-  stage: build-test
-  needs:
-    - build:node:dev
-  variables:
-    PUSH_TO_REGISTRY: "false"
-  script:
     - bash scripts/pipeline/build-image.sh images/node/20 node 20-test
   rules:
     - if: $CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/
@@ -201,8 +149,8 @@ build:mysql:
   <<: *build_base
   stage: build-services-core
   needs:
-    - build:php:test
-    - build:node:test
+    - build:php
+    - build:node
   variables:
     PUSH_TO_REGISTRY: "false"
   script:
@@ -214,8 +162,8 @@ build:redis:
   <<: *build_base
   stage: build-services-core
   needs:
-    - build:php:test
-    - build:node:test
+    - build:php
+    - build:node
   variables:
     PUSH_TO_REGISTRY: "false"
   script:
@@ -227,8 +175,8 @@ build:nginx:
   <<: *build_base
   stage: build-services-core
   needs:
-    - build:php:test
-    - build:node:test
+    - build:php
+    - build:node
   variables:
     PUSH_TO_REGISTRY: "false"
   script:
@@ -302,12 +250,8 @@ test:image-sizes:
   stage: test
   image: docker:27-cli
   needs:
-    - build:php:prod
-    - build:php:dev
-    - build:php:test
-    - build:node:prod
-    - build:node:dev
-    - build:node:test
+    - build:php
+    - build:node
     - build:mysql
     - build:redis
     - build:nginx
@@ -331,12 +275,8 @@ test:multi-stage-integrity:
   stage: test
   image: docker:27-cli
   needs:
-    - build:php:prod
-    - build:php:dev
-    - build:php:test
-    - build:node:prod
-    - build:node:dev
-    - build:node:test
+    - build:php
+    - build:node
     - build:mysql
     - build:redis
     - build:nginx
