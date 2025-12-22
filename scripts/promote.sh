@@ -47,10 +47,15 @@ promote_image() {
 
     log_info "Promoting ${source}…"
 
-    if ! docker pull "${source}"; then
-      log_error "Failed to pull source image: ${source}"
+    # Images are already built locally on the runner, no need to pull
+    # Just verify the image exists locally
+    if ! docker image inspect "${source}" &>/dev/null; then
+      log_error "Source image not found locally: ${source}"
+      log_error "Make sure build jobs completed successfully on the same runner"
       return 1
     fi
+
+    log_success "Found local image: ${source}"
 
     # Tag with version-specific tags (reduced to 3 essential tags)
     local tags=(
@@ -83,10 +88,15 @@ promote_service() {
 
   log_info "Promoting service ${source}…"
 
-  if ! docker pull "${source}"; then
-    log_error "Failed to pull source image: ${source}"
+  # Images are already built locally on the runner, no need to pull
+  # Just verify the image exists locally
+  if ! docker image inspect "${source}" &>/dev/null; then
+    log_error "Source image not found locally: ${source}"
+    log_error "Make sure build jobs completed successfully on the same runner"
     return 1
   fi
+
+  log_success "Found local image: ${source}"
 
   # Tag with version-specific tags (reduced to 3 essential tags)
   local tags=(

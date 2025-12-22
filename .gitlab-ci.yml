@@ -120,6 +120,8 @@ build:php:prod:
   needs:
     - validate:config
     - validate:shellcheck
+  variables:
+    PUSH_TO_REGISTRY: "false"
   script:
     - bash scripts/pipeline/build-image.sh images/php/8.3 php 8.3-prod
   rules:
@@ -131,6 +133,8 @@ build:node:prod:
   needs:
     - validate:config
     - validate:shellcheck
+  variables:
+    PUSH_TO_REGISTRY: "false"
   script:
     - bash scripts/pipeline/build-image.sh images/node/20 node 20-prod
   rules:
@@ -144,6 +148,8 @@ build:php:dev:
   stage: build-dev
   needs:
     - build:php:prod
+  variables:
+    PUSH_TO_REGISTRY: "false"
   script:
     - bash scripts/pipeline/build-image.sh images/php/8.3 php 8.3-dev
   rules:
@@ -154,6 +160,8 @@ build:node:dev:
   stage: build-dev
   needs:
     - build:node:prod
+  variables:
+    PUSH_TO_REGISTRY: "false"
   script:
     - bash scripts/pipeline/build-image.sh images/node/20 node 20-dev
   rules:
@@ -167,6 +175,8 @@ build:php:test:
   stage: build-test
   needs:
     - build:php:dev
+  variables:
+    PUSH_TO_REGISTRY: "false"
   script:
     - bash scripts/pipeline/build-image.sh images/php/8.3 php 8.3-test
   rules:
@@ -177,6 +187,8 @@ build:node:test:
   stage: build-test
   needs:
     - build:node:dev
+  variables:
+    PUSH_TO_REGISTRY: "false"
   script:
     - bash scripts/pipeline/build-image.sh images/node/20 node 20-test
   rules:
@@ -191,6 +203,8 @@ build:mysql:
   needs:
     - build:php:test
     - build:node:test
+  variables:
+    PUSH_TO_REGISTRY: "false"
   script:
     - bash scripts/pipeline/build-image.sh images/database/mysql/8.0 database mysql-8.0
   rules:
@@ -202,6 +216,8 @@ build:redis:
   needs:
     - build:php:test
     - build:node:test
+  variables:
+    PUSH_TO_REGISTRY: "false"
   script:
     - bash scripts/pipeline/build-image.sh images/database/redis/7 database redis-7
   rules:
@@ -213,6 +229,8 @@ build:nginx:
   needs:
     - build:php:test
     - build:node:test
+  variables:
+    PUSH_TO_REGISTRY: "false"
   script:
     - bash scripts/pipeline/build-image.sh images/web/nginx/1.26 web nginx-1.26
   rules:
@@ -228,6 +246,8 @@ build:mailhog:
     - build:mysql
     - build:redis
     - build:nginx
+  variables:
+    PUSH_TO_REGISTRY: "false"
   script:
     - bash scripts/pipeline/build-image.sh images/services/mailhog services mailhog
   rules:
@@ -240,6 +260,8 @@ build:minio:
     - build:mysql
     - build:redis
     - build:nginx
+  variables:
+    PUSH_TO_REGISTRY: "false"
   script:
     - bash scripts/pipeline/build-image.sh images/services/minio services minio
   rules:
@@ -252,6 +274,8 @@ build:e2e-testing:
     - build:mysql
     - build:redis
     - build:nginx
+  variables:
+    PUSH_TO_REGISTRY: "false"
   script:
     - bash scripts/pipeline/build-image.sh images/services/e2e-testing services e2e-testing
   rules:
@@ -264,6 +288,8 @@ build:performance-testing:
     - build:mysql
     - build:redis
     - build:nginx
+  variables:
+    PUSH_TO_REGISTRY: "false"
   script:
     - bash scripts/pipeline/build-image.sh images/services/performance-testing services performance-testing
   rules:
@@ -383,22 +409,24 @@ sync:dockerhub:
 # ================================
 # CLEANUP STAGE
 # ================================
-cleanup:staging-tags:
-  stage: cleanup
-  image: docker:27-cli
-  needs:
-    - promote:tags
-  before_script:
-    - apk add --no-cache bash curl jq
-    - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
-  script:
-    - echo "🧹 Cleaning up staging tags…"
-    - chmod +x scripts/cleanup.sh
-    - bash scripts/cleanup.sh
-    - echo "✅ Cleanup completed"
-  after_script:
-    - docker logout $CI_REGISTRY
-  rules:
-    - if: $CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/
-  when: always
-  allow_failure: true
+# NOTE: Cleanup disabled - staging images are built locally on runner (not pushed to registry)
+# Runner's daily cleanup job handles local image cleanup instead
+# cleanup:staging-tags:
+#   stage: cleanup
+#   image: docker:27-cli
+#   needs:
+#     - promote:tags
+#   before_script:
+#     - apk add --no-cache bash curl jq
+#     - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+#   script:
+#     - echo "🧹 Cleaning up staging tags…"
+#     - chmod +x scripts/cleanup.sh
+#     - bash scripts/cleanup.sh
+#     - echo "✅ Cleanup completed"
+#   after_script:
+#     - docker logout $CI_REGISTRY
+#   rules:
+#     - if: $CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/
+#   when: always
+#   allow_failure: true
