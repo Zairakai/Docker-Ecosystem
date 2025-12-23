@@ -5,6 +5,7 @@
 </p>
 
 <!-- Line 1: CI/CD & Quality -->
+[![Release][release-badge]][release-link]
 [![Main][pipeline-main-badge]][pipeline-main-link]
 [![Develop][pipeline-develop-badge]][pipeline-develop-link]
 [![Security][security-badge]][security]
@@ -439,6 +440,8 @@ _Built with ❤️ by the Zairakai team for Laravel + Vue.js developers_
 [discord]: https://discord.gg/MAmD5SG8Zu
 
 <!-- Badge Links -->
+[release-badge]: https://img.shields.io/gitlab/v/tag/zairakai%2Fdocker-ecosystem?label=release&logo=gitlab
+[release-link]: https://gitlab.com/zairakai/docker-ecosystem/-/releases
 [pipeline-main-badge]: https://gitlab.com/zairakai/docker-ecosystem/badges/main/pipeline.svg?ignore_skipped=true&key_text=Main
 [pipeline-main-link]: https://gitlab.com/zairakai/docker-ecosystem/commits/main
 [pipeline-develop-badge]: https://gitlab.com/zairakai/docker-ecosystem/badges/develop/pipeline.svg?ignore_skipped=true&key_text=Develop
