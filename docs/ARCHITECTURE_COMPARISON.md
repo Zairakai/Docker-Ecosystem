@@ -434,21 +434,21 @@ Scenario: Hybrid page with SSR and Vue.js
 
 ## Choosing the Right Mode
 
-### Use Blade-only when:
+### Use Blade-only when
 
 - Building traditional server-rendered applications
 - No need for complex JavaScript interactions
 - Simplicity is priority
 - SEO is critical and JS is not needed
 
-### Use SPA-only when:
+### Use SPA-only when
 
 - Building modern app-like experiences
 - Frontend team separate from backend team
 - Need for offline capabilities (PWA)
 - Complex client-side state management
 
-### Use Hybrid when:
+### Use Hybrid when
 
 - Starting with Laravel, adding Vue.js progressively
 - Need both SSR (SEO, initial load) and SPA (interactivity)

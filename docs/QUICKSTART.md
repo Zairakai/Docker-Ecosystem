@@ -80,7 +80,8 @@ volumes:
 
 **💡 Note**: Images are automatically pulled from [Docker Hub](https://hub.docker.com/u/zairakai) when you start the stack.
 
-**Alternative**: Use GitLab Container Registry by replacing `zairakai/mysql:8.0` with `registry.gitlab.com/zairakai/docker-ecosystem/database:mysql-8.0` (see [README](../README.md#-image-naming-conventions) for full mapping).
+**Alternative**: Use GitLab Container Registry by replacing `zairakai/mysql:8.0` with
+`registry.gitlab.com/zairakai/docker-ecosystem/database:mysql-8.0` (see [README](../README.md#-image-naming-conventions) for full mapping).
 
 ## Step 2: Start Your Environment
 

@@ -433,6 +433,7 @@ PUSH_TO_REGISTRY=true|false
 **Automatic Variables** (no configuration needed):
 
 The pipeline automatically uses GitLab's built-in CI/CD variables:
+
 - `CI_JOB_TOKEN` - Used for GitLab API authentication (tag cleanup, registry management)
 - `CI_REGISTRY`, `CI_REGISTRY_USER`, `CI_REGISTRY_PASSWORD` - Docker registry authentication
 - `CI_COMMIT_SHORT_SHA`, `CI_PROJECT_ID` - Pipeline metadata

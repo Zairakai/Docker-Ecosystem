@@ -90,6 +90,7 @@ git push origin feature/your-feature-name
 - Optimize existing scripts
 
 **Shell Script Requirements:**
+
 - [x] **ShellCheck 100% compliance** - ZERO warnings tolerated
 - [x] **Shebang**: Always use `#!/usr/bin/env bash` (NOT `#!/bin/sh`)
 - [x] **Error handling**: Use `set -euo pipefail` at script start
@@ -98,6 +99,7 @@ git push origin feature/your-feature-name
 - [x] **Testability**: Scripts must be executable locally (not just in CI)
 
 **Example script structure:**
+
 ```bash
 #!/usr/bin/env bash
 # scripts/pipeline/example.sh
@@ -122,6 +124,7 @@ log_success "Done!"
 ```
 
 **Testing scripts:**
+
 ```bash
 # Validate all scripts with ShellCheck
 make shellcheck

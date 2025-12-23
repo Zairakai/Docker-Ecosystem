@@ -339,7 +339,7 @@ gunzip -t /backups/mysql/latest.sql.gz
 
 **Communication Template:**
 
-```
+```text
 INCIDENT ALERT
 
 Severity: [P0/P1/P2/P3]
@@ -581,5 +581,7 @@ groups:
 **Need help?** Join our [Discord][discord] community or check the [Reference Guide][reference].
 
 <!-- Reference Links -->
+[home]: ../README.md
+[docs]: INDEX.md
 [reference]: REFERENCE.md
 [discord]: https://discord.gg/MAmD5SG8Zu

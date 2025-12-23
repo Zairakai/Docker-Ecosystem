@@ -11,24 +11,30 @@ progressive extension-only architecture.
 - [Design Philosophy](#design-philosophy)
   - [Extension-Only Architecture](#extension-only-architecture)
   - [Transparency & Security](#transparency--security)
+
 - [Image Structure](#image-structure)
   - [PHP Stack (3 images)](#php-stack-3-images)
   - [Node.js Stack (3 images)](#nodejs-stack-3-images)
   - [Database & Services (6 images)](#database--services-6-images)
+
 - [System Architecture](#system-architecture)
 - [Performance Benefits](#performance-benefits)
 - [Security Architecture](#security-architecture)
   - [Multi-Layer Security Scanning](#multi-layer-security-scanning)
   - [Container Security](#container-security)
+
 - [Use Cases](#use-cases)
   - [Perfect For](#perfect-for)
   - [Not Recommended For](#not-recommended-for)
+
 - [Version Strategy](#version-strategy)
   - [Tagging Strategy](#tagging-strategy)
   - [Version Selection](#version-selection)
+
 - [Development Workflow](#development-workflow)
   - [Typical Development Session](#typical-development-session)
   - [Testing Workflow](#testing-workflow)
+
 - [Navigation](#navigation)
 
 ## Overview
@@ -37,6 +43,7 @@ The Zairakai Docker Ecosystem provides **12 lightweight Docker images** specific
 **Laravel + Vue.js** development, following a progressive **extension-only** architecture.
 
 **Key Characteristics:**
+
 - [x] **Progressive layers**: prod → dev → test
 - [x] **Alpine Linux base**: 70% smaller images
 - [x] **Non-root execution**: Enhanced security
@@ -53,6 +60,7 @@ Each image builds purposefully on the previous one - nothing is removed, only ad
 - **Test images**: Dev + testing frameworks, coverage tools, and profiling
 
 **Benefits:**
+
 - 🎯 **Consistency**: Same base across all environments
 - 🔒 **Security**: Production stays minimal
 - 🚀 **Performance**: No unnecessary bloat in prod
@@ -79,12 +87,14 @@ registry.gitlab.com/zairakai/docker-ecosystem/php:8.3-test (180MB)
 ```
 
 **Production (45MB)**:
+
 - PHP 8.3 FPM
 - Essential extensions: gd, zip, intl, pdo, bcmath, opcache
 - Composer
 - Non-root user (www:www)
 
 **Development (+40MB)**:
+
 - Xdebug 3.4
 - Redis extension
 - Imagick extension
@@ -92,6 +102,7 @@ registry.gitlab.com/zairakai/docker-ecosystem/php:8.3-test (180MB)
 - PHP-FPM Exporter for Prometheus
 
 **Testing (+95MB)**:
+
 - PCOV (code coverage)
 - XHProf (profiling)
 - PHPUnit (via project composer.json)
@@ -108,11 +119,13 @@ registry.gitlab.com/zairakai/docker-ecosystem/node:20-test (240MB)
 ```
 
 **Production (35MB)**:
+
 - Node.js 20 LTS (minimal runtime)
 - npm + basic tooling
 - Non-root user (node:node)
 
 **Development (+85MB)**:
+
 - Yarn + pnpm
 - TypeScript + ts-node
 - Vite build system
@@ -120,6 +133,7 @@ registry.gitlab.com/zairakai/docker-ecosystem/node:20-test (240MB)
 - ESLint (global)
 
 **Testing (+120MB)**:
+
 - Playwright browsers (Chromium, Firefox, WebKit)
 - Cucumber/Gherkin for BDD
 - Jest + Vitest
@@ -161,6 +175,7 @@ registry.gitlab.com/zairakai/docker-ecosystem/node:20-test (240MB)
 ```
 
 **Communication Flow:**
+
 1. **User → Nginx** (HTTP/HTTPS)
 2. **Nginx → PHP-FPM** (FastCGI)
 3. **Nginx → Node.js** (Reverse Proxy for assets)
@@ -179,6 +194,7 @@ registry.gitlab.com/zairakai/docker-ecosystem/node:20-test (240MB)
 | **Build Cache Hit** | 30-40% | 80-90% | 2-3x better |
 
 **Why Faster?**
+
 - [x] Alpine base (70% smaller downloads)
 - [x] Multi-stage builds (efficient layer caching)
 - [x] Pre-built images (no local compilation)
@@ -202,6 +218,7 @@ Post-Build Security (security-scan stage)
 ```
 
 **Security Pipeline:**
+
 1. **Validate** → Dockerfile linting (Hadolint)
 2. **Scan Dependencies** → Composer + npm packages
 3. **Build** → Multi-stage with minimal attack surface
@@ -250,6 +267,7 @@ registry.gitlab.com/zairakai/docker-ecosystem/php:latest-prod    # Latest stable
 ```
 
 **Tag Levels:**
+
 - `8.3-prod` → Technical PHP version (8.3), stable across ecosystem releases
 - `1.1.0-prod` → Specific ecosystem release version for reproducibility
 - `latest-prod` → Latest stable ecosystem release
@@ -265,6 +283,7 @@ registry.gitlab.com/zairakai/docker-ecosystem/php:latest-prod    # Latest stable
 | **Redis** | 7 | Latest stable | Ongoing |
 
 **Update Policy:**
+
 - **Security patches**: Auto-applied to `.x` tags
 - **Minor versions**: Announced, opt-in upgrade
 - **Major versions**: New image series (e.g., `php:8.4-*`)
@@ -293,6 +312,7 @@ docker-compose exec app npm run dev
 ```
 
 **Development Tools Included:**
+
 - [x] Xdebug for step-through debugging
 - [x] Composer for dependency management
 - [x] Artisan CLI for Laravel commands
@@ -319,6 +339,7 @@ docker-compose run --rm performance-testing
 ```
 
 **Testing Tools Included:**
+
 - [x] PHPUnit (via composer.json)
 - [x] PCOV for fast code coverage
 - [x] Jest/Vitest for JS testing
@@ -332,6 +353,7 @@ docker-compose run --rm performance-testing
 - [Testing Modes →][testing-modes]
 
 **Learn More:**
+
 - **[Testing Modes][testing-modes]** - Blade, SPA, and Hybrid architectures
 - **[Reference Guide][reference]** - Complete image tags and configurations
 - **[Monitoring Guide][monitoring]** - Prometheus, Grafana, Jaeger setup
@@ -343,13 +365,8 @@ docker-compose run --rm performance-testing
 [home]: ../README.md
 [docs]: INDEX.md
 [quickstart]: QUICKSTART.md
-[prerequisites]: PREREQUISITES.md
 [testing-modes]: TESTING_MODES.md
-[architecture-comparison]: ARCHITECTURE_COMPARISON.md
 [reference]: REFERENCE.md
 [monitoring]: MONITORING.md
-[disaster-recovery]: DISASTER_RECOVERY.md
-[kubernetes]: KUBERNETES.md
-[swarm]: SWARM.md
 [discord]: https://discord.gg/MAmD5SG8Zu
 [issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues

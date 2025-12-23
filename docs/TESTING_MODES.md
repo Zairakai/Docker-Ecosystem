@@ -427,7 +427,6 @@ Choose the mode that matches your application architecture and testing requireme
 [docs]: INDEX.md
 [architecture]: ARCHITECTURE.md
 [architecture-comparison]: ARCHITECTURE_COMPARISON.md
-[reference]: REFERENCE.md
 [examples]: ../examples/
 [discord]: https://discord.gg/MAmD5SG8Zu
 [issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues

@@ -124,9 +124,9 @@ docker-compose --version
 
 **Install Docker:**
 
-- **Linux**: https://docs.docker.com/engine/install/
-- **macOS**: https://docs.docker.com/desktop/mac/install/
-- **Windows**: https://docs.docker.com/desktop/windows/install/
+- **Linux**: <https://docs.docker.com/engine/install/>
+- **macOS**: <https://docs.docker.com/desktop/mac/install/>
+- **Windows**: <https://docs.docker.com/desktop/windows/install/>
 
 **Disk Space:**
 
@@ -387,10 +387,6 @@ Once you've confirmed you meet the prerequisites:
 [quickstart]: QUICKSTART.md
 [architecture]: ARCHITECTURE.md
 [testing-modes]: TESTING_MODES.md
-[reference]: REFERENCE.md
 [kubernetes]: KUBERNETES.md
-[swarm]: SWARM.md
-[monitoring]: MONITORING.md
-[disaster-recovery]: DISASTER_RECOVERY.md
 [discord]: https://discord.gg/MAmD5SG8Zu
 [issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
