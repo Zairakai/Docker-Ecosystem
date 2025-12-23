@@ -2,17 +2,30 @@
 
 ![Zairakai Docker Ecosystem][banner]
 
+<!-- CI/CD & Quality -->
 [![Main][pipeline-main-badge]][pipeline-main-link]
 [![Develop][pipeline-develop-badge]][pipeline-develop-link]
+[![Security][security-badge]][security]
 [![License][license-badge]][license]
+
+<!-- Registries -->
 [![Docker Hub][dockerhub-badge]][dockerhub]
 [![GitLab Registry][gitlab-registry-badge]][gitlab-registry]
 
+<!-- Download Statistics -->
 [![PHP Pulls][php-pulls-badge]][dockerhub-php]
 [![MySQL Pulls][mysql-pulls-badge]][dockerhub-mysql]
 [![Redis Pulls][redis-pulls-badge]][dockerhub-redis]
 [![Node Pulls][node-pulls-badge]][dockerhub-node]
-[![Security][security-badge]][security]
+
+<!-- Available Images -->
+[![PHP 8.3][php-version-badge]][dockerhub-php]
+[![Node 20][node-version-badge]][dockerhub-node]
+[![MySQL 8.0][mysql-version-badge]][dockerhub-mysql]
+[![Redis 7][redis-version-badge]][dockerhub-redis]
+[![Nginx 1.26][nginx-version-badge]][dockerhub-nginx]
+[![MailHog][mailhog-badge]][dockerhub-mailhog]
+[![MinIO][minio-badge]][dockerhub-minio]
 
 **12 lightweight images** with progressive architecture (prod → dev → test) and comprehensive security scanning.
 
@@ -427,4 +440,14 @@ _Built with ❤️ by the Zairakai team for Laravel + Vue.js developers_
 [dockerhub-redis]: https://hub.docker.com/r/zairakai/redis
 [node-pulls-badge]: https://img.shields.io/docker/pulls/zairakai/node?label=Node%20pulls&logo=docker
 [dockerhub-node]: https://hub.docker.com/r/zairakai/node
+[php-version-badge]: https://img.shields.io/badge/PHP-8.3-777BB4?logo=php&logoColor=white
+[node-version-badge]: https://img.shields.io/badge/Node-20%20LTS-339933?logo=node.js&logoColor=white
+[mysql-version-badge]: https://img.shields.io/badge/MySQL-8.0-4479A1?logo=mysql&logoColor=white
+[redis-version-badge]: https://img.shields.io/badge/Redis-7-DC382D?logo=redis&logoColor=white
+[nginx-version-badge]: https://img.shields.io/badge/Nginx-1.26-009639?logo=nginx&logoColor=white
+[dockerhub-nginx]: https://hub.docker.com/r/zairakai/nginx
+[mailhog-badge]: https://img.shields.io/badge/MailHog-latest-00ADD8?logo=mail.ru&logoColor=white
+[dockerhub-mailhog]: https://hub.docker.com/r/zairakai/mailhog
+[minio-badge]: https://img.shields.io/badge/MinIO-latest-C72E49?logo=minio&logoColor=white
+[dockerhub-minio]: https://hub.docker.com/r/zairakai/minio
 [security-badge]: https://img.shields.io/badge/security-scanned-green.svg
