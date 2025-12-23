@@ -37,6 +37,7 @@
 Images are available on **two registries** for maximum convenience:
 
 ### Docker Hub (Recommended for simplicity)
+
 ```bash
 docker pull zairakai/php:8.3-prod
 docker pull zairakai/mysql:8.0
@@ -45,6 +46,7 @@ docker pull zairakai/nginx:1.26
 ```
 
 ### GitLab Container Registry (Primary source)
+
 ```bash
 docker pull registry.gitlab.com/zairakai/docker-ecosystem/php:8.3-prod
 docker pull registry.gitlab.com/zairakai/docker-ecosystem/database:mysql-8.0
@@ -184,6 +186,7 @@ docker-ecosystem/
 All CI/CD logic is **externalized in reusable scripts** for testability and maintainability:
 
 ### Validation Scripts
+
 ```bash
 # Validate configuration (Dockerfiles, scripts, directories)
 bash scripts/pipeline/validate-config.sh
@@ -193,6 +196,7 @@ bash scripts/pipeline/validate-shellcheck.sh
 ```
 
 ### Build Scripts
+
 ```bash
 # Build a single image (supports multi-stage and single-stage builds)
 bash scripts/pipeline/build-image.sh <image-path> <image-prefix> <image-tag>
@@ -204,6 +208,7 @@ bash scripts/pipeline/build-image.sh images/services/mailhog services mailhog
 ```
 
 ### Test Scripts
+
 ```bash
 # Test image sizes (pull all images and generate report)
 CI_REGISTRY_IMAGE=registry.gitlab.com/zairakai/docker-ecosystem \
@@ -215,6 +220,7 @@ CI_REGISTRY_IMAGE=registry.gitlab.com/zairakai/docker-ecosystem \
 ```
 
 ### Release Scripts
+
 ```bash
 # Promote staging tags to stable version tags
 PROMOTED_VERSION=v1.2.3 bash scripts/promote.sh
