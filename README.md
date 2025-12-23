@@ -1,6 +1,8 @@
 # Zairakai Docker Ecosystem
 
-![Zairakai Docker Ecosystem][banner]
+<p align="center">
+  <img src="./assets/banner.svg" alt="Zairakai Docker Ecosystem" style="max-width: 800px; width: 100%;">
+</p>
 
 <!-- CI/CD & Quality -->
 [![Main][pipeline-main-badge]][pipeline-main-link]
@@ -416,7 +418,6 @@ _Built with ❤️ by the Zairakai team for Laravel + Vue.js developers_
 
 <!-- Reference Links -->
 
-[banner]: ./assets/banner.svg
 [license]: ./LICENSE
 [security]: ./SECURITY.md
 [contributing]: ./CONTRIBUTING.md

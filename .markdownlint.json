@@ -12,7 +12,7 @@
   "MD031": true,
   "MD032": true,
   "MD033": {
-    "allowed_elements": ["details", "summary", "kbd", "sub", "sup"]
+    "allowed_elements": ["details", "summary", "kbd", "sub", "sup", "p", "img"]
   },
   "MD036": false,
   "MD041": true,
