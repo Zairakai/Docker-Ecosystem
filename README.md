@@ -414,10 +414,6 @@ _Built with ❤️ by the Zairakai team for Laravel + Vue.js developers_
 
 [banner]: ./assets/banner.svg
 [license]: ./LICENSE
-[docker]: https://www.docker.com/
-[php]: https://www.php.net/
-[nodejs]: https://nodejs.org/
-[mysql]: https://www.mysql.com/
 [security]: ./SECURITY.md
 [contributing]: ./CONTRIBUTING.md
 [quickstart]: docs/QUICKSTART.md
