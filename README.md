@@ -5,7 +5,8 @@
 [![Main][pipeline-main-badge]][pipeline-main-link]
 [![Develop][pipeline-develop-badge]][pipeline-develop-link]
 [![License][license-badge]][license]
-[![Docker][docker-badge]][docker]
+[![Docker Hub][dockerhub-badge]][dockerhub]
+[![GitLab Registry][gitlab-registry-badge]][gitlab-registry]
 [![PHP][php-badge]][php]
 [![Node.js][nodejs-badge]][nodejs]
 [![MySQL][mysql-badge]][mysql]
@@ -412,7 +413,10 @@ _Built with ❤️ by the Zairakai team for Laravel + Vue.js developers_
 [pipeline-develop-badge]: https://gitlab.com/zairakai/docker-ecosystem/badges/develop/pipeline.svg?ignore_skipped=true&key_text=Develop
 [pipeline-develop-link]: https://gitlab.com/zairakai/docker-ecosystem/commits/develop
 [license-badge]: https://img.shields.io/badge/license-MIT-blue.svg
-[docker-badge]: https://img.shields.io/badge/docker-ready-blue.svg
+[dockerhub-badge]: https://img.shields.io/badge/docker%20hub-zairakai-blue?logo=docker
+[dockerhub]: https://hub.docker.com/u/zairakai
+[gitlab-registry-badge]: https://img.shields.io/badge/gitlab%20registry-available-orange?logo=gitlab
+[gitlab-registry]: https://gitlab.com/zairakai/docker-ecosystem/container_registry
 [php-badge]: https://img.shields.io/badge/php-8.3-blue.svg
 [nodejs-badge]: https://img.shields.io/badge/node.js-20%20LTS-green.svg
 [mysql-badge]: https://img.shields.io/badge/mysql-8.0-blue.svg
