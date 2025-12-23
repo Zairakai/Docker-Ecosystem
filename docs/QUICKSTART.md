@@ -55,7 +55,7 @@ services:
       - REDIS_HOST=redis
 
   mysql:
-    image: zairakai/database:mysql-8.0
+    image: zairakai/mysql:8.0
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=laravel
@@ -67,7 +67,7 @@ services:
       - mysql-data:/var/lib/mysql
 
   redis:
-    image: zairakai/database:redis-7
+    image: zairakai/redis:7
     ports:
       - "6379:6379"
     volumes:
@@ -78,7 +78,9 @@ volumes:
   redis-data:
 ```
 
-**💡 Note**: Images are automatically pulled from our GitLab registry when you start the stack.
+**💡 Note**: Images are automatically pulled from [Docker Hub](https://hub.docker.com/u/zairakai) when you start the stack.
+
+**Alternative**: Use GitLab Container Registry by replacing `zairakai/mysql:8.0` with `registry.gitlab.com/zairakai/docker-ecosystem/database:mysql-8.0` (see [README](../README.md#-image-naming-conventions) for full mapping).
 
 ## Step 2: Start Your Environment
 

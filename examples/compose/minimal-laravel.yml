@@ -3,11 +3,15 @@
 # ================================
 # Simple Laravel backend development environment
 # Includes: PHP-dev, MySQL, Redis
+#
+# Images: Pulled from Docker Hub (zairakai/*)
+# Alternative: Use GitLab Registry (registry.gitlab.com/zairakai/docker-ecosystem/*)
+# See README.md for image naming conventions
 
 services:
   # Laravel Application
   app:
-    image: registry.gitlab.com/zairakai/docker-ecosystem/php:8.3-dev
+    image: zairakai/php:8.3-dev
     container_name: laravel-app
     volumes:
       - ./:/var/www/html
@@ -23,7 +27,7 @@ services:
 
   # MySQL Database
   mysql:
-    image: registry.gitlab.com/zairakai/docker-ecosystem/database:mysql-8.0
+    image: zairakai/mysql:8.0
     container_name: laravel-mysql
     environment:
       MYSQL_ROOT_PASSWORD: secret
@@ -37,7 +41,7 @@ services:
 
   # Redis Cache
   redis:
-    image: registry.gitlab.com/zairakai/docker-ecosystem/database:redis-7
+    image: zairakai/redis:7
     container_name: laravel-redis
     volumes:
       - redis_data:/data

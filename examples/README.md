@@ -2,6 +2,15 @@
 
 Ready-to-use configurations for the Zairakai Docker images.
 
+## 📦 Registry Options
+
+All examples use images available on **two registries**:
+
+- **Docker Hub** (Recommended): `zairakai/php:8.3-dev`, `zairakai/mysql:8.0`
+- **GitLab Registry**: `registry.gitlab.com/zairakai/docker-ecosystem/php:8.3-dev`
+
+**Updated examples use Docker Hub** for simpler syntax. See [README.md](../README.md#-image-naming-conventions) for full registry comparison.
+
 ## Directory Structure
 
 ```bash
@@ -82,7 +91,8 @@ cd your-project
 docker-compose up -d
 ```
 
-**Note**: Images are automatically pulled from GitLab Container Registry - no build required!
+**Note**: Images are automatically pulled from **Docker Hub** - no build required!
+**Alternative**: Use GitLab Container Registry by modifying image names (see registry options above).
 
 ## Examples by Use Case
 

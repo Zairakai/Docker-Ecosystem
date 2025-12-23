@@ -16,6 +16,31 @@
 > 📦 **This is an image repository**  
 > These images are intended to be **consumed by application repositories** (via Docker Compose, CI/CD, or orchestration), not for direct development inside this repository.
 
+## 📦 Available Registries
+
+Images are available on **two registries** for maximum convenience:
+
+### Docker Hub (Recommended for simplicity)
+```bash
+docker pull zairakai/php:8.3-prod
+docker pull zairakai/mysql:8.0
+docker pull zairakai/redis:7
+docker pull zairakai/nginx:1.26
+```
+
+### GitLab Container Registry (Primary source)
+```bash
+docker pull registry.gitlab.com/zairakai/docker-ecosystem/php:8.3-prod
+docker pull registry.gitlab.com/zairakai/docker-ecosystem/database:mysql-8.0
+docker pull registry.gitlab.com/zairakai/docker-ecosystem/database:redis-7
+docker pull registry.gitlab.com/zairakai/docker-ecosystem/web:nginx-1.26
+```
+
+**Sync Strategy:**
+- GitLab Registry = Primary source (built by CI/CD)
+- Docker Hub = Public mirror (synced automatically after each release)
+- Both registries contain identical images, choose based on your preference
+
 ## Quick Start
 
 ```bash
@@ -30,23 +55,25 @@ services:
       - APP_ENV=local
 
   mysql:
-    image: zairakai/database:mysql-8.0
+    image: zairakai/mysql:8.0
     environment:
       - MYSQL_DATABASE=laravel
       - MYSQL_USER=laravel
       - MYSQL_PASSWORD=secret
 
   redis:
-    image: zairakai/database:redis-7
+    image: zairakai/redis:7
 EOF
 
-# 2. Start your stack (images pulled automatically from registry)
+# 2. Start your stack (images pulled automatically from Docker Hub)
 docker-compose up -d
 
 # 3. Setup Laravel
 docker-compose exec app composer install
 docker-compose exec app php artisan migrate
 ```
+
+**Alternative:** Use GitLab Registry by replacing `zairakai/` with `registry.gitlab.com/zairakai/docker-ecosystem/` and adjusting image names (see [Image Naming](#-image-naming-conventions) below).
 
 **[📚 Documentation Index](docs/INDEX.md)** | **[5-Minute Tutorial][quickstart]** | **[Examples][examples]** | **[Architecture Guide][architecture]**
 
@@ -205,6 +232,27 @@ bash scripts/cleanup.sh
 - **MinIO**: S3-compatible object storage
 - **E2E Testing**: Playwright + Gherkin/Cucumber for Blade and Vue.js testing
 - **Performance Testing**: Artillery, k6, Locust for load and stress testing
+
+## 🏷️ Image Naming Conventions
+
+Images use different naming patterns depending on the registry:
+
+| Image Type | Docker Hub | GitLab Container Registry |
+|------------|------------|---------------------------|
+| **PHP** | `zairakai/php:8.3-prod` | `registry.gitlab.com/zairakai/docker-ecosystem/php:8.3-prod` |
+| **Node.js** | `zairakai/node:20-dev` | `registry.gitlab.com/zairakai/docker-ecosystem/node:20-dev` |
+| **MySQL** | `zairakai/mysql:8.0` | `registry.gitlab.com/zairakai/docker-ecosystem/database:mysql-8.0` |
+| **Redis** | `zairakai/redis:7` | `registry.gitlab.com/zairakai/docker-ecosystem/database:redis-7` |
+| **Nginx** | `zairakai/nginx:1.26` | `registry.gitlab.com/zairakai/docker-ecosystem/web:nginx-1.26` |
+| **MailHog** | `zairakai/mailhog:latest` | `registry.gitlab.com/zairakai/docker-ecosystem/services:mailhog` |
+| **MinIO** | `zairakai/minio:latest` | `registry.gitlab.com/zairakai/docker-ecosystem/services:minio` |
+
+**Key Differences:**
+- **Docker Hub**: Simpler names (`zairakai/mysql:8.0`)
+- **GitLab Registry**: Grouped by type (`database:mysql-8.0`, `services:mailhog`)
+- Both registries provide identical images with the same content and layers
+
+**Recommendation:** Use **Docker Hub** for simpler syntax in docker-compose files, or **GitLab Registry** if you need private access or specific versioning.
 
 ## Security & Quality
 
