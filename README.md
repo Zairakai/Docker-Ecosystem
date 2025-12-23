@@ -4,23 +4,13 @@
   <img src="./assets/banner.svg" alt="Zairakai Docker Ecosystem" style="max-width: 800px; width: 100%;">
 </p>
 
-<!-- CI/CD & Quality -->
+<!-- Line 1: CI/CD & Quality -->
 [![Main][pipeline-main-badge]][pipeline-main-link]
 [![Develop][pipeline-develop-badge]][pipeline-develop-link]
 [![Security][security-badge]][security]
 [![License][license-badge]][license]
 
-<!-- Registries -->
-[![Docker Hub][dockerhub-badge]][dockerhub]
-[![GitLab Registry][gitlab-registry-badge]][gitlab-registry]
-
-<!-- Download Statistics -->
-[![PHP Pulls][php-pulls-badge]][dockerhub-php]
-[![MySQL Pulls][mysql-pulls-badge]][dockerhub-mysql]
-[![Redis Pulls][redis-pulls-badge]][dockerhub-redis]
-[![Node Pulls][node-pulls-badge]][dockerhub-node]
-
-<!-- Available Images -->
+<!-- Line 2: Available Images -->
 [![PHP 8.3][php-version-badge]][dockerhub-php]
 [![Node 20][node-version-badge]][dockerhub-node]
 [![MySQL 8.0][mysql-version-badge]][dockerhub-mysql]
@@ -30,6 +20,21 @@
 [![MinIO][minio-badge]][dockerhub-minio]
 [![E2E Testing][e2e-testing-badge]][dockerhub-e2e]
 [![Performance Testing][performance-testing-badge]][dockerhub-performance]
+
+<!-- Line 3: Registries -->
+[![Docker Hub][dockerhub-badge]][dockerhub]
+[![GitLab Registry][gitlab-registry-badge]][gitlab-registry]
+
+<!-- Line 4: Download Statistics (Docker Hub pulls) -->
+[![PHP Pulls][php-pulls-badge]][dockerhub-php]
+[![Node Pulls][node-pulls-badge]][dockerhub-node]
+[![MySQL Pulls][mysql-pulls-badge]][dockerhub-mysql]
+[![Redis Pulls][redis-pulls-badge]][dockerhub-redis]
+[![Nginx Pulls][nginx-pulls-badge]][dockerhub-nginx]
+[![MailHog Pulls][mailhog-pulls-badge]][dockerhub-mailhog]
+[![MinIO Pulls][minio-pulls-badge]][dockerhub-minio]
+[![E2E Pulls][e2e-pulls-badge]][dockerhub-e2e]
+[![Performance Pulls][performance-pulls-badge]][dockerhub-performance]
 
 **14 lightweight images** with progressive architecture (prod → dev → test) and comprehensive security scanning.
 
@@ -451,6 +456,11 @@ _Built with ❤️ by the Zairakai team for Laravel + Vue.js developers_
 [dockerhub-redis]: https://hub.docker.com/r/zairakai/redis
 [node-pulls-badge]: https://img.shields.io/docker/pulls/zairakai/node?label=Node%20pulls&logo=docker
 [dockerhub-node]: https://hub.docker.com/r/zairakai/node
+[nginx-pulls-badge]: https://img.shields.io/docker/pulls/zairakai/nginx?label=Nginx%20pulls&logo=docker
+[mailhog-pulls-badge]: https://img.shields.io/docker/pulls/zairakai/mailhog?label=MailHog%20pulls&logo=docker
+[minio-pulls-badge]: https://img.shields.io/docker/pulls/zairakai/minio?label=MinIO%20pulls&logo=docker
+[e2e-pulls-badge]: https://img.shields.io/docker/pulls/zairakai/e2e-testing?label=E2E%20pulls&logo=docker
+[performance-pulls-badge]: https://img.shields.io/docker/pulls/zairakai/performance-testing?label=Performance%20pulls&logo=docker
 [php-version-badge]: https://img.shields.io/badge/PHP-8.3-777BB4?logo=php&logoColor=white
 [node-version-badge]: https://img.shields.io/badge/Node-20%20LTS-339933?logo=node.js&logoColor=white
 [mysql-version-badge]: https://img.shields.io/badge/MySQL-8.0-4479A1?logo=mysql&logoColor=white
