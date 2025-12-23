@@ -60,6 +60,8 @@ IMAGE_MAPPINGS=(
   "web:nginx-1.26|zairakai/nginx:1.26"
   "services:mailhog|zairakai/mailhog:latest"
   "services:minio|zairakai/minio:latest"
+  "services:e2e-testing|zairakai/e2e-testing:latest"
+  "services:performance-testing|zairakai/performance-testing:latest"
 )
 
 # ================================
@@ -127,6 +129,10 @@ if [[ ${FAILED} -eq 0 ]]; then
   log_info "  - docker pull zairakai/mysql:8.0"
   log_info "  - docker pull zairakai/redis:7"
   log_info "  - docker pull zairakai/nginx:1.26"
+  log_info "  - docker pull zairakai/mailhog:latest"
+  log_info "  - docker pull zairakai/minio:latest"
+  log_info "  - docker pull zairakai/e2e-testing:latest"
+  log_info "  - docker pull zairakai/performance-testing:latest"
 
   exit 0
 else

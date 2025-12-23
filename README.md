@@ -26,8 +26,10 @@
 [![Nginx 1.26][nginx-version-badge]][dockerhub-nginx]
 [![MailHog][mailhog-badge]][dockerhub-mailhog]
 [![MinIO][minio-badge]][dockerhub-minio]
+[![E2E Testing][e2e-testing-badge]][dockerhub-e2e]
+[![Performance Testing][performance-testing-badge]][dockerhub-performance]
 
-**12 lightweight images** with progressive architecture (prod → dev → test) and comprehensive security scanning.
+**14 lightweight images** with progressive architecture (prod → dev → test) and comprehensive security scanning.
 
 > 📦 **This is an image repository**  
 > These images are intended to be **consumed by application repositories** (via Docker Compose, CI/CD, or orchestration), not for direct development inside this repository.
@@ -271,6 +273,8 @@ Images use different naming patterns depending on the registry:
 | **Nginx** | `zairakai/nginx:1.26` | `registry.gitlab.com/zairakai/docker-ecosystem/web:nginx-1.26` |
 | **MailHog** | `zairakai/mailhog:latest` | `registry.gitlab.com/zairakai/docker-ecosystem/services:mailhog` |
 | **MinIO** | `zairakai/minio:latest` | `registry.gitlab.com/zairakai/docker-ecosystem/services:minio` |
+| **E2E Testing** | `zairakai/e2e-testing:latest` | `registry.gitlab.com/zairakai/docker-ecosystem/services:e2e-testing` |
+| **Performance Testing** | `zairakai/performance-testing:latest` | `registry.gitlab.com/zairakai/docker-ecosystem/services:performance-testing` |
 
 **Key Differences:**
 
@@ -456,4 +460,8 @@ _Built with ❤️ by the Zairakai team for Laravel + Vue.js developers_
 [dockerhub-mailhog]: https://hub.docker.com/r/zairakai/mailhog
 [minio-badge]: https://img.shields.io/badge/MinIO-latest-C72E49?logo=minio&logoColor=white
 [dockerhub-minio]: https://hub.docker.com/r/zairakai/minio
+[e2e-testing-badge]: https://img.shields.io/badge/E2E%20Testing-Playwright-45BA4B?logo=playwright&logoColor=white
+[dockerhub-e2e]: https://hub.docker.com/r/zairakai/e2e-testing
+[performance-testing-badge]: https://img.shields.io/badge/Performance-Artillery%20%7C%20k6-FF6C37?logo=artillery&logoColor=white
+[dockerhub-performance]: https://hub.docker.com/r/zairakai/performance-testing
 [security-badge]: https://img.shields.io/badge/security-scanned-green.svg
