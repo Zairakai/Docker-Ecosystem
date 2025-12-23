@@ -7,9 +7,11 @@
 [![License][license-badge]][license]
 [![Docker Hub][dockerhub-badge]][dockerhub]
 [![GitLab Registry][gitlab-registry-badge]][gitlab-registry]
-[![PHP][php-badge]][php]
-[![Node.js][nodejs-badge]][nodejs]
-[![MySQL][mysql-badge]][mysql]
+
+[![PHP Pulls][php-pulls-badge]][dockerhub-php]
+[![MySQL Pulls][mysql-pulls-badge]][dockerhub-mysql]
+[![Redis Pulls][redis-pulls-badge]][dockerhub-redis]
+[![Node Pulls][node-pulls-badge]][dockerhub-node]
 [![Security][security-badge]][security]
 
 **12 lightweight images** with progressive architecture (prod → dev → test) and comprehensive security scanning.
@@ -417,7 +419,12 @@ _Built with ❤️ by the Zairakai team for Laravel + Vue.js developers_
 [dockerhub]: https://hub.docker.com/u/zairakai
 [gitlab-registry-badge]: https://img.shields.io/badge/gitlab%20registry-available-orange?logo=gitlab
 [gitlab-registry]: https://gitlab.com/zairakai/docker-ecosystem/container_registry
-[php-badge]: https://img.shields.io/badge/php-8.3-blue.svg
-[nodejs-badge]: https://img.shields.io/badge/node.js-20%20LTS-green.svg
-[mysql-badge]: https://img.shields.io/badge/mysql-8.0-blue.svg
+[php-pulls-badge]: https://img.shields.io/docker/pulls/zairakai/php?label=PHP%20pulls&logo=docker
+[dockerhub-php]: https://hub.docker.com/r/zairakai/php
+[mysql-pulls-badge]: https://img.shields.io/docker/pulls/zairakai/mysql?label=MySQL%20pulls&logo=docker
+[dockerhub-mysql]: https://hub.docker.com/r/zairakai/mysql
+[redis-pulls-badge]: https://img.shields.io/docker/pulls/zairakai/redis?label=Redis%20pulls&logo=docker
+[dockerhub-redis]: https://hub.docker.com/r/zairakai/redis
+[node-pulls-badge]: https://img.shields.io/docker/pulls/zairakai/node?label=Node%20pulls&logo=docker
+[dockerhub-node]: https://hub.docker.com/r/zairakai/node
 [security-badge]: https://img.shields.io/badge/security-scanned-green.svg
