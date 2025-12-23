@@ -263,7 +263,7 @@ bash scripts/cleanup.sh
 Images use different naming patterns depending on the registry:
 
 | Image Type | Docker Hub | GitLab Container Registry |
-|------------|------------|---------------------------|
+| ---------- | ---------- | ------------------------- |
 | **PHP** | `zairakai/php:8.3-prod` | `registry.gitlab.com/zairakai/docker-ecosystem/php:8.3-prod` |
 | **Node.js** | `zairakai/node:20-dev` | `registry.gitlab.com/zairakai/docker-ecosystem/node:20-dev` |
 | **MySQL** | `zairakai/mysql:8.0` | `registry.gitlab.com/zairakai/docker-ecosystem/database:mysql-8.0` |
