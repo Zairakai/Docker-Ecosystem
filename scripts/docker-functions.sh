@@ -47,7 +47,15 @@ check_dockerfile() {
 create_buildx_builder() {
     local builder_name="$1"
 
-    log_info "Creating buildx builder: ${builder_name}"
+    # For local builds (PUSH_TO_REGISTRY=false), use docker driver to avoid OCI export issues
+    # For registry pushes (PUSH_TO_REGISTRY=true), use docker-container for advanced features
+    local driver="docker-container"
+    if [[ "${PUSH_TO_REGISTRY:-false}" == "false" ]]; then
+        driver="docker"
+        log_info "Using docker driver for local build (avoids OCI export timeouts)"
+    fi
+
+    log_info "Creating buildx builder: ${builder_name} (driver: ${driver})"
 
     if docker buildx inspect "${builder_name}" &>/dev/null; then
         log_info "Builder ${builder_name} already exists"
@@ -57,7 +65,7 @@ create_buildx_builder() {
 
     docker buildx create \
         --name "${builder_name}" \
-        --driver docker-container \
+        --driver "${driver}" \
         --use \
         --bootstrap || {
             log_error "Failed to create buildx builder"
@@ -176,8 +184,8 @@ build_image_with_buildx() {
     # Push or load
     if [[ "${PUSH_TO_REGISTRY}" == "true" ]]; then
         build_flags+=("--push")
-    else
-        build_flags+=("--load")
+    # Note: When using docker driver (PUSH_TO_REGISTRY=false), image is automatically
+    # available in daemon after build, so we don't need --load (which would fail anyway)
     fi
 
     # Execute build
