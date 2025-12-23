@@ -258,7 +258,7 @@ bash scripts/cleanup.sh
 - **E2E Testing**: Playwright + Gherkin/Cucumber for Blade and Vue.js testing
 - **Performance Testing**: Artillery, k6, Locust for load and stress testing
 
-## 🏷️ Image Naming Conventions
+## Image Naming Conventions
 
 Images use different naming patterns depending on the registry:
 
