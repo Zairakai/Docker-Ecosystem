@@ -93,7 +93,7 @@ docker-compose exec app php artisan migrate
 ```
 
 **Alternative:** Use GitLab Registry by replacing `zairakai/` with `registry.gitlab.com/zairakai/docker-ecosystem/`
-and adjusting image names (see [Image Naming](#-image-naming-conventions) below).
+and adjusting image names (see [Image Naming](#image-naming-conventions) below).
 
 **[📚 Documentation Index](docs/INDEX.md)** | **[5-Minute Tutorial][quickstart]** | **[Examples][examples]** | **[Architecture Guide][architecture]**
 
