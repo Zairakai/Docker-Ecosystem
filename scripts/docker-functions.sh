@@ -53,6 +53,11 @@ create_buildx_builder() {
     if [[ "${PUSH_TO_REGISTRY:-false}" == "false" ]]; then
         driver="docker"
         log_info "Using docker driver for local build (avoids OCI export timeouts)"
+
+        # Docker driver is singleton - use default builder instead of creating new instance
+        log_info "Using default buildx builder (docker driver limitation)"
+        docker buildx use default 2>/dev/null || docker buildx create --driver docker --name default --use --bootstrap
+        return 0
     fi
 
     log_info "Creating buildx builder: ${builder_name} (driver: ${driver})"
@@ -79,6 +84,12 @@ create_buildx_builder() {
 # Remove buildx builder instance
 remove_buildx_builder() {
     local builder_name="$1"
+
+    # Skip cleanup for default builder (shared across jobs when using docker driver)
+    if [[ "${PUSH_TO_REGISTRY:-false}" == "false" ]] || [[ "${builder_name}" == "default" ]]; then
+        log_debug "Skipping builder removal (using shared default builder)"
+        return 0
+    fi
 
     if docker buildx inspect "${builder_name}" &>/dev/null; then
         log_info "Removing buildx builder: ${builder_name}"
