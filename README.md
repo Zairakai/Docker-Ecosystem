@@ -55,6 +55,7 @@ docker pull registry.gitlab.com/zairakai/docker-ecosystem/web:nginx-1.26
 ```
 
 **Sync Strategy:**
+
 - GitLab Registry = Primary source (built by CI/CD)
 - Docker Hub = Public mirror (synced automatically after each release)
 - Both registries contain identical images, choose based on your preference
@@ -234,6 +235,7 @@ bash scripts/cleanup.sh
 ```
 
 **Benefits:**
+
 - [x] **Local execution** - Test scripts before pushing to CI
 - [x] **DRY principle** - Zero code duplication in `.gitlab-ci.yml`
 - [x] **ShellCheck 100%** - All scripts pass strict validation
@@ -271,6 +273,7 @@ Images use different naming patterns depending on the registry:
 | **MinIO** | `zairakai/minio:latest` | `registry.gitlab.com/zairakai/docker-ecosystem/services:minio` |
 
 **Key Differences:**
+
 - **Docker Hub**: Simpler names (`zairakai/mysql:8.0`)
 - **GitLab Registry**: Grouped by type (`database:mysql-8.0`, `services:mailhog`)
 - Both registries provide identical images with the same content and layers
