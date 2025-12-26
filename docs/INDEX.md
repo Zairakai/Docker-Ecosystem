@@ -167,7 +167,7 @@ Located in [`examples/nginx/`][examples-nginx]
 
 ### Monitoring Configurations
 
-Located in [`examples/monitoring/`][examples-monitoring]z:
+Located in [`examples/monitoring/`][examples-monitoring]:
 
 - `prometheus.yml` - Prometheus scrape configuration
 - `grafana-datasources.yml` - Grafana datasources
