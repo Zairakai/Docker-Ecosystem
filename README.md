@@ -4,38 +4,18 @@
   <img src="./assets/banner.svg" alt="Zairakai Docker Ecosystem" style="max-width: 800px; width: 100%;">
 </p>
 
-<!-- Line 1: CI/CD & Quality -->
+<!-- CI/CD & Quality -->
 [![Release][release-badge]][release-link]
+[![License][license-badge]][license]
+[![Security][security-badge]][security]
 [![Main][pipeline-main-badge]][pipeline-main-link]
 [![Develop][pipeline-develop-badge]][pipeline-develop-link]
-[![Security][security-badge]][security]
-[![License][license-badge]][license]
 
-<!-- Line 2: Available Images -->
-[![PHP 8.3][php-version-badge]][dockerhub-php]
-[![Node 20][node-version-badge]][dockerhub-node]
-[![MySQL 8.0][mysql-version-badge]][dockerhub-mysql]
-[![Redis 7][redis-version-badge]][dockerhub-redis]
-[![Nginx 1.26][nginx-version-badge]][dockerhub-nginx]
-[![MailHog][mailhog-badge]][dockerhub-mailhog]
-[![MinIO][minio-badge]][dockerhub-minio]
-[![E2E Testing][e2e-testing-badge]][dockerhub-e2e]
-[![Performance Testing][performance-testing-badge]][dockerhub-performance]
-
-<!-- Line 3: Registries -->
-[![Docker Hub][dockerhub-badge]][dockerhub]
-[![GitLab Registry][gitlab-registry-badge]][gitlab-registry]
-
-<!-- Line 4: Download Statistics (Docker Hub pulls) -->
-[![PHP Pulls][php-pulls-badge]][dockerhub-php]
-[![Node Pulls][node-pulls-badge]][dockerhub-node]
-[![MySQL Pulls][mysql-pulls-badge]][dockerhub-mysql]
-[![Redis Pulls][redis-pulls-badge]][dockerhub-redis]
-[![Nginx Pulls][nginx-pulls-badge]][dockerhub-nginx]
-[![MailHog Pulls][mailhog-pulls-badge]][dockerhub-mailhog]
-[![MinIO Pulls][minio-pulls-badge]][dockerhub-minio]
-[![E2E Pulls][e2e-pulls-badge]][dockerhub-e2e]
-[![Performance Pulls][performance-pulls-badge]][dockerhub-performance]
+<!-- Community & Stats -->
+[![GitLab Stars][stars-badge]][stars-link]
+[![Total Downloads][total-downloads-badge]][dockerhub]
+[![Discord][discord-badge]][discord]
+[![Contributors][contributors-badge]][contributors]
 
 **14 lightweight images** with progressive architecture (prod → dev → test) and comprehensive security scanning.
 
@@ -43,6 +23,9 @@
 > These images are intended to be **consumed by application repositories** (via Docker Compose, CI/CD, or orchestration), not for direct development inside this repository.
 
 ## 📦 Available Registries
+
+[![Docker Hub][dockerhub-badge]][dockerhub]
+[![GitLab Registry][gitlab-registry-badge]][gitlab-registry]
 
 Images are available on **two registries** for maximum convenience:
 
@@ -254,19 +237,41 @@ bash scripts/cleanup.sh
 
 ## 📦 Available Images
 
-### Core Stack
+[![PHP 8.3][php-version-badge]][dockerhub-php]
+[![Node 20][node-version-badge]][dockerhub-node]
+[![MySQL 8.0][mysql-version-badge]][dockerhub-mysql]
+[![Redis 7][redis-version-badge]][dockerhub-redis]
+[![Nginx 1.26][nginx-version-badge]][dockerhub-nginx]
+[![MailHog][mailhog-badge]][dockerhub-mailhog]
+[![MinIO][minio-badge]][dockerhub-minio]
+[![E2E Testing][e2e-testing-badge]][dockerhub-e2e]
+[![Performance Testing][performance-testing-badge]][dockerhub-performance]
 
-- **PHP 8.3**: `prod` _(45MB)_, `dev` _(85MB)_, `test` _(180MB)_ - Laravel backend
-- **Node.js 20 LTS**: `prod` _(35MB)_, `dev` _(120MB)_, `test` _(240MB)_ - Vue.js frontend
-- **MySQL 8.0 + Redis 7**: Database and caching
-- **Nginx 1.26**: Reverse proxy and static files
+### Multi-Stage Images (Progressive Architecture)
 
-### Services
+| Image | Prod | Dev | Test |
+|-------|------|-----|------|
+| [![PHP 8.3][php-version-badge]][dockerhub-php]<br>_Laravel backend_ | [![Size][php-prod-size-badge]][dockerhub-php]<br>[![Pulls][php-prod-pulls-badge]][dockerhub-php] | [![Size][php-dev-size-badge]][dockerhub-php]<br>[![Pulls][php-dev-pulls-badge]][dockerhub-php] | [![Size][php-test-size-badge]][dockerhub-php]<br>[![Pulls][php-test-pulls-badge]][dockerhub-php] |
+| [![Node 20][node-version-badge]][dockerhub-node]<br>_Vue.js frontend_ | [![Size][node-prod-size-badge]][dockerhub-node]<br>[![Pulls][node-prod-pulls-badge]][dockerhub-node] | [![Size][node-dev-size-badge]][dockerhub-node]<br>[![Pulls][node-dev-pulls-badge]][dockerhub-node] | [![Size][node-test-size-badge]][dockerhub-node]<br>[![Pulls][node-test-pulls-badge]][dockerhub-node] |
 
-- **MailHog**: Email testing with web interface
-- **MinIO**: S3-compatible object storage
-- **E2E Testing**: Playwright + Gherkin/Cucumber for Blade and Vue.js testing
-- **Performance Testing**: Artillery, k6, Locust for load and stress testing
+### Single-Stage Images (Database, Web & Services)
+
+| Image | Description | Size | Downloads |
+|-------|-------------|------|-----------|
+| [![MySQL 8.0][mysql-version-badge]][dockerhub-mysql] | Database with HA support | [![Size][mysql-size-badge]][dockerhub-mysql] | [![Pulls][mysql-pulls-badge]][dockerhub-mysql] |
+| [![Redis 7][redis-version-badge]][dockerhub-redis] | Caching with Sentinel | [![Size][redis-size-badge]][dockerhub-redis] | [![Pulls][redis-pulls-badge]][dockerhub-redis] |
+| [![Nginx 1.26][nginx-version-badge]][dockerhub-nginx] | Reverse proxy for Laravel | [![Size][nginx-size-badge]][dockerhub-nginx] | [![Pulls][nginx-pulls-badge]][dockerhub-nginx] |
+| [![MailHog][mailhog-badge]][dockerhub-mailhog] | Email testing with web UI | [![Size][mailhog-size-badge]][dockerhub-mailhog] | [![Pulls][mailhog-pulls-badge]][dockerhub-mailhog] |
+| [![MinIO][minio-badge]][dockerhub-minio] | S3-compatible object storage | [![Size][minio-size-badge]][dockerhub-minio] | [![Pulls][minio-pulls-badge]][dockerhub-minio] |
+| [![E2E Testing][e2e-testing-badge]][dockerhub-e2e] | Playwright + Gherkin/Cucumber | [![Size][e2e-size-badge]][dockerhub-e2e] | [![Pulls][e2e-pulls-badge]][dockerhub-e2e] |
+| [![Performance Testing][performance-testing-badge]][dockerhub-performance] | Artillery, k6, Locust | [![Size][performance-size-badge]][dockerhub-performance] | [![Pulls][performance-pulls-badge]][dockerhub-performance] |
+
+### Platform Support
+
+[![Alpine 3.19][alpine-badge]][alpine-link]
+[![Multi-Arch][multi-arch-badge]][multi-arch-link]
+
+All images are built on **Alpine Linux 3.19** for minimal size and attack surface, supporting **linux/amd64** and **linux/arm64** architectures.
 
 ## Image Naming Conventions
 
@@ -410,20 +415,18 @@ scripts/backup/restore.sh redis     # Point-in-time recovery
 
 - **[Contributing Guidelines][contributing]** - Development workflow and standards
 
-## Support
+## Support & License
 
-- [Discord][discord] - Community discussions (_🖥️・Developers_ role)
-- [Report Issues][issues]
-- [Documentation][docs] - Architecture and reference guides
-
-## License
-
-MIT License - see [LICENSE][license] file for details.
+[![Discord][discord-badge]][discord]
+[![Issues][issues-badge]][issues]
+[![Docs][docs-badge]][docs]
+[![Contributors][contributors-badge]][contributors]
+[![Activity][activity-badge]][activity]
+[![License][license-badge]][license]
 
 _Built with ❤️ by the Zairakai team for Laravel + Vue.js developers_
 
-<!-- Reference Links -->
-
+<!-- Documentation Links (no badges) -->
 [license]: ./LICENSE
 [security]: ./SECURITY.md
 [contributing]: ./CONTRIBUTING.md
@@ -436,46 +439,139 @@ _Built with ❤️ by the Zairakai team for Laravel + Vue.js developers_
 [disaster-recovery]: docs/DISASTER_RECOVERY.md
 [examples]: examples/
 [docs]: docs/
-[issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
-[discord]: https://discord.gg/MAmD5SG8Zu
 
-<!-- Badge Links -->
+<!-- Line 1: CI/CD & Quality -->
 [release-badge]: https://img.shields.io/gitlab/v/tag/zairakai%2Fdocker-ecosystem?label=release&logo=gitlab
 [release-link]: https://gitlab.com/zairakai/docker-ecosystem/-/releases
+
 [pipeline-main-badge]: https://gitlab.com/zairakai/docker-ecosystem/badges/main/pipeline.svg?ignore_skipped=true&key_text=Main
 [pipeline-main-link]: https://gitlab.com/zairakai/docker-ecosystem/commits/main
+
 [pipeline-develop-badge]: https://gitlab.com/zairakai/docker-ecosystem/badges/develop/pipeline.svg?ignore_skipped=true&key_text=Develop
 [pipeline-develop-link]: https://gitlab.com/zairakai/docker-ecosystem/commits/develop
+
+[security-badge]: https://img.shields.io/badge/security-scanned-green.svg
+[security]: ./SECURITY.md
+
 [license-badge]: https://img.shields.io/badge/license-MIT-blue.svg
-[dockerhub-badge]: https://img.shields.io/badge/docker%20hub-zairakai-blue?logo=docker
-[dockerhub]: https://hub.docker.com/u/zairakai
-[gitlab-registry-badge]: https://img.shields.io/badge/gitlab%20registry-available-orange?logo=gitlab
-[gitlab-registry]: https://gitlab.com/zairakai/docker-ecosystem/container_registry
-[php-pulls-badge]: https://img.shields.io/docker/pulls/zairakai/php?label=PHP%20pulls&logo=docker
-[dockerhub-php]: https://hub.docker.com/r/zairakai/php
-[mysql-pulls-badge]: https://img.shields.io/docker/pulls/zairakai/mysql?label=MySQL%20pulls&logo=docker
-[dockerhub-mysql]: https://hub.docker.com/r/zairakai/mysql
-[redis-pulls-badge]: https://img.shields.io/docker/pulls/zairakai/redis?label=Redis%20pulls&logo=docker
-[dockerhub-redis]: https://hub.docker.com/r/zairakai/redis
-[node-pulls-badge]: https://img.shields.io/docker/pulls/zairakai/node?label=Node%20pulls&logo=docker
-[dockerhub-node]: https://hub.docker.com/r/zairakai/node
-[nginx-pulls-badge]: https://img.shields.io/docker/pulls/zairakai/nginx?label=Nginx%20pulls&logo=docker
-[mailhog-pulls-badge]: https://img.shields.io/docker/pulls/zairakai/mailhog?label=MailHog%20pulls&logo=docker
-[minio-pulls-badge]: https://img.shields.io/docker/pulls/zairakai/minio?label=MinIO%20pulls&logo=docker
-[e2e-pulls-badge]: https://img.shields.io/docker/pulls/zairakai/e2e-testing?label=E2E%20pulls&logo=docker
-[performance-pulls-badge]: https://img.shields.io/docker/pulls/zairakai/performance-testing?label=Performance%20pulls&logo=docker
+[license]: ./LICENSE
+
+<!-- Line 2: Available Images -->
 [php-version-badge]: https://img.shields.io/badge/PHP-8.3-777BB4?logo=php&logoColor=white
+[dockerhub-php]: https://hub.docker.com/r/zairakai/php
+
 [node-version-badge]: https://img.shields.io/badge/Node-20%20LTS-339933?logo=node.js&logoColor=white
+[dockerhub-node]: https://hub.docker.com/r/zairakai/node
+
 [mysql-version-badge]: https://img.shields.io/badge/MySQL-8.0-4479A1?logo=mysql&logoColor=white
+[dockerhub-mysql]: https://hub.docker.com/r/zairakai/mysql
+
 [redis-version-badge]: https://img.shields.io/badge/Redis-7-DC382D?logo=redis&logoColor=white
+[dockerhub-redis]: https://hub.docker.com/r/zairakai/redis
+
 [nginx-version-badge]: https://img.shields.io/badge/Nginx-1.26-009639?logo=nginx&logoColor=white
 [dockerhub-nginx]: https://hub.docker.com/r/zairakai/nginx
+
 [mailhog-badge]: https://img.shields.io/badge/MailHog-latest-00ADD8?logo=mail.ru&logoColor=white
 [dockerhub-mailhog]: https://hub.docker.com/r/zairakai/mailhog
+
 [minio-badge]: https://img.shields.io/badge/MinIO-latest-C72E49?logo=minio&logoColor=white
 [dockerhub-minio]: https://hub.docker.com/r/zairakai/minio
+
 [e2e-testing-badge]: https://img.shields.io/badge/E2E%20Testing-Playwright-45BA4B?logo=playwright&logoColor=white
 [dockerhub-e2e]: https://hub.docker.com/r/zairakai/e2e-testing
+
 [performance-testing-badge]: https://img.shields.io/badge/Performance-Artillery%20%7C%20k6-FF6C37?logo=artillery&logoColor=white
 [dockerhub-performance]: https://hub.docker.com/r/zairakai/performance-testing
-[security-badge]: https://img.shields.io/badge/security-scanned-green.svg
+
+<!-- Line 3: Registries & Infrastructure -->
+[dockerhub-badge]: https://img.shields.io/badge/docker%20hub-zairakai-blue?logo=docker
+[dockerhub]: https://hub.docker.com/u/zairakai
+
+[gitlab-registry-badge]: https://img.shields.io/badge/gitlab%20registry-available-orange?logo=gitlab
+[gitlab-registry]: https://gitlab.com/zairakai/docker-ecosystem/container_registry
+
+[alpine-badge]: https://img.shields.io/badge/built%20on-Alpine%203.19-0D597F?logo=alpine-linux&logoColor=white
+[alpine-link]: https://alpinelinux.org/
+
+[multi-arch-badge]: https://img.shields.io/badge/platforms-linux%2Famd64%20%7C%20linux%2Farm64-blue?logo=docker
+[multi-arch-link]: #-available-images
+
+<!-- Line 4: Community & Stats -->
+[stars-badge]: https://img.shields.io/gitlab/stars/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Stars
+[stars-link]: https://gitlab.com/zairakai/docker-ecosystem
+
+[total-downloads-badge]: https://img.shields.io/badge/docker%20pulls-1M%2B-blue?logo=docker
+
+[discord-badge]: https://img.shields.io/discord/1260000352699289621?logo=discord&label=Discord&color=5865F2
+[discord]: https://discord.gg/MAmD5SG8Zu
+
+[contributors-badge]: https://img.shields.io/gitlab/contributors/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Contributors
+[contributors]: https://gitlab.com/zairakai/docker-ecosystem/-/graphs/main
+
+<!-- Support & License Section -->
+[issues-badge]: https://img.shields.io/gitlab/issues/open/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Issues
+[issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
+
+[docs-badge]: https://img.shields.io/badge/docs-available-blue?logo=readthedocs&logoColor=white
+
+[activity-badge]: https://img.shields.io/gitlab/last-commit/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Last%20Commit
+[activity]: https://gitlab.com/zairakai/docker-ecosystem/-/commits/main
+
+<!-- Stage-Specific Pulls Badges (PHP) -->
+[php-prod-pulls-badge]: https://img.shields.io/docker/pulls/zairakai/php?logo=docker&label=8.3-prod
+
+[php-dev-pulls-badge]: https://img.shields.io/docker/pulls/zairakai/php?logo=docker&label=8.3-dev
+
+[php-test-pulls-badge]: https://img.shields.io/docker/pulls/zairakai/php?logo=docker&label=8.3-test
+
+<!-- Stage-Specific Pulls Badges (Node) -->
+[node-prod-pulls-badge]: https://img.shields.io/docker/pulls/zairakai/node?logo=docker&label=20-prod
+
+[node-dev-pulls-badge]: https://img.shields.io/docker/pulls/zairakai/node?logo=docker&label=20-dev
+
+[node-test-pulls-badge]: https://img.shields.io/docker/pulls/zairakai/node?logo=docker&label=20-test
+
+<!-- Pulls Badges (Single-Stage Images) -->
+[mysql-pulls-badge]: https://img.shields.io/docker/pulls/zairakai/mysql?logo=docker&label=pulls
+
+[redis-pulls-badge]: https://img.shields.io/docker/pulls/zairakai/redis?logo=docker&label=pulls
+
+[nginx-pulls-badge]: https://img.shields.io/docker/pulls/zairakai/nginx?logo=docker&label=pulls
+
+[mailhog-pulls-badge]: https://img.shields.io/docker/pulls/zairakai/mailhog?logo=docker&label=pulls
+
+[minio-pulls-badge]: https://img.shields.io/docker/pulls/zairakai/minio?logo=docker&label=pulls
+
+[e2e-pulls-badge]: https://img.shields.io/docker/pulls/zairakai/e2e-testing?logo=docker&label=pulls
+
+[performance-pulls-badge]: https://img.shields.io/docker/pulls/zairakai/performance-testing?logo=docker&label=pulls
+
+<!-- Dynamic Size Badges (PHP) -->
+[php-prod-size-badge]: https://img.shields.io/docker/image-size/zairakai/php/8.3-prod?logo=docker&label=size&color=success
+
+[php-dev-size-badge]: https://img.shields.io/docker/image-size/zairakai/php/8.3-dev?logo=docker&label=size&color=blue
+
+[php-test-size-badge]: https://img.shields.io/docker/image-size/zairakai/php/8.3-test?logo=docker&label=size&color=orange
+
+<!-- Dynamic Size Badges (Node) -->
+[node-prod-size-badge]: https://img.shields.io/docker/image-size/zairakai/node/20-prod?logo=docker&label=size&color=success
+
+[node-dev-size-badge]: https://img.shields.io/docker/image-size/zairakai/node/20-dev?logo=docker&label=size&color=blue
+
+[node-test-size-badge]: https://img.shields.io/docker/image-size/zairakai/node/20-test?logo=docker&label=size&color=orange
+
+<!-- Dynamic Size Badges (Single-Stage Images) -->
+[mysql-size-badge]: https://img.shields.io/docker/image-size/zairakai/mysql/8.0?logo=docker&label=size
+
+[redis-size-badge]: https://img.shields.io/docker/image-size/zairakai/redis/7?logo=docker&label=size
+
+[nginx-size-badge]: https://img.shields.io/docker/image-size/zairakai/nginx/1.26?logo=docker&label=size
+
+[mailhog-size-badge]: https://img.shields.io/docker/image-size/zairakai/mailhog/latest?logo=docker&label=size
+
+[minio-size-badge]: https://img.shields.io/docker/image-size/zairakai/minio/latest?logo=docker&label=size
+
+[e2e-size-badge]: https://img.shields.io/docker/image-size/zairakai/e2e-testing/latest?logo=docker&label=size
+
+[performance-size-badge]: https://img.shields.io/docker/image-size/zairakai/performance-testing/latest?logo=docker&label=size

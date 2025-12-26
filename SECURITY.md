@@ -1,5 +1,9 @@
 # Security Policy - Zairakai Docker Ecosystem
 
+[![Security][security-badge]][security-dashboard]
+[![Signed][cosign-badge]][cosign-docs]
+[![Vulnerabilities][vulnerabilities-badge]][security-dashboard]
+
 ## Security Overview
 
 The Zairakai Docker Ecosystem implements comprehensive security scanning throughout the CI/CD pipeline to ensure the safety and reliability of our Laravel + Vue.js development stack.
@@ -363,10 +367,9 @@ Security scans run automatically but require manual review for:
 
 ### Contact Information
 
-- **[Discord][discord]**: Community discussions (*🖥️・Developers* role)
-- **[GitLab Issues][issues]**: Report vulnerabilities and security concerns
-- **Security Findings**: Review security reports in GitLab Security Dashboard
-- **Critical Issues**: Address immediately based on scanner findings
+[![Discord][discord-badge]][discord]
+[![Issues][issues-badge]][issues]
+[![Security Dashboard][security-dashboard-badge]][security-dashboard]
 
 ## Compliance Standards
 
@@ -388,3 +391,13 @@ Our security implementation follows:
 <!-- Reference Links -->
 [discord]: https://discord.gg/MAmD5SG8Zu
 [issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
+[security-dashboard]: https://gitlab.com/zairakai/docker-ecosystem/-/security/dashboard
+[cosign-docs]: #-image-signing-with-cosign
+
+<!-- Badge Links -->
+[security-badge]: https://img.shields.io/badge/security-scanned-green.svg?logo=gitlab
+[cosign-badge]: https://img.shields.io/badge/signed-cosign-blue?logo=cosign&logoColor=white
+[vulnerabilities-badge]: https://img.shields.io/gitlab/vulnerabilities/zairakai%2Fdocker-ecosystem?logo=gitlab&label=vulnerabilities
+[discord-badge]: https://img.shields.io/discord/1260000352699289621?logo=discord&label=Discord&color=5865F2
+[issues-badge]: https://img.shields.io/gitlab/issues/open/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Issues
+[security-dashboard-badge]: https://img.shields.io/badge/security-dashboard-orange?logo=gitlab&logoColor=white

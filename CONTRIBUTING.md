@@ -1,5 +1,9 @@
 # Contributing Guide
 
+[![PRs Welcome][prs-welcome-badge]][issues]
+[![Contributors][contributors-badge]][contributors]
+[![Discord][discord-badge]][discord]
+
 Thank you for your interest in contributing to the Zairakai Docker Ecosystem!
 
 This repository generates and maintains **Docker images** for Laravel + Vue.js development. Contributions help improve the quality and security of these images.
@@ -176,10 +180,9 @@ CI_REGISTRY_IMAGE=registry.gitlab.com/zairakai/docker-ecosystem \
 
 ## Need Help?
 
-- **[Discord][discord]** - Community discussions (*🖥️・Developers* role)
-- **[GitLab Issues][issues]** - Bug reports and feature requests
-- **[Documentation][docs]** - Architecture and reference guides
-- **[Examples][examples]** - Usage patterns and configurations
+[![Discord][discord-badge]][discord]
+[![Issues][issues-badge]][issues]
+[![Docs][docs-badge]][docs]
 
 **Let's build better Docker images together!**
 
@@ -189,3 +192,11 @@ CI_REGISTRY_IMAGE=registry.gitlab.com/zairakai/docker-ecosystem \
 [security]: ./SECURITY.md
 [docs]: docs/
 [examples]: examples/
+[contributors]: https://gitlab.com/zairakai/docker-ecosystem/-/graphs/main
+
+<!-- Badge Links -->
+[prs-welcome-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?logo=git
+[contributors-badge]: https://img.shields.io/gitlab/contributors/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Contributors
+[discord-badge]: https://img.shields.io/discord/1260000352699289621?logo=discord&label=Discord&color=5865F2
+[issues-badge]: https://img.shields.io/gitlab/issues/open/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Issues
+[docs-badge]: https://img.shields.io/badge/docs-available-blue?logo=readthedocs&logoColor=white
