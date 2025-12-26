@@ -4,27 +4,41 @@
   <img src="./assets/banner.svg" alt="Zairakai Docker Ecosystem" style="max-width: 800px; width: 100%;">
 </p>
 
-<!-- Line 1: CI/CD & Quality -->
-[![Release][release-badge]][release-link]
-[![Main][pipeline-main-badge]][pipeline-main-link]
-[![Develop][pipeline-develop-badge]][pipeline-develop-link]
-[![Security][security-badge]][security]
-[![License][license-badge]][license]
+<p align="center">
+  <strong>Production-ready Docker images for Laravel + Vue.js development</strong>
+</p>
 
-<!-- Line 2: Available Images -->
-[![PHP 8.3][php-version-badge]][dockerhub-php]
-[![Node 20][node-version-badge]][dockerhub-node]
-[![MySQL 8.0][mysql-version-badge]][dockerhub-mysql]
-[![Redis 7][redis-version-badge]][dockerhub-redis]
-[![Nginx 1.26][nginx-version-badge]][dockerhub-nginx]
-[![MailHog][mailhog-badge]][dockerhub-mailhog]
-[![MinIO][minio-badge]][dockerhub-minio]
-[![E2E Testing][e2e-testing-badge]][dockerhub-e2e]
-[![Performance Testing][performance-testing-badge]][dockerhub-performance]
+<p align="center">
+  <!-- CI/CD & Quality -->
+  <a href="https://gitlab.com/zairakai/docker-ecosystem/-/releases"><img src="https://img.shields.io/gitlab/v/tag/zairakai%2Fdocker-ecosystem?label=release&logo=gitlab" alt="Release"></a>
+  <a href="https://gitlab.com/zairakai/docker-ecosystem/commits/main"><img src="https://gitlab.com/zairakai/docker-ecosystem/badges/main/pipeline.svg?ignore_skipped=true&key_text=Main" alt="Main Pipeline"></a>
+  <a href="https://gitlab.com/zairakai/docker-ecosystem/commits/develop"><img src="https://gitlab.com/zairakai/docker-ecosystem/badges/develop/pipeline.svg?ignore_skipped=true&key_text=Develop" alt="Develop Pipeline"></a>
+  <a href="./SECURITY.md"><img src="https://img.shields.io/badge/security-scanned-green.svg" alt="Security"></a>
+  <a href="./LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License"></a>
+  <br>
+  <!-- Community & Stats -->
+  <a href="https://gitlab.com/zairakai/docker-ecosystem"><img src="https://img.shields.io/gitlab/stars/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Stars" alt="GitLab Stars"></a>
+  <a href="https://hub.docker.com/u/zairakai"><img src="https://img.shields.io/badge/docker%20pulls-1M%2B-blue?logo=docker" alt="Total Downloads"></a>
+  <a href="https://discord.gg/MAmD5SG8Zu"><img src="https://img.shields.io/discord/1260000352699289621?logo=discord&label=Discord&color=5865F2" alt="Discord"></a>
+  <a href="https://gitlab.com/zairakai/docker-ecosystem/-/graphs/main"><img src="https://img.shields.io/gitlab/contributors/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Contributors" alt="Contributors"></a>
+</p>
 
-<!-- Line 3: Registries -->
-[![Docker Hub][dockerhub-badge]][dockerhub]
-[![GitLab Registry][gitlab-registry-badge]][gitlab-registry]
+<p align="center">
+  <!-- Stack Technologies -->
+  <a href="https://hub.docker.com/r/zairakai/php"><img src="https://img.shields.io/badge/PHP-8.3-777BB4?logo=php&logoColor=white" alt="PHP 8.3"></a>
+  <a href="https://hub.docker.com/r/zairakai/node"><img src="https://img.shields.io/badge/Node-20%20LTS-339933?logo=node.js&logoColor=white" alt="Node 20"></a>
+  <a href="https://hub.docker.com/r/zairakai/mysql"><img src="https://img.shields.io/badge/MySQL-8.0-4479A1?logo=mysql&logoColor=white" alt="MySQL 8.0"></a>
+  <a href="https://hub.docker.com/r/zairakai/redis"><img src="https://img.shields.io/badge/Redis-7-DC382D?logo=redis&logoColor=white" alt="Redis 7"></a>
+  <a href="https://hub.docker.com/r/zairakai/nginx"><img src="https://img.shields.io/badge/Nginx-1.26-009639?logo=nginx&logoColor=white" alt="Nginx 1.26"></a>
+  <br>
+  <!-- Infrastructure -->
+  <a href="https://alpinelinux.org/"><img src="https://img.shields.io/badge/built%20on-Alpine%203.19-0D597F?logo=alpine-linux&logoColor=white" alt="Alpine Linux"></a>
+  <a href="#-available-images"><img src="https://img.shields.io/badge/platforms-linux%2Famd64%20%7C%20linux%2Farm64-blue?logo=docker" alt="Multi-Arch"></a>
+  <a href="https://hub.docker.com/u/zairakai"><img src="https://img.shields.io/badge/docker%20hub-zairakai-blue?logo=docker" alt="Docker Hub"></a>
+  <a href="https://gitlab.com/zairakai/docker-ecosystem/container_registry"><img src="https://img.shields.io/badge/gitlab%20registry-available-orange?logo=gitlab" alt="GitLab Registry"></a>
+</p>
+
+---
 
 **14 lightweight images** with progressive architecture (prod → dev → test) and comprehensive security scanning.
 
@@ -247,29 +261,43 @@ bash scripts/cleanup.sh
 
 - **PHP 8.3**: `prod` _(45MB)_, `dev` _(85MB)_, `test` _(180MB)_ - Laravel backend
   [![PHP Pulls][php-pulls-badge]][dockerhub-php]
+  [![PHP Prod Size][php-prod-size-badge]][dockerhub-php]
+  [![PHP Dev Size][php-dev-size-badge]][dockerhub-php]
+  [![PHP Test Size][php-test-size-badge]][dockerhub-php]
 
 - **Node.js 20 LTS**: `prod` _(35MB)_, `dev` _(120MB)_, `test` _(240MB)_ - Vue.js frontend
   [![Node Pulls][node-pulls-badge]][dockerhub-node]
+  [![Node Prod Size][node-prod-size-badge]][dockerhub-node]
+  [![Node Dev Size][node-dev-size-badge]][dockerhub-node]
+  [![Node Test Size][node-test-size-badge]][dockerhub-node]
 
 - **MySQL 8.0 + Redis 7**: Database and caching
-  [![MySQL Pulls][mysql-pulls-badge]][dockerhub-mysql] [![Redis Pulls][redis-pulls-badge]][dockerhub-redis]
+  [![MySQL Pulls][mysql-pulls-badge]][dockerhub-mysql]
+  [![MySQL Size][mysql-size-badge]][dockerhub-mysql]
+  [![Redis Pulls][redis-pulls-badge]][dockerhub-redis]
+  [![Redis Size][redis-size-badge]][dockerhub-redis]
 
 - **Nginx 1.26**: Reverse proxy and static files
   [![Nginx Pulls][nginx-pulls-badge]][dockerhub-nginx]
+  [![Nginx Size][nginx-size-badge]][dockerhub-nginx]
 
 ### Services
 
 - **MailHog**: Email testing with web interface
   [![MailHog Pulls][mailhog-pulls-badge]][dockerhub-mailhog]
+  [![MailHog Size][mailhog-size-badge]][dockerhub-mailhog]
 
 - **MinIO**: S3-compatible object storage
   [![MinIO Pulls][minio-pulls-badge]][dockerhub-minio]
+  [![MinIO Size][minio-size-badge]][dockerhub-minio]
 
 - **E2E Testing**: Playwright + Gherkin/Cucumber for Blade and Vue.js testing
   [![E2E Pulls][e2e-pulls-badge]][dockerhub-e2e]
+  [![E2E Size][e2e-size-badge]][dockerhub-e2e]
 
 - **Performance Testing**: Artillery, k6, Locust for load and stress testing
   [![Performance Pulls][performance-pulls-badge]][dockerhub-performance]
+  [![Performance Size][performance-size-badge]][dockerhub-performance]
 
 ## Image Naming Conventions
 
@@ -497,3 +525,18 @@ _Built with ❤️ by the Zairakai team for Laravel + Vue.js developers_
 [contributors]: https://gitlab.com/zairakai/docker-ecosystem/-/graphs/main
 [activity-badge]: https://img.shields.io/gitlab/last-commit/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Last%20commit
 [activity]: https://gitlab.com/zairakai/docker-ecosystem/-/commits/main
+
+<!-- Dynamic Image Size Badges -->
+[php-prod-size-badge]: https://img.shields.io/docker/image-size/zairakai/php/8.3-prod?logo=docker&label=prod&color=success
+[php-dev-size-badge]: https://img.shields.io/docker/image-size/zairakai/php/8.3-dev?logo=docker&label=dev&color=blue
+[php-test-size-badge]: https://img.shields.io/docker/image-size/zairakai/php/8.3-test?logo=docker&label=test&color=orange
+[node-prod-size-badge]: https://img.shields.io/docker/image-size/zairakai/node/20-prod?logo=docker&label=prod&color=success
+[node-dev-size-badge]: https://img.shields.io/docker/image-size/zairakai/node/20-dev?logo=docker&label=dev&color=blue
+[node-test-size-badge]: https://img.shields.io/docker/image-size/zairakai/node/20-test?logo=docker&label=test&color=orange
+[mysql-size-badge]: https://img.shields.io/docker/image-size/zairakai/mysql/8.0?logo=docker&label=size
+[redis-size-badge]: https://img.shields.io/docker/image-size/zairakai/redis/7?logo=docker&label=size
+[nginx-size-badge]: https://img.shields.io/docker/image-size/zairakai/nginx/1.26?logo=docker&label=size
+[mailhog-size-badge]: https://img.shields.io/docker/image-size/zairakai/mailhog/latest?logo=docker&label=size
+[minio-size-badge]: https://img.shields.io/docker/image-size/zairakai/minio/latest?logo=docker&label=size
+[e2e-size-badge]: https://img.shields.io/docker/image-size/zairakai/e2e-testing/latest?logo=docker&label=size
+[performance-size-badge]: https://img.shields.io/docker/image-size/zairakai/performance-testing/latest?logo=docker&label=size

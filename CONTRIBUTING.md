@@ -3,6 +3,7 @@
 [![Discord][discord-badge]][discord]
 [![Issues][issues-badge]][issues]
 [![Contributors][contributors-badge]][contributors]
+[![PRs Welcome][prs-badge]][contributing]
 
 Thank you for your interest in contributing to the Zairakai Docker Ecosystem!
 
@@ -193,8 +194,10 @@ Join our Discord community, report issues, or browse the documentation and examp
 [security]: ./SECURITY.md
 [docs]: docs/
 [examples]: examples/
+[contributing]: https://gitlab.com/zairakai/docker-ecosystem/-/blob/main/CONTRIBUTING.md
 
 <!-- Badges -->
 [discord-badge]: https://img.shields.io/discord/1260000352699289621?logo=discord&label=Discord&color=5865F2
 [issues-badge]: https://img.shields.io/gitlab/issues/open/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Issues
 [contributors-badge]: https://img.shields.io/gitlab/contributors/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Contributors
+[prs-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?logo=git
