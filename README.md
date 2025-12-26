@@ -257,47 +257,24 @@ bash scripts/cleanup.sh
 
 ## 📦 Available Images
 
-### Core Stack
+### Multi-Stage Images (Progressive Architecture)
 
-- **PHP 8.3**: `prod` _(45MB)_, `dev` _(85MB)_, `test` _(180MB)_ - Laravel backend
-  [![PHP Pulls][php-pulls-badge]][dockerhub-php]
-  [![PHP Prod Size][php-prod-size-badge]][dockerhub-php]
-  [![PHP Dev Size][php-dev-size-badge]][dockerhub-php]
-  [![PHP Test Size][php-test-size-badge]][dockerhub-php]
+| Image | Prod | Dev | Test |
+|-------|------|-----|------|
+| **PHP 8.3**<br>_Laravel backend_ | [![Size][php-prod-size-badge]][dockerhub-php]<br>[![Pulls][php-prod-pulls-badge]][dockerhub-php] | [![Size][php-dev-size-badge]][dockerhub-php]<br>[![Pulls][php-dev-pulls-badge]][dockerhub-php] | [![Size][php-test-size-badge]][dockerhub-php]<br>[![Pulls][php-test-pulls-badge]][dockerhub-php] |
+| **Node.js 20 LTS**<br>_Vue.js frontend_ | [![Size][node-prod-size-badge]][dockerhub-node]<br>[![Pulls][node-prod-pulls-badge]][dockerhub-node] | [![Size][node-dev-size-badge]][dockerhub-node]<br>[![Pulls][node-dev-pulls-badge]][dockerhub-node] | [![Size][node-test-size-badge]][dockerhub-node]<br>[![Pulls][node-test-pulls-badge]][dockerhub-node] |
 
-- **Node.js 20 LTS**: `prod` _(35MB)_, `dev` _(120MB)_, `test` _(240MB)_ - Vue.js frontend
-  [![Node Pulls][node-pulls-badge]][dockerhub-node]
-  [![Node Prod Size][node-prod-size-badge]][dockerhub-node]
-  [![Node Dev Size][node-dev-size-badge]][dockerhub-node]
-  [![Node Test Size][node-test-size-badge]][dockerhub-node]
+### Single-Stage Images (Database, Web & Services)
 
-- **MySQL 8.0 + Redis 7**: Database and caching
-  [![MySQL Pulls][mysql-pulls-badge]][dockerhub-mysql]
-  [![MySQL Size][mysql-size-badge]][dockerhub-mysql]
-  [![Redis Pulls][redis-pulls-badge]][dockerhub-redis]
-  [![Redis Size][redis-size-badge]][dockerhub-redis]
-
-- **Nginx 1.26**: Reverse proxy and static files
-  [![Nginx Pulls][nginx-pulls-badge]][dockerhub-nginx]
-  [![Nginx Size][nginx-size-badge]][dockerhub-nginx]
-
-### Services
-
-- **MailHog**: Email testing with web interface
-  [![MailHog Pulls][mailhog-pulls-badge]][dockerhub-mailhog]
-  [![MailHog Size][mailhog-size-badge]][dockerhub-mailhog]
-
-- **MinIO**: S3-compatible object storage
-  [![MinIO Pulls][minio-pulls-badge]][dockerhub-minio]
-  [![MinIO Size][minio-size-badge]][dockerhub-minio]
-
-- **E2E Testing**: Playwright + Gherkin/Cucumber for Blade and Vue.js testing
-  [![E2E Pulls][e2e-pulls-badge]][dockerhub-e2e]
-  [![E2E Size][e2e-size-badge]][dockerhub-e2e]
-
-- **Performance Testing**: Artillery, k6, Locust for load and stress testing
-  [![Performance Pulls][performance-pulls-badge]][dockerhub-performance]
-  [![Performance Size][performance-size-badge]][dockerhub-performance]
+| Image | Description | Size | Downloads |
+|-------|-------------|------|-----------|
+| **MySQL 8.0** | Database with HA support | [![Size][mysql-size-badge]][dockerhub-mysql] | [![Pulls][mysql-pulls-badge]][dockerhub-mysql] |
+| **Redis 7** | Caching with Sentinel | [![Size][redis-size-badge]][dockerhub-redis] | [![Pulls][redis-pulls-badge]][dockerhub-redis] |
+| **Nginx 1.26** | Reverse proxy for Laravel | [![Size][nginx-size-badge]][dockerhub-nginx] | [![Pulls][nginx-pulls-badge]][dockerhub-nginx] |
+| **MailHog** | Email testing with web UI | [![Size][mailhog-size-badge]][dockerhub-mailhog] | [![Pulls][mailhog-pulls-badge]][dockerhub-mailhog] |
+| **MinIO** | S3-compatible object storage | [![Size][minio-size-badge]][dockerhub-minio] | [![Pulls][minio-pulls-badge]][dockerhub-minio] |
+| **E2E Testing** | Playwright + Gherkin/Cucumber | [![Size][e2e-size-badge]][dockerhub-e2e] | [![Pulls][e2e-pulls-badge]][dockerhub-e2e] |
+| **Performance Testing** | Artillery, k6, Locust | [![Size][performance-size-badge]][dockerhub-performance] | [![Pulls][performance-pulls-badge]][dockerhub-performance] |
 
 ## Image Naming Conventions
 
@@ -488,7 +465,7 @@ _Built with ❤️ by the Zairakai team for Laravel + Vue.js developers_
 [dockerhub]: https://hub.docker.com/u/zairakai
 [gitlab-registry-badge]: https://img.shields.io/badge/gitlab%20registry-available-orange?logo=gitlab
 [gitlab-registry]: https://gitlab.com/zairakai/docker-ecosystem/container_registry
-[php-pulls-badge]: https://img.shields.io/docker/pulls/zairakai/php?label=PHP%20pulls&logo=docker
+[php-pulls-badge]: https://img.shields.io/docker/pulls/zairakai/php?label=PHP%208.3%20pulls&logo=docker
 [dockerhub-php]: https://hub.docker.com/r/zairakai/php
 [mysql-pulls-badge]: https://img.shields.io/docker/pulls/zairakai/mysql?label=MySQL%20pulls&logo=docker
 [dockerhub-mysql]: https://hub.docker.com/r/zairakai/mysql
@@ -527,12 +504,12 @@ _Built with ❤️ by the Zairakai team for Laravel + Vue.js developers_
 [activity]: https://gitlab.com/zairakai/docker-ecosystem/-/commits/main
 
 <!-- Dynamic Image Size Badges -->
-[php-prod-size-badge]: https://img.shields.io/docker/image-size/zairakai/php/8.3-prod?logo=docker&label=prod&color=success
-[php-dev-size-badge]: https://img.shields.io/docker/image-size/zairakai/php/8.3-dev?logo=docker&label=dev&color=blue
-[php-test-size-badge]: https://img.shields.io/docker/image-size/zairakai/php/8.3-test?logo=docker&label=test&color=orange
-[node-prod-size-badge]: https://img.shields.io/docker/image-size/zairakai/node/20-prod?logo=docker&label=prod&color=success
-[node-dev-size-badge]: https://img.shields.io/docker/image-size/zairakai/node/20-dev?logo=docker&label=dev&color=blue
-[node-test-size-badge]: https://img.shields.io/docker/image-size/zairakai/node/20-test?logo=docker&label=test&color=orange
+[php-prod-size-badge]: https://img.shields.io/docker/image-size/zairakai/php/8.3-prod?logo=docker&label=size&color=success
+[php-dev-size-badge]: https://img.shields.io/docker/image-size/zairakai/php/8.3-dev?logo=docker&label=size&color=blue
+[php-test-size-badge]: https://img.shields.io/docker/image-size/zairakai/php/8.3-test?logo=docker&label=size&color=orange
+[node-prod-size-badge]: https://img.shields.io/docker/image-size/zairakai/node/20-prod?logo=docker&label=size&color=success
+[node-dev-size-badge]: https://img.shields.io/docker/image-size/zairakai/node/20-dev?logo=docker&label=size&color=blue
+[node-test-size-badge]: https://img.shields.io/docker/image-size/zairakai/node/20-test?logo=docker&label=size&color=orange
 [mysql-size-badge]: https://img.shields.io/docker/image-size/zairakai/mysql/8.0?logo=docker&label=size
 [redis-size-badge]: https://img.shields.io/docker/image-size/zairakai/redis/7?logo=docker&label=size
 [nginx-size-badge]: https://img.shields.io/docker/image-size/zairakai/nginx/1.26?logo=docker&label=size
@@ -540,3 +517,11 @@ _Built with ❤️ by the Zairakai team for Laravel + Vue.js developers_
 [minio-size-badge]: https://img.shields.io/docker/image-size/zairakai/minio/latest?logo=docker&label=size
 [e2e-size-badge]: https://img.shields.io/docker/image-size/zairakai/e2e-testing/latest?logo=docker&label=size
 [performance-size-badge]: https://img.shields.io/docker/image-size/zairakai/performance-testing/latest?logo=docker&label=size
+
+<!-- Stage-Specific Pulls Badges (PHP & Node Multi-Stage) -->
+[php-prod-pulls-badge]: https://img.shields.io/docker/pulls/zairakai/php?logo=docker&label=8.3-prod
+[php-dev-pulls-badge]: https://img.shields.io/docker/pulls/zairakai/php?logo=docker&label=8.3-dev
+[php-test-pulls-badge]: https://img.shields.io/docker/pulls/zairakai/php?logo=docker&label=8.3-test
+[node-prod-pulls-badge]: https://img.shields.io/docker/pulls/zairakai/node?logo=docker&label=20-prod
+[node-dev-pulls-badge]: https://img.shields.io/docker/pulls/zairakai/node?logo=docker&label=20-dev
+[node-test-pulls-badge]: https://img.shields.io/docker/pulls/zairakai/node?logo=docker&label=20-test
