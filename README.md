@@ -26,7 +26,7 @@
 
 Images are available on **two registries** for maximum convenience:
 
-### [![Docker Hub][dockerhub-badge]][dockerhub] Recommended for simplicity
+### [![Docker Hub][dockerhub-badge]][dockerhub]
 
 ```bash
 docker pull zairakai/php:8.3-prod
@@ -35,7 +35,7 @@ docker pull zairakai/redis:7
 docker pull zairakai/nginx:1.26
 ```
 
-### [![GitLab Registry][gitlab-registry-badge]][gitlab-registry] Primary source
+### [![GitLab Registry][gitlab-registry-badge]][gitlab-registry]
 
 ```bash
 docker pull registry.gitlab.com/zairakai/docker-ecosystem/php:8.3-prod
@@ -82,9 +82,9 @@ docker-compose exec app composer install
 docker-compose exec app php artisan migrate
 ```
 
-> **Alternative:**  
-> Use GitLab Registry by replacing `zairakai/` with `registry.gitlab.com/zairakai/docker-ecosystem/`
-and adjusting image names (see [Image Naming](#image-naming-conventions) below).
+> **Alternative:** Use GitLab Registry  
+> Replace **`zairakai/`** with **`registry.gitlab.com/zairakai/docker-ecosystem/`**  
+> Adjust image names (see [Image Naming](#image-naming-conventions) below)
 
 - **[📚 Documentation Index](docs/INDEX.md)**
 - **[5-Minute Tutorial][quickstart]**
@@ -240,27 +240,17 @@ bash scripts/pipeline/sync-dockerhub.sh
 
 ## 📦 Available Images
 
-[![PHP 8.3][php-version-badge]][dockerhub-php]
-[![Node 20][node-version-badge]][dockerhub-node]
-[![MySQL 8.0][mysql-version-badge]][dockerhub-mysql]
-[![Redis 7][redis-version-badge]][dockerhub-redis]
-[![Nginx 1.26][nginx-version-badge]][dockerhub-nginx]
-[![MailHog][mailhog-badge]][dockerhub-mailhog]
-[![MinIO][minio-badge]][dockerhub-minio]
-[![E2E Testing][e2e-testing-badge]][dockerhub-e2e]
-[![Performance Testing][performance-testing-badge]][dockerhub-performance]
-
 ### Multi-Stage Images (Progressive Architecture)
 
 | Image | Prod | Dev | Test |
-|-------|------|-----|------|
-| [![PHP 8.3][php-version-badge]][dockerhub-php]<br>_Laravel backend_ | [![Size][php-prod-size-badge]][dockerhub-php]<br>[![Pulls][php-prod-pulls-badge]][dockerhub-php] | [![Size][php-dev-size-badge]][dockerhub-php]<br>[![Pulls][php-dev-pulls-badge]][dockerhub-php] | [![Size][php-test-size-badge]][dockerhub-php]<br>[![Pulls][php-test-pulls-badge]][dockerhub-php] |
-| [![Node 20][node-version-badge]][dockerhub-node]<br>_Vue.js frontend_ | [![Size][node-prod-size-badge]][dockerhub-node]<br>[![Pulls][node-prod-pulls-badge]][dockerhub-node] | [![Size][node-dev-size-badge]][dockerhub-node]<br>[![Pulls][node-dev-pulls-badge]][dockerhub-node] | [![Size][node-test-size-badge]][dockerhub-node]<br>[![Pulls][node-test-pulls-badge]][dockerhub-node] |
+| ----- | ---- | --- | ---- |
+| [![PHP 8.3][php-version-badge]][dockerhub-php] | [![Size][php-prod-size-badge]][dockerhub-php] [![Pulls][php-prod-pulls-badge]][dockerhub-php] | [![Size][php-dev-size-badge]][dockerhub-php] [![Pulls][php-dev-pulls-badge]][dockerhub-php] | [![Size][php-test-size-badge]][dockerhub-php] [![Pulls][php-test-pulls-badge]][dockerhub-php] |
+| [![Node 20][node-version-badge]][dockerhub-node] | [![Size][node-prod-size-badge]][dockerhub-node] [![Pulls][node-prod-pulls-badge]][dockerhub-node] | [![Size][node-dev-size-badge]][dockerhub-node] [![Pulls][node-dev-pulls-badge]][dockerhub-node] | [![Size][node-test-size-badge]][dockerhub-node] [![Pulls][node-test-pulls-badge]][dockerhub-node] |
 
 ### Single-Stage Images (Database, Web & Services)
 
 | Image | Description | Size | Downloads |
-|-------|-------------|------|-----------|
+| ----- | ----------- | ---- | --------- |
 | [![MySQL 8.0][mysql-version-badge]][dockerhub-mysql] | Database with HA support | [![Size][mysql-size-badge]][dockerhub-mysql] | [![Pulls][mysql-pulls-badge]][dockerhub-mysql] |
 | [![Redis 7][redis-version-badge]][dockerhub-redis] | Caching with Sentinel | [![Size][redis-size-badge]][dockerhub-redis] | [![Pulls][redis-pulls-badge]][dockerhub-redis] |
 | [![Nginx 1.26][nginx-version-badge]][dockerhub-nginx] | Reverse proxy for Laravel | [![Size][nginx-size-badge]][dockerhub-nginx] | [![Pulls][nginx-pulls-badge]][dockerhub-nginx] |
@@ -278,27 +268,19 @@ All images are built on **Alpine Linux 3.19** for minimal size and attack surfac
 
 ## Image Naming Conventions
 
-Images use different naming patterns depending on the registry:
+**Docker Hub** (simpler):
+```
+zairakai/<image>:<tag>
+```
+Examples: `zairakai/php:8.3-prod`, `zairakai/mysql:8.0`
 
-| Image Type | Docker Hub | GitLab Container Registry |
-| ---------- | ---------- | ------------------------- |
-| **PHP** | `zairakai/php:8.3-prod` | `registry.gitlab.com/zairakai/docker-ecosystem/php:8.3-prod` |
-| **Node.js** | `zairakai/node:20-dev` | `registry.gitlab.com/zairakai/docker-ecosystem/node:20-dev` |
-| **MySQL** | `zairakai/mysql:8.0` | `registry.gitlab.com/zairakai/docker-ecosystem/database:mysql-8.0` |
-| **Redis** | `zairakai/redis:7` | `registry.gitlab.com/zairakai/docker-ecosystem/database:redis-7` |
-| **Nginx** | `zairakai/nginx:1.26` | `registry.gitlab.com/zairakai/docker-ecosystem/web:nginx-1.26` |
-| **MailHog** | `zairakai/mailhog:latest` | `registry.gitlab.com/zairakai/docker-ecosystem/services:mailhog` |
-| **MinIO** | `zairakai/minio:latest` | `registry.gitlab.com/zairakai/docker-ecosystem/services:minio` |
-| **E2E Testing** | `zairakai/e2e-testing:latest` | `registry.gitlab.com/zairakai/docker-ecosystem/services:e2e-testing` |
-| **Performance Testing** | `zairakai/performance-testing:latest` | `registry.gitlab.com/zairakai/docker-ecosystem/services:performance-testing` |
+**GitLab Container Registry** (grouped by type):
+```
+registry.gitlab.com/zairakai/docker-ecosystem/<type>:<image>-<version>
+```
+Examples: `php:8.3-prod`, `database:mysql-8.0`, `services:mailhog`
 
-**Key Differences:**
-
-- **Docker Hub**: Simpler names (`zairakai/mysql:8.0`)
-- **GitLab Registry**: Grouped by type (`database:mysql-8.0`, `services:mailhog`)
-- Both registries provide identical images with the same content and layers
-
-**Recommendation:** Use **Docker Hub** for simpler syntax in docker-compose files, or **GitLab Registry** if you need private access or specific versioning.
+> **Tip:** Use Docker Hub for simpler syntax in docker-compose files
 
 ## Security & Quality
 
