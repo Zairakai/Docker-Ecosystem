@@ -41,17 +41,20 @@ Quick reference for images, tags, commands, and configurations.
 
 **Pipeline Stages:**
 
-- **Build (staging)**: all images are built and pushed with a `-$CI_COMMIT_SHORT_SHA` suffix.
-  - Examples: `php:8.3-<sha>-prod`, `web:nginx-1.26-<sha>`, `services:minio-<sha>`.
-- **Tests**: readiness via `docker inspect` plus HTTP/CLI probes (Nginx, MailHog, MinIO, MySQL, Redis) with
-  crash-loop detection and timeouts.
-- **Promotion**: if checks pass, images are re-tagged to stable without the suffix (e.g., `php:8.3-prod`).
-- **Cleanup**: staging tags are removed from the registry (on success or failure) to keep it clean.
+- **Build**: all images are built **locally on the CI runner** with a `-$CI_COMMIT_SHORT_SHA` suffix (NOT pushed to registry).
+  - Examples: `php:8.3-<sha>-prod`, `mysql-8.0-<sha>` (local-only)
+  - All build jobs run on the same runner (shared Docker daemon)
+- **Test**: readiness via `docker inspect` plus image sizes validation and multi-stage integrity checks
+- **Promote**: if checks pass, stable tags are created and pushed to registry
+  - Examples: `php:8.3-prod`, `php:1.3.0-prod`, `php:latest-prod`
+  - Stable tags are automatically synced to Docker Hub
 
 **Notes:**
 
-- MailHog/MinIO are thin wrappers on top of official images, with versions pinned in their Dockerfiles.
-- Staging tags are ephemeral and should not be consumed by downstream projects.
+- Staging images exist **only locally on the CI runner**, never in the registry
+- Registry contains **only stable production-ready images** (no ephemeral staging tags)
+- Runner's daily Docker cleanup removes local staging images automatically
+- MailHog/MinIO are thin wrappers on top of official images, with versions pinned in their Dockerfiles
 
 ## Image Tags
 

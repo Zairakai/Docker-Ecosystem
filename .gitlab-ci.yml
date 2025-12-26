@@ -10,7 +10,6 @@ stages:
   - build-services-extra
   - test
   - promote
-  - cleanup
 
 variables:
   DOCKER_HOST: "unix:///var/run/docker.sock"

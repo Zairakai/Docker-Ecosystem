@@ -93,18 +93,21 @@ and adjusting image names (see [Image Naming](#image-naming-conventions) below).
 
 ## CI/CD Release Flow (Quality-Gated)
 
-- Trigger: pushing a tag `vX.Y.Z` starts the release pipeline.
-- Build (staging): all images are built with a `-$CI_COMMIT_SHORT_SHA` suffix.
-  - Examples: `php:8.3-<sha>-prod`, `web:nginx-1.26-<sha>`, `services:minio-<sha>`.
-- Tests: **quality-gated validation** using container readiness checks
-  (`docker inspect`, HTTP/CLI probes), crash-loop detection and timeouts.
-- Promotion: if all checks pass, tags are re‑tagged to stable without the suffix (e.g., `php:8.3-prod`).
-- Cleanup: staging tags are removed from the registry (on success or failure) to keep it clean.
+- **Trigger**: pushing a tag `vX.Y.Z` starts the release pipeline
+- **Build**: all images are built **locally on the CI runner** with a `-$CI_COMMIT_SHORT_SHA` suffix
+  - Examples: `php:8.3-<sha>-prod`, `mysql-8.0-<sha>` (local-only, never pushed to registry)
+  - All build jobs run on the same runner (shared Docker daemon)
+- **Test**: quality-gated validation using container readiness checks (`docker inspect`, HTTP/CLI probes), crash-loop detection and timeouts
+- **Promote**: if all tests pass, stable tags are created and pushed to registry
+  - Examples: `php:8.3-prod`, `php:1.3.0-prod`, `php:latest-prod`
+  - Stable tags are automatically synced to Docker Hub
 
 Notes:
 
-- MailHog/MinIO are thin wrappers on top of official images, with versions pinned in their Dockerfiles.
-- Staging tags are ephemeral and should not be consumed by downstream projects.
+- Staging images exist **only locally on the CI runner**, never in the registry
+- Registry contains **only stable production-ready images** (no ephemeral staging tags)
+- Runner's daily Docker cleanup removes local staging images automatically
+- MailHog/MinIO are thin wrappers on top of official images, with versions pinned in their Dockerfiles
 
 ## Repository Structure
 
@@ -135,8 +138,7 @@ docker-ecosystem/
 │   ├── build-all-images.sh          # Main build script (local)
 │   ├── docker-functions.sh          # Docker build functions
 │   ├── common.sh                    # Shared utilities (logging, validation)
-│   ├── promote.sh                   # Promote staging tags to stable
-│   ├── cleanup.sh                   # Clean up staging tags
+│   ├── promote.sh                   # Promote local staging images to stable registry tags
 │   ├── backup/                      # Backup/restore scripts
 │   │   ├── backup.sh                # MySQL + Redis backup
 │   │   └── restore.sh               # MySQL + Redis restore
@@ -218,14 +220,14 @@ CI_REGISTRY_IMAGE=registry.gitlab.com/zairakai/docker-ecosystem \
 ### Release Scripts
 
 ```bash
-# Promote staging tags to stable version tags
-PROMOTED_VERSION=v1.2.3 bash scripts/promote.sh
+# Promote local staging images to stable registry tags (CI/CD only)
+# Requires: CI_REGISTRY_IMAGE, IMAGE_SUFFIX, PROMOTED_VERSION, registry credentials
+export PROMOTED_VERSION=v1.2.3
+export IMAGE_SUFFIX=-abc1234
+bash scripts/promote.sh
 
-# Sync stable images to Docker Hub
+# Sync stable images to Docker Hub (CI/CD only)
 bash scripts/pipeline/sync-dockerhub.sh
-
-# Cleanup staging tags from registry
-bash scripts/cleanup.sh
 ```
 
 **Benefits:**
