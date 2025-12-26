@@ -367,10 +367,12 @@ Security scans run automatically but require manual review for:
 
 ### Contact Information
 
-- **[Discord][discord]**: Community discussions (*🖥️・Developers* role)
-- **[GitLab Issues][issues]**: Report vulnerabilities and security concerns
-- **Security Findings**: Review security reports in GitLab Security Dashboard
-- **Critical Issues**: Address immediately based on scanner findings
+[![Discord][discord-badge]][discord]
+[![Issues][issues-badge]][issues]
+[![Security Dashboard][security-badge]][security-dashboard]
+
+Report security vulnerabilities via GitLab Issues or discuss security concerns on Discord.
+Review security findings in the GitLab Security Dashboard and address critical issues immediately.
 
 ## Compliance Standards
 
@@ -394,6 +396,8 @@ Our security implementation follows:
 [issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
 
 <!-- Badges -->
+[discord-badge]: https://img.shields.io/discord/1260000352699289621?logo=discord&label=Discord&color=5865F2
+[issues-badge]: https://img.shields.io/gitlab/issues/open/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Issues
 [security-badge]: https://img.shields.io/badge/security-scanned-green.svg
 [security-dashboard]: https://gitlab.com/zairakai/docker-ecosystem/-/security/dashboard
 [cosign-badge]: https://img.shields.io/badge/signed-cosign-blue?logo=keycdn

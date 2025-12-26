@@ -180,10 +180,10 @@ CI_REGISTRY_IMAGE=registry.gitlab.com/zairakai/docker-ecosystem \
 
 ## Need Help?
 
-- **[Discord][discord]** - Community discussions (*🖥️・Developers* role)
-- **[GitLab Issues][issues]** - Bug reports and feature requests
-- **[Documentation][docs]** - Architecture and reference guides
-- **[Examples][examples]** - Usage patterns and configurations
+[![Discord][discord-badge]][discord]
+[![Issues][issues-badge]][issues]
+
+Join our Discord community, report issues, or browse the documentation and examples!
 
 **Let's build better Docker images together!**
 
@@ -195,6 +195,6 @@ CI_REGISTRY_IMAGE=registry.gitlab.com/zairakai/docker-ecosystem \
 [examples]: examples/
 
 <!-- Badges -->
-[discord-badge]: https://img.shields.io/discord/1234567890?logo=discord&label=Discord&color=5865F2
+[discord-badge]: https://img.shields.io/discord/1260000352699289621?logo=discord&label=Discord&color=5865F2
 [issues-badge]: https://img.shields.io/gitlab/issues/open/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Issues
 [contributors-badge]: https://img.shields.io/gitlab/contributors/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Contributors

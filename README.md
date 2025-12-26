@@ -417,14 +417,15 @@ scripts/backup/restore.sh redis     # Point-in-time recovery
 
 [![Discord][discord-badge]][discord]
 [![Issues][issues-badge]][issues]
+[![Documentation][docs-badge]][docs]
 [![Contributors][contributors-badge]][contributors]
 [![Last Commit][activity-badge]][activity]
 
-- [Discord][discord] - Community discussions (_🖥️・Developers_ role)
-- [Report Issues][issues]
-- [Documentation][docs] - Architecture and reference guides
+Join our community on Discord, report issues, browse documentation, and contribute to the project!
 
 ## License
+
+[![MIT License][license-badge]][license]
 
 MIT License - see [LICENSE][license] file for details.
 
@@ -489,8 +490,9 @@ _Built with ❤️ by the Zairakai team for Laravel + Vue.js developers_
 [security-badge]: https://img.shields.io/badge/security-scanned-green.svg
 
 <!-- Community & Support Badges -->
-[discord-badge]: https://img.shields.io/discord/1234567890?logo=discord&label=Discord&color=5865F2
+[discord-badge]: https://img.shields.io/discord/1260000352699289621?logo=discord&label=Discord&color=5865F2
 [issues-badge]: https://img.shields.io/gitlab/issues/open/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Issues
+[docs-badge]: https://img.shields.io/badge/docs-available-blue?logo=read-the-docs&logoColor=white
 [contributors-badge]: https://img.shields.io/gitlab/contributors/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Contributors
 [contributors]: https://gitlab.com/zairakai/docker-ecosystem/-/graphs/main
 [activity-badge]: https://img.shields.io/gitlab/last-commit/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Last%20commit
