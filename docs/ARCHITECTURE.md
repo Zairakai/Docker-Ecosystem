@@ -2,7 +2,7 @@
 
 [🏠 Home][home] > [📚 Documentation][docs] > Architecture Overview
 
-Comprehensive architectural overview of the Zairakai Docker Ecosystem - 12 lightweight images following a
+Comprehensive architectural overview of the Zairakai Docker Ecosystem - 13 lightweight images following a
 progressive extension-only architecture.
 
 ## Table of Contents
@@ -39,7 +39,7 @@ progressive extension-only architecture.
 
 ## Overview
 
-The Zairakai Docker Ecosystem provides **12 lightweight Docker images** specifically designed for
+The Zairakai Docker Ecosystem provides **13 lightweight Docker images** specifically designed for
 **Laravel + Vue.js** development, following a progressive **extension-only** architecture.
 
 **Key Characteristics:**

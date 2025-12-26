@@ -17,19 +17,16 @@
 [![Discord][discord-badge]][discord]
 [![Contributors][contributors-badge]][contributors]
 
-**14 lightweight images** with progressive architecture (prod → dev → test) and comprehensive security scanning.
+**13 lightweight images** with progressive architecture (prod → dev → test) and comprehensive security scanning.
 
 > 📦 **This is an image repository**  
 > These images are intended to be **consumed by application repositories** (via Docker Compose, CI/CD, or orchestration), not for direct development inside this repository.
 
 ## 📦 Available Registries
 
-[![Docker Hub][dockerhub-badge]][dockerhub]
-[![GitLab Registry][gitlab-registry-badge]][gitlab-registry]
-
 Images are available on **two registries** for maximum convenience:
 
-### Docker Hub (Recommended for simplicity)
+### [![Docker Hub][dockerhub-badge]][dockerhub] Recommended for simplicity
 
 ```bash
 docker pull zairakai/php:8.3-prod
@@ -38,7 +35,7 @@ docker pull zairakai/redis:7
 docker pull zairakai/nginx:1.26
 ```
 
-### GitLab Container Registry (Primary source)
+### [![GitLab Registry][gitlab-registry-badge]][gitlab-registry] Primary source
 
 ```bash
 docker pull registry.gitlab.com/zairakai/docker-ecosystem/php:8.3-prod
@@ -85,15 +82,19 @@ docker-compose exec app composer install
 docker-compose exec app php artisan migrate
 ```
 
-**Alternative:** Use GitLab Registry by replacing `zairakai/` with `registry.gitlab.com/zairakai/docker-ecosystem/`
+> **Alternative:**  
+> Use GitLab Registry by replacing `zairakai/` with `registry.gitlab.com/zairakai/docker-ecosystem/`
 and adjusting image names (see [Image Naming](#image-naming-conventions) below).
 
-**[📚 Documentation Index](docs/INDEX.md)** | **[5-Minute Tutorial][quickstart]** | **[Examples][examples]** | **[Architecture Guide][architecture]**
+- **[📚 Documentation Index](docs/INDEX.md)**
+- **[5-Minute Tutorial][quickstart]**
+- **[Examples][examples]**
+- **[Architecture Guide][architecture]**
 
 ## CI/CD Release Flow (Quality-Gated)
 
 - Trigger: pushing a tag `vX.Y.Z` starts the release pipeline.
-- Build (staging): all images are built and pushed with a `-$CI_COMMIT_SHORT_SHA` suffix.
+- Build (staging): all images are built with a `-$CI_COMMIT_SHORT_SHA` suffix.
   - Examples: `php:8.3-<sha>-prod`, `web:nginx-1.26-<sha>`, `services:minio-<sha>`.
 - Tests: **quality-gated validation** using container readiness checks
   (`docker inspect`, HTTP/CLI probes), crash-loop detection and timeouts.
