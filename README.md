@@ -26,23 +26,6 @@
 [![Docker Hub][dockerhub-badge]][dockerhub]
 [![GitLab Registry][gitlab-registry-badge]][gitlab-registry]
 
-<!-- Line 4: Download Statistics (Docker Hub pulls) -->
-[![PHP Pulls][php-pulls-badge]][dockerhub-php]
-[![Node Pulls][node-pulls-badge]][dockerhub-node]
-[![MySQL Pulls][mysql-pulls-badge]][dockerhub-mysql]
-[![Redis Pulls][redis-pulls-badge]][dockerhub-redis]
-[![Nginx Pulls][nginx-pulls-badge]][dockerhub-nginx]
-[![MailHog Pulls][mailhog-pulls-badge]][dockerhub-mailhog]
-[![MinIO Pulls][minio-pulls-badge]][dockerhub-minio]
-[![E2E Pulls][e2e-pulls-badge]][dockerhub-e2e]
-[![Performance Pulls][performance-pulls-badge]][dockerhub-performance]
-
-<!-- Line 5: Community & Support -->
-[![Discord][discord-badge]][discord]
-[![Issues][issues-badge]][issues]
-[![Contributors][contributors-badge]][contributors]
-[![Last Commit][activity-badge]][activity]
-
 **14 lightweight images** with progressive architecture (prod → dev → test) and comprehensive security scanning.
 
 > 📦 **This is an image repository**  
@@ -263,16 +246,30 @@ bash scripts/cleanup.sh
 ### Core Stack
 
 - **PHP 8.3**: `prod` _(45MB)_, `dev` _(85MB)_, `test` _(180MB)_ - Laravel backend
+  [![PHP Pulls][php-pulls-badge]][dockerhub-php]
+
 - **Node.js 20 LTS**: `prod` _(35MB)_, `dev` _(120MB)_, `test` _(240MB)_ - Vue.js frontend
+  [![Node Pulls][node-pulls-badge]][dockerhub-node]
+
 - **MySQL 8.0 + Redis 7**: Database and caching
+  [![MySQL Pulls][mysql-pulls-badge]][dockerhub-mysql] [![Redis Pulls][redis-pulls-badge]][dockerhub-redis]
+
 - **Nginx 1.26**: Reverse proxy and static files
+  [![Nginx Pulls][nginx-pulls-badge]][dockerhub-nginx]
 
 ### Services
 
 - **MailHog**: Email testing with web interface
+  [![MailHog Pulls][mailhog-pulls-badge]][dockerhub-mailhog]
+
 - **MinIO**: S3-compatible object storage
+  [![MinIO Pulls][minio-pulls-badge]][dockerhub-minio]
+
 - **E2E Testing**: Playwright + Gherkin/Cucumber for Blade and Vue.js testing
+  [![E2E Pulls][e2e-pulls-badge]][dockerhub-e2e]
+
 - **Performance Testing**: Artillery, k6, Locust for load and stress testing
+  [![Performance Pulls][performance-pulls-badge]][dockerhub-performance]
 
 ## Image Naming Conventions
 
@@ -417,6 +414,11 @@ scripts/backup/restore.sh redis     # Point-in-time recovery
 - **[Contributing Guidelines][contributing]** - Development workflow and standards
 
 ## Support
+
+[![Discord][discord-badge]][discord]
+[![Issues][issues-badge]][issues]
+[![Contributors][contributors-badge]][contributors]
+[![Last Commit][activity-badge]][activity]
 
 - [Discord][discord] - Community discussions (_🖥️・Developers_ role)
 - [Report Issues][issues]
