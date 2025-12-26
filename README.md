@@ -37,6 +37,12 @@
 [![E2E Pulls][e2e-pulls-badge]][dockerhub-e2e]
 [![Performance Pulls][performance-pulls-badge]][dockerhub-performance]
 
+<!-- Line 5: Community & Support -->
+[![Discord][discord-badge]][discord]
+[![Issues][issues-badge]][issues]
+[![Contributors][contributors-badge]][contributors]
+[![Last Commit][activity-badge]][activity]
+
 **14 lightweight images** with progressive architecture (prod → dev → test) and comprehensive security scanning.
 
 > 📦 **This is an image repository**  
@@ -479,3 +485,11 @@ _Built with ❤️ by the Zairakai team for Laravel + Vue.js developers_
 [performance-testing-badge]: https://img.shields.io/badge/Performance-Artillery%20%7C%20k6-FF6C37?logo=artillery&logoColor=white
 [dockerhub-performance]: https://hub.docker.com/r/zairakai/performance-testing
 [security-badge]: https://img.shields.io/badge/security-scanned-green.svg
+
+<!-- Community & Support Badges -->
+[discord-badge]: https://img.shields.io/discord/1234567890?logo=discord&label=Discord&color=5865F2
+[issues-badge]: https://img.shields.io/gitlab/issues/open/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Issues
+[contributors-badge]: https://img.shields.io/gitlab/contributors/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Contributors
+[contributors]: https://gitlab.com/zairakai/docker-ecosystem/-/graphs/main
+[activity-badge]: https://img.shields.io/gitlab/last-commit/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Last%20commit
+[activity]: https://gitlab.com/zairakai/docker-ecosystem/-/commits/main

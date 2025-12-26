@@ -1,5 +1,9 @@
 # Contributing Guide
 
+[![Discord][discord-badge]][discord]
+[![Issues][issues-badge]][issues]
+[![Contributors][contributors-badge]][contributors]
+
 Thank you for your interest in contributing to the Zairakai Docker Ecosystem!
 
 This repository generates and maintains **Docker images** for Laravel + Vue.js development. Contributions help improve the quality and security of these images.
@@ -189,3 +193,8 @@ CI_REGISTRY_IMAGE=registry.gitlab.com/zairakai/docker-ecosystem \
 [security]: ./SECURITY.md
 [docs]: docs/
 [examples]: examples/
+
+<!-- Badges -->
+[discord-badge]: https://img.shields.io/discord/1234567890?logo=discord&label=Discord&color=5865F2
+[issues-badge]: https://img.shields.io/gitlab/issues/open/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Issues
+[contributors-badge]: https://img.shields.io/gitlab/contributors/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Contributors

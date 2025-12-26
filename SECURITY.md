@@ -1,5 +1,9 @@
 # Security Policy - Zairakai Docker Ecosystem
 
+[![Security Scanning][security-badge]][security-dashboard]
+[![Signed with Cosign][cosign-badge]][cosign]
+[![Vulnerabilities][vulnerability-badge]][vulnerability-dashboard]
+
 ## Security Overview
 
 The Zairakai Docker Ecosystem implements comprehensive security scanning throughout the CI/CD pipeline to ensure the safety and reliability of our Laravel + Vue.js development stack.
@@ -388,3 +392,11 @@ Our security implementation follows:
 <!-- Reference Links -->
 [discord]: https://discord.gg/MAmD5SG8Zu
 [issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
+
+<!-- Badges -->
+[security-badge]: https://img.shields.io/badge/security-scanned-green.svg
+[security-dashboard]: https://gitlab.com/zairakai/docker-ecosystem/-/security/dashboard
+[cosign-badge]: https://img.shields.io/badge/signed-cosign-blue?logo=keycdn
+[cosign]: https://github.com/sigstore/cosign
+[vulnerability-badge]: https://img.shields.io/badge/vulnerabilities-monitored-orange?logo=gitlab
+[vulnerability-dashboard]: https://gitlab.com/zairakai/docker-ecosystem/-/security/vulnerabilities
