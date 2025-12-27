@@ -395,7 +395,12 @@ After building and testing locally:
 
 ---
 
-**Need help?** Join our [Discord](https://discord.gg/MAmD5SG8Zu) community or report issues on [GitLab](https://gitlab.com/zairakai/docker-ecosystem/-/issues).
+## Support
+
+[![Discord][discord-badge]][discord]
+[![Issues][issues-badge]][issues]
+
+**Need help?** Join our Discord community or report issues on GitLab.
 
 ---
 

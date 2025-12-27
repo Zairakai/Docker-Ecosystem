@@ -388,6 +388,13 @@ Our security implementation follows:
 - **Base Images**: Updated when new stable versions are released
 - **Manual Review**: Security findings require manual assessment and action
 
+## Support
+
+[![Discord][discord-badge]][discord]
+[![Issues][issues-badge]][issues]
+
+**Need help?** Join our Discord community or report issues on GitLab.
+
 <!-- Reference Links -->
 [discord]: https://discord.gg/MAmD5SG8Zu
 [issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues

@@ -178,11 +178,12 @@ CI_REGISTRY_IMAGE=registry.gitlab.com/zairakai/docker-ecosystem \
 - Follow least-privilege principles
 - Keep dependencies updated
 
-## Need Help?
+## Support
 
 [![Discord][discord-badge]][discord]
 [![Issues][issues-badge]][issues]
-[![Docs][docs-badge]][docs]
+
+**Need help?** Join our Discord community or report issues on GitLab.
 
 **Let's build better Docker images together!**
 

@@ -406,10 +406,12 @@ scripts/backup/restore.sh redis     # Point-in-time recovery
 
 ## Support & License
 
+[![Discord][discord-badge]][discord]
+[![Issues][issues-badge]][issues]
 [![License][license-badge]][license]
 [![Docs][docs-badge]][docs]
-[![Issues][issues-badge]][issues]
-[![Discord][discord-badge]][discord]
+
+**Need help?** Join our Discord community or report issues on GitLab.
 
 _Built with ❤️ by the Zairakai team for Laravel + Vue.js developers_
 

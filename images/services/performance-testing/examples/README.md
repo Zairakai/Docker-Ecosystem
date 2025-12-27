@@ -114,6 +114,13 @@ Mount a volume to persist reports:
 -v $(pwd)/reports:/app/reports
 ```
 
+## Support
+
+[![Discord][discord-badge]][discord]
+[![Issues][issues-badge]][issues]
+
+**Need help?** Join our Discord community or report issues on GitLab.
+
 <!-- Badge References -->
 [pipeline-badge]: https://gitlab.com/zairakai/docker-ecosystem/badges/main/pipeline.svg
 [pipeline]: https://gitlab.com/zairakai/docker-ecosystem/-/pipelines
