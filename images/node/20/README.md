@@ -12,14 +12,14 @@ Part of the [Zairakai Docker Ecosystem](https://gitlab.com/zairakai/docker-ecosy
 
 ## Available Tags
 
-| Tag | Size | Use Case | Key Features |
-|-----|------|----------|--------------|
-| `20-prod` | ~35MB | Production | Minimal runtime, non-root |
-| `20-dev` | ~120MB | Development | + Yarn, npm, build tools, ESLint |
-| `20-test` | ~240MB | CI/CD Testing | + Jest, Playwright, Gherkin/Cucumber |
-| `latest-prod` | ~35MB | Production (latest) | Alias for 20-prod |
-| `latest-dev` | ~120MB | Development (latest) | Alias for 20-dev |
-| `latest-test` | ~240MB | Testing (latest) | Alias for 20-test |
+| Tag | Use Case | Key Features |
+|-----|----------|--------------|
+| `20-prod` | Production | Minimal runtime, non-root |
+| `20-dev` | Development | + Yarn, npm, build tools, ESLint |
+| `20-test` | CI/CD Testing | + Jest, Playwright, Gherkin/Cucumber |
+| `latest-prod` | Production (latest) | Alias for 20-prod |
+| `latest-dev` | Development (latest) | Alias for 20-dev |
+| `latest-test` | Testing (latest) | Alias for 20-test |
 
 ---
 

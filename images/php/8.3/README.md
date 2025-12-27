@@ -12,14 +12,14 @@ Part of the [Zairakai Docker Ecosystem](https://gitlab.com/zairakai/docker-ecosy
 
 ## Available Tags
 
-| Tag | Size | Use Case | Key Features |
-|-----|------|----------|--------------|
-| `8.3-prod` | ~45MB | Production | Minimal, OPcache, non-root |
-| `8.3-dev` | ~85MB | Development | + Xdebug, Composer, dev tools |
-| `8.3-test` | ~180MB | CI/CD Testing | + PHPUnit, Pcov, Xhprof, PHPStan |
-| `latest-prod` | ~45MB | Production (latest) | Alias for 8.3-prod |
-| `latest-dev` | ~85MB | Development (latest) | Alias for 8.3-dev |
-| `latest-test` | ~180MB | Testing (latest) | Alias for 8.3-test |
+| Tag | Use Case | Key Features |
+|-----|----------|--------------|
+| `8.3-prod` | Production | Minimal, OPcache, non-root |
+| `8.3-dev` | Development | + Xdebug, Composer, dev tools |
+| `8.3-test` | CI/CD Testing | + PHPUnit, Pcov, Xhprof, PHPStan |
+| `latest-prod` | Production (latest) | Alias for 8.3-prod |
+| `latest-dev` | Development (latest) | Alias for 8.3-dev |
+| `latest-test` | Testing (latest) | Alias for 8.3-test |
 
 ---
 
