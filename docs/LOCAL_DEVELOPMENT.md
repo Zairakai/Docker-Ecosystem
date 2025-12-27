@@ -1,7 +1,10 @@
 # Local Development Workflow
 
+<!-- CI/CD & Quality -->
 [![Pipeline][pipeline-badge]][pipeline]
 [![License][license-badge]][license]
+
+<!-- Community -->
 [![Discord][discord-badge]][discord]
 [![Issues][issues-badge]][issues]
 This guide explains how to develop, build, and test the Docker Ecosystem locally.

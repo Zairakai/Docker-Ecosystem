@@ -1,8 +1,16 @@
 # Node.js 20 LTS - Production-Ready Images for Vue.js
 
-[![Docker Image Size](https://img.shields.io/docker/image-size/zairakai/node/20-prod)](https://hub.docker.com/r/zairakai/node)
-[![Docker Pulls](https://img.shields.io/docker/pulls/zairakai/node)](https://hub.docker.com/r/zairakai/node)
-[![GitLab Pipeline](https://gitlab.com/zairakai/docker-ecosystem/badges/main/pipeline.svg)](https://gitlab.com/zairakai/docker-ecosystem/-/pipelines)
+
+<!-- Image Stats -->
+[![Docker Pulls][pulls-badge]][dockerhub]
+[![Image Size][size-badge]][dockerhub]
+
+<!-- CI/CD & Quality -->
+[![Pipeline][pipeline-badge]][pipeline]
+[![License][license-badge]][license]
+
+<!-- Community -->
+[![Discord][discord-badge]][discord]
 
 Lightweight, secure, and optimized Node.js 20 LTS images designed for **Vue.js + Vite** applications.
 
@@ -312,13 +320,6 @@ services:
 
 ---
 
-## Support & Contributing
-
-- **Issues**: https://gitlab.com/zairakai/docker-ecosystem/-/issues
-- **Source Code**: https://gitlab.com/zairakai/docker-ecosystem
-- **License**: MIT
-
----
 
 ## Related Images
 
@@ -331,4 +332,25 @@ services:
 
 ---
 
+
+## Support
+
+[![Discord][discord-badge]][discord]
+[![Issues][issues-badge]][issues]
+
+**Need help?** Join our Discord community or report issues on GitLab.
+
 **Built with care by [Zairakai](https://gitlab.com/zairakai) for the Vue.js community.**
+
+<!-- Badge References -->
+[pulls-badge]: https://img.shields.io/docker/pulls/zairakai/node?logo=docker&logoColor=white
+[size-badge]: https://img.shields.io/docker/image-size/zairakai/node/20-prod?logo=docker&logoColor=white&label=size
+[pipeline-badge]: https://gitlab.com/zairakai/docker-ecosystem/badges/main/pipeline.svg
+[pipeline]: https://gitlab.com/zairakai/docker-ecosystem/-/pipelines
+[license-badge]: https://img.shields.io/badge/license-MIT-blue.svg
+[license]: https://gitlab.com/zairakai/docker-ecosystem/-/blob/main/LICENSE
+[discord-badge]: https://img.shields.io/discord/1260000352699289621?logo=discord&label=Discord&color=5865F2
+[discord]: https://discord.gg/MAmD5SG8Zu
+[issues-badge]: https://img.shields.io/gitlab/issues/open-raw/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Issues
+[issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
+[dockerhub]: https://hub.docker.com/r/zairakai/node

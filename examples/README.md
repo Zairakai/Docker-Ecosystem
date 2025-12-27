@@ -1,8 +1,11 @@
 # Docker Compose Examples
 
+<!-- CI/CD & Quality -->
 [![Pipeline][pipeline-badge]][pipeline]
 [![License][license-badge]][license]
 [![Docker Compose][compose-badge]][compose]
+
+<!-- Community -->
 [![Discord][discord-badge]][discord]
 [![Issues][issues-badge]][issues]
 
@@ -323,4 +326,3 @@ The Docker Ecosystem supports **3 distinct architectures** for Laravel + Vue.js:
 [compose]: https://docs.docker.com/compose/
 
 <!-- Reference Links -->
-[reference]: REFERENCE.md

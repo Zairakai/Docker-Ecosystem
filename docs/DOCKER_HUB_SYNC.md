@@ -1,9 +1,13 @@
 # Docker Hub Synchronization & Description Updates
 
+<!-- CI/CD & Quality -->
 [![Pipeline][pipeline-badge]][pipeline]
 [![License][license-badge]][license]
+
+<!-- Community -->
 [![Discord][discord-badge]][discord]
 [![Issues][issues-badge]][issues]
+
 This document explains how Docker images are synchronized to Docker Hub with automatic description updates.
 
 ---

@@ -1,8 +1,16 @@
 # MailHog - Email Testing for Development
 
-[![Docker Image Size](https://img.shields.io/docker/image-size/zairakai/mailhog)](https://hub.docker.com/r/zairakai/mailhog)
-[![Docker Pulls](https://img.shields.io/docker/pulls/zairakai/mailhog)](https://hub.docker.com/r/zairakai/mailhog)
 
+<!-- Image Stats -->
+[![Docker Pulls][pulls-badge]][dockerhub]
+[![Image Size][size-badge]][dockerhub]
+
+<!-- CI/CD & Quality -->
+[![Pipeline][pipeline-badge]][pipeline]
+[![License][license-badge]][license]
+
+<!-- Community -->
+[![Discord][discord-badge]][discord]
 Email testing tool with web UI for capturing and viewing emails sent by your Laravel application.
 
 Part of the [Zairakai Docker Ecosystem](https://gitlab.com/zairakai/docker-ecosystem).
@@ -104,4 +112,25 @@ MAIL_FROM_NAME="${APP_NAME}"
 [discord-badge]: https://img.shields.io/discord/1260000352699289621?logo=discord&label=Discord&color=5865F2
 [discord]: https://discord.gg/MAmD5SG8Zu
 [issues-badge]: https://img.shields.io/gitlab/issues/open-raw/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Issues
+
+## Support
+
+[![Discord][discord-badge]][discord]
+[![Issues][issues-badge]][issues]
+
+**Need help?** Join our Discord community or report issues on GitLab.
+
 [issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
+
+<!-- Badge References -->
+[pulls-badge]: https://img.shields.io/docker/pulls/zairakai/mailhog?logo=docker&logoColor=white
+[size-badge]: https://img.shields.io/docker/image-size/zairakai/mailhog/latest?logo=docker&logoColor=white&label=size
+[pipeline-badge]: https://gitlab.com/zairakai/docker-ecosystem/badges/main/pipeline.svg
+[pipeline]: https://gitlab.com/zairakai/docker-ecosystem/-/pipelines
+[license-badge]: https://img.shields.io/badge/license-MIT-blue.svg
+[license]: https://gitlab.com/zairakai/docker-ecosystem/-/blob/main/LICENSE
+[discord-badge]: https://img.shields.io/discord/1260000352699289621?logo=discord&label=Discord&color=5865F2
+[discord]: https://discord.gg/MAmD5SG8Zu
+[issues-badge]: https://img.shields.io/gitlab/issues/open-raw/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Issues
+[issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
+[dockerhub]: https://hub.docker.com/r/zairakai/mailhog

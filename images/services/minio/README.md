@@ -1,8 +1,16 @@
 # MinIO - S3-Compatible Object Storage
 
-[![Docker Image Size](https://img.shields.io/docker/image-size/zairakai/minio)](https://hub.docker.com/r/zairakai/minio)
-[![Docker Pulls](https://img.shields.io/docker/pulls/zairakai/minio)](https://hub.docker.com/r/zairakai/minio)
 
+<!-- Image Stats -->
+[![Docker Pulls][pulls-badge]][dockerhub]
+[![Image Size][size-badge]][dockerhub]
+
+<!-- CI/CD & Quality -->
+[![Pipeline][pipeline-badge]][pipeline]
+[![License][license-badge]][license]
+
+<!-- Community -->
+[![Discord][discord-badge]][discord]
 High-performance S3-compatible object storage for development and testing.
 
 Part of the [Zairakai Docker Ecosystem](https://gitlab.com/zairakai/docker-ecosystem).
@@ -125,4 +133,25 @@ Compatible with AWS S3 SDKs:
 [discord-badge]: https://img.shields.io/discord/1260000352699289621?logo=discord&label=Discord&color=5865F2
 [discord]: https://discord.gg/MAmD5SG8Zu
 [issues-badge]: https://img.shields.io/gitlab/issues/open-raw/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Issues
+
+## Support
+
+[![Discord][discord-badge]][discord]
+[![Issues][issues-badge]][issues]
+
+**Need help?** Join our Discord community or report issues on GitLab.
+
 [issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
+
+<!-- Badge References -->
+[pulls-badge]: https://img.shields.io/docker/pulls/zairakai/minio?logo=docker&logoColor=white
+[size-badge]: https://img.shields.io/docker/image-size/zairakai/minio/latest?logo=docker&logoColor=white&label=size
+[pipeline-badge]: https://gitlab.com/zairakai/docker-ecosystem/badges/main/pipeline.svg
+[pipeline]: https://gitlab.com/zairakai/docker-ecosystem/-/pipelines
+[license-badge]: https://img.shields.io/badge/license-MIT-blue.svg
+[license]: https://gitlab.com/zairakai/docker-ecosystem/-/blob/main/LICENSE
+[discord-badge]: https://img.shields.io/discord/1260000352699289621?logo=discord&label=Discord&color=5865F2
+[discord]: https://discord.gg/MAmD5SG8Zu
+[issues-badge]: https://img.shields.io/gitlab/issues/open-raw/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Issues
+[issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
+[dockerhub]: https://hub.docker.com/r/zairakai/minio

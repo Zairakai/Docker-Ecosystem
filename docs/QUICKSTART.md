@@ -1,9 +1,13 @@
 # Quick Start Guide
 
+<!-- CI/CD & Quality -->
 [![Pipeline][pipeline-badge]][pipeline]
 [![License][license-badge]][license]
+
+<!-- Community -->
 [![Discord][discord-badge]][discord]
 [![Issues][issues-badge]][issues]
+
 [🏠 Home][home] > [📚 Documentation][docs] > Quick Start Guide  
 
 Get your Laravel + Vue.js development environment running with Zairakai images in 5 minutes.

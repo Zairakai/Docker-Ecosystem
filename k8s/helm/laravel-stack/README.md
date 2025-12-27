@@ -1,12 +1,17 @@
 # Laravel Stack Helm Chart
 
+<!-- CI/CD & Quality -->
 [![Pipeline][pipeline-badge]][pipeline]
 [![License][license-badge]][license]
+
+<!-- Platform & Tech -->
 [![Kubernetes][k8s-badge]][k8s]
 [![Helm][helm-badge]][helm]
+[![Alpine][alpine-badge]][alpine]
+
+<!-- Community -->
 [![Discord][discord-badge]][discord]
 [![Contributors][contributors-badge]][contributors]
-[![Alpine][alpine-badge]][alpine]
 
 Complete Kubernetes deployment for Laravel + Vue.js applications using Zairakai Docker images.
 
@@ -371,7 +376,6 @@ See `values.yaml` for complete configuration options.
 
 **Need help?** Join our Discord community or report issues on GitLab.
 
-
 <!-- Badge References -->
 [pipeline-badge]: https://gitlab.com/zairakai/docker-ecosystem/badges/main/pipeline.svg
 [pipeline]: https://gitlab.com/zairakai/docker-ecosystem/-/pipelines
@@ -391,4 +395,3 @@ See `values.yaml` for complete configuration options.
 [alpine]: https://alpinelinux.org/
 
 <!-- Reference Links -->
-[reference]: REFERENCE.md

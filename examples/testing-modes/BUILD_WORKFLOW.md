@@ -1,7 +1,10 @@
 # Build Workflow: Laravel + Vite Assets
 
+<!-- CI/CD & Quality -->
 [![Pipeline][pipeline-badge]][pipeline]
 [![License][license-badge]][license]
+
+<!-- Community -->
 [![Discord][discord-badge]][discord]
 [![Issues][issues-badge]][issues]
 
@@ -377,4 +380,3 @@ docker-compose exec php php artisan config:clear
 [issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
 
 <!-- Reference Links -->
-[reference]: REFERENCE.md

@@ -1,7 +1,10 @@
 # Kubernetes Deployment Guide
 
+<!-- CI/CD & Quality -->
 [![Pipeline][pipeline-badge]][pipeline]
 [![License][license-badge]][license]
+
+<!-- Community -->
 [![Discord][discord-badge]][discord]
 [![Issues][issues-badge]][issues]
 [🏠 Home][home] > [📚 Documentation][docs] > Kubernetes Deployment Guide

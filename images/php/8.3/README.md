@@ -1,8 +1,15 @@
 # PHP 8.3 - Production-Ready Images for Laravel
 
-[![Docker Image Size](https://img.shields.io/docker/image-size/zairakai/php/8.3-prod)](https://hub.docker.com/r/zairakai/php)
-[![Docker Pulls](https://img.shields.io/docker/pulls/zairakai/php)](https://hub.docker.com/r/zairakai/php)
-[![GitLab Pipeline](https://gitlab.com/zairakai/docker-ecosystem/badges/main/pipeline.svg)](https://gitlab.com/zairakai/docker-ecosystem/-/pipelines)
+<!-- Image Stats -->
+[![Docker Pulls][pulls-badge]][dockerhub]
+[![Image Size][size-badge]][dockerhub]
+
+<!-- CI/CD & Quality -->
+[![Pipeline][pipeline-badge]][pipeline]
+[![License][license-badge]][license]
+
+<!-- Community -->
+[![Discord][discord-badge]][discord]
 
 Lightweight, secure, and optimized PHP 8.3 FPM images designed for **Laravel** applications.
 
@@ -221,23 +228,41 @@ Lightweight for containerized architectures:
 
 ---
 
-## Support & Contributing
-
-- **Issues**: https://gitlab.com/zairakai/docker-ecosystem/-/issues
-- **Source Code**: https://gitlab.com/zairakai/docker-ecosystem
-- **License**: MIT
-
----
-
 ## Related Images
 
 | Image | Description |
 |-------|-------------|
-| [zairakai/node](https://hub.docker.com/r/zairakai/node) | Node.js 20 for Vue.js/Vite |
-| [zairakai/nginx](https://hub.docker.com/r/zairakai/nginx) | Nginx reverse proxy |
-| [zairakai/mysql](https://hub.docker.com/r/zairakai/mysql) | MySQL 8.0 with HA |
-| [zairakai/redis](https://hub.docker.com/r/zairakai/redis) | Redis 7 with Sentinel |
+| [zairakai/node][node-hub] | Node.js 20 for Vue.js/Vite |
+| [zairakai/nginx][nginx-hub] | Nginx reverse proxy |
+| [zairakai/mysql][mysql-hub] | MySQL 8.0 with HA |
+| [zairakai/redis][redis-hub] | Redis 7 with Sentinel |
 
 ---
 
+## Support
+
+[![Discord][discord-badge]][discord]
+[![Issues][issues-badge]][issues]
+
+**Need help?** Join our Discord community or report issues on GitLab.
+
 **Built with care by [Zairakai](https://gitlab.com/zairakai) for the Laravel community.**
+
+<!-- Badge References -->
+[pulls-badge]: https://img.shields.io/docker/pulls/zairakai/php?logo=docker&logoColor=white
+[size-badge]: https://img.shields.io/docker/image-size/zairakai/php/8.3-prod?logo=docker&logoColor=white&label=size
+[pipeline-badge]: https://gitlab.com/zairakai/docker-ecosystem/badges/main/pipeline.svg
+[pipeline]: https://gitlab.com/zairakai/docker-ecosystem/-/pipelines
+[license-badge]: https://img.shields.io/badge/license-MIT-blue.svg
+[license]: https://gitlab.com/zairakai/docker-ecosystem/-/blob/main/LICENSE
+[discord-badge]: https://img.shields.io/discord/1260000352699289621?logo=discord&label=Discord&color=5865F2
+[discord]: https://discord.gg/MAmD5SG8Zu
+[issues-badge]: https://img.shields.io/gitlab/issues/open-raw/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Issues
+[issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
+[dockerhub]: https://hub.docker.com/r/zairakai/php
+
+<!-- Reference Links -->
+[node-hub]: https://hub.docker.com/r/zairakai/node
+[nginx-hub]: https://hub.docker.com/r/zairakai/nginx
+[mysql-hub]: https://hub.docker.com/r/zairakai/mysql
+[redis-hub]: https://hub.docker.com/r/zairakai/redis
