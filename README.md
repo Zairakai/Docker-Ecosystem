@@ -269,15 +269,19 @@ All images are built on **Alpine Linux 3.19** for minimal size and attack surfac
 ## Image Naming Conventions
 
 **Docker Hub** (simpler):
-```
+
+```text
 zairakai/<image>:<tag>
 ```
+
 Examples: `zairakai/php:8.3-prod`, `zairakai/mysql:8.0`
 
 **GitLab Container Registry** (grouped by type):
-```
+
+```text
 registry.gitlab.com/zairakai/docker-ecosystem/<type>:<image>-<version>
 ```
+
 Examples: `php:8.3-prod`, `database:mysql-8.0`, `services:mailhog`
 
 > **Tip:** Use Docker Hub for simpler syntax in docker-compose files
@@ -402,12 +406,10 @@ scripts/backup/restore.sh redis     # Point-in-time recovery
 
 ## Support & License
 
-[![Discord][discord-badge]][discord]
-[![Issues][issues-badge]][issues]
-[![Docs][docs-badge]][docs]
-[![Contributors][contributors-badge]][contributors]
-[![Activity][activity-badge]][activity]
 [![License][license-badge]][license]
+[![Docs][docs-badge]][docs]
+[![Issues][issues-badge]][issues]
+[![Discord][discord-badge]][discord]
 
 _Built with ❤️ by the Zairakai team for Laravel + Vue.js developers_
 
@@ -436,10 +438,8 @@ _Built with ❤️ by the Zairakai team for Laravel + Vue.js developers_
 [pipeline-develop-link]: https://gitlab.com/zairakai/docker-ecosystem/commits/develop
 
 [security-badge]: https://img.shields.io/badge/security-scanned-green.svg
-[security]: ./SECURITY.md
 
 [license-badge]: https://img.shields.io/badge/license-MIT-blue.svg
-[license]: ./LICENSE
 
 <!-- Line 2: Available Images -->
 [php-version-badge]: https://img.shields.io/badge/PHP-8.3-777BB4?logo=php&logoColor=white
@@ -495,13 +495,11 @@ _Built with ❤️ by the Zairakai team for Laravel + Vue.js developers_
 [contributors]: https://gitlab.com/zairakai/docker-ecosystem/-/graphs/main
 
 <!-- Support & License Section -->
-[issues-badge]: https://img.shields.io/gitlab/issues/open/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Issues
+[issues-badge]: https://img.shields.io/gitlab/issues/open-raw/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Issues
+
 [issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
 
 [docs-badge]: https://img.shields.io/badge/docs-available-blue?logo=readthedocs&logoColor=white
-
-[activity-badge]: https://img.shields.io/gitlab/last-commit/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Last%20Commit
-[activity]: https://gitlab.com/zairakai/docker-ecosystem/-/commits/main
 
 <!-- Stage-Specific Pulls Badges (PHP) -->
 [php-prod-pulls-badge]: https://img.shields.io/docker/pulls/zairakai/php?logo=docker&label=8.3-prod

@@ -42,13 +42,34 @@ fi
 SHELLCHECK_VERSION=$(shellcheck --version | grep "version:" | awk '{print $2}')
 log_info "ShellCheck version: ${SHELLCHECK_VERSION}"
 
-# Find all shell scripts
+# Find all shell scripts (excluding vendor/third-party directories)
 log_info "→ Finding shell scripts…"
 
-mapfile -t SHELL_SCRIPTS < <(find . -name "*.sh" -type f)
+# Exclusions: node_modules, vendor, .git, dist, build, coverage
+mapfile -t SHELL_SCRIPTS < <(find . -name "*.sh" -type f \
+  -not -path "*/node_modules/*" \
+  -not -path "*/vendor/*" \
+  -not -path "*/.git/*" \
+  -not -path "*/dist/*" \
+  -not -path "*/build/*" \
+  -not -path "*/coverage/*" \
+  | sort)
 
 SCRIPT_COUNT=${#SHELL_SCRIPTS[@]}
-log_info "Found ${SCRIPT_COUNT} shell scripts"
+log_info "Found ${SCRIPT_COUNT} shell scripts (excluding node_modules, vendor, .git, dist, build, coverage)"
+
+# Display first few scripts found
+if [[ ${SCRIPT_COUNT} -gt 0 ]]; then
+  log_debug "Sample scripts found:"
+  for i in "${!SHELL_SCRIPTS[@]}"; do
+    if [[ $i -lt 5 ]]; then
+      log_debug "  - ${SHELL_SCRIPTS[$i]}"
+    fi
+  done
+  if [[ ${SCRIPT_COUNT} -gt 5 ]]; then
+    log_debug "  ... and $((SCRIPT_COUNT - 5)) more"
+  fi
+fi
 
 if [[ ${SCRIPT_COUNT} -eq 0 ]]; then
   log_warning "No shell scripts found"
@@ -77,9 +98,21 @@ done
 log_section "ShellCheck Validation Summary"
 
 if [[ ${FAILED} -eq 0 ]]; then
-  log_success "✅ All ${TOTAL} scripts passed ShellCheck validation"
+  log_success "✅ All ${TOTAL} shell scripts passed ShellCheck validation"
+  log_info ""
+  log_info "Coverage:"
+  log_info "  • Project scripts: scripts/**/*.sh"
+  log_info "  • Pipeline scripts: scripts/pipeline/*.sh"
+  log_info "  • Image scripts: images/**/scripts/*.sh"
+  log_info "  • Backup scripts: scripts/backup/*.sh"
+  log_info ""
+  log_info "Severity level: ${SEVERITY}"
+  log_info "Format: ${FORMAT}"
   exit 0
 else
   log_error "❌ ${FAILED}/${TOTAL} scripts failed ShellCheck validation"
+  log_error ""
+  log_error "Failed scripts must be fixed before committing."
+  log_error "Run 'shellcheck <script>' to see specific issues."
   exit 1
 fi

@@ -59,7 +59,6 @@ REQUIRED_SCRIPTS=(
   "scripts/common.sh"
   "scripts/docker-functions.sh"
   "scripts/promote.sh"
-  "scripts/cleanup.sh"
   "scripts/pipeline/build-image.sh"
 )
 

@@ -73,6 +73,16 @@ build-mysql: ## 🔨 Build MySQL 8.0 image
 		IMAGE_SUFFIX=-local \
 		bash scripts/pipeline/build-image.sh images/database/mysql/8.0 database mysql-8.0
 
+.PHONY: build-all
+build-all: ## 🔨 Build all images locally (required before test-all)
+	@echo "🏗️  Building all images with -local suffix…"
+	@CI_REGISTRY_IMAGE=registry.gitlab.com/zairakai/docker-ecosystem \
+		IMAGE_SUFFIX=-local \
+		PUSH_TO_REGISTRY=false \
+		CACHE_ENABLED=true \
+		bash scripts/build-all-images.sh
+	@bash -c 'source $(ANSI) && ok "All images built successfully"'
+
 ## ────────────────────────────────────────────────────────────────────
 ## TEST TARGETS
 ## ────────────────────────────────────────────────────────────────────
@@ -89,8 +99,12 @@ test-multi-stage: ## 🔍 Test multi-stage build integrity
 		bash scripts/pipeline/test-multi-stage.sh
 
 .PHONY: test-all
-test-all: test-image-sizes test-multi-stage ## 🧪 Run all tests
+test-all: test-image-sizes test-multi-stage ## 🧪 Run all tests (requires images built with build-all first)
 	@bash -c 'source $(ANSI) && ok "All tests passed"'
+
+.PHONY: build-and-test
+build-and-test: build-all test-all ## 🚀 Full workflow: build all images then run all tests
+	@bash -c 'source $(ANSI) && ok "Build and test complete"'
 
 ## ────────────────────────────────────────────────────────────────────
 ## CI/CD TARGETS

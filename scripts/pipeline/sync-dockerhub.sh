@@ -39,6 +39,69 @@ else
 fi
 
 # ================================
+# GET DOCKER HUB JWT TOKEN (for API calls)
+# ================================
+log_info "→ Authenticating to Docker Hub API…"
+
+DOCKERHUB_JWT_TOKEN=$(curl -s -X POST \
+  https://hub.docker.com/v2/users/login/ \
+  -H "Content-Type: application/json" \
+  -d "{\"username\":\"${DOCKERHUB_USERNAME}\",\"password\":\"${DOCKERHUB_TOKEN}\"}" \
+  | grep -o '"token":"[^"]*"' | cut -d'"' -f4)
+
+if [[ -z "${DOCKERHUB_JWT_TOKEN}" ]]; then
+  log_warning "⚠️  Failed to get Docker Hub API token - descriptions will not be updated"
+  DOCKERHUB_JWT_TOKEN=""
+else
+  log_success "Docker Hub API token obtained"
+fi
+
+# ================================
+# FUNCTION: UPDATE DOCKER HUB DESCRIPTION
+# ================================
+update_dockerhub_description() {
+  local namespace="$1"
+  local repository="$2"
+  local readme_path="$3"
+
+  # Skip if no JWT token or README file doesn't exist
+  if [[ -z "${DOCKERHUB_JWT_TOKEN}" ]]; then
+    log_debug "  ⊘ Skipping description update (no API token)"
+    return 0
+  fi
+
+  if [[ ! -f "${readme_path}" ]]; then
+    log_debug "  ⊘ No README found at ${readme_path}"
+    return 0
+  fi
+
+  # Read README content and escape for JSON
+  local description
+  description=$(jq -Rs . < "${readme_path}")
+
+  log_debug "  → Updating Docker Hub description from ${readme_path}"
+
+  # Update description via API
+  local response
+  response=$(curl -s -w "\n%{http_code}" -X PATCH \
+    "https://hub.docker.com/v2/repositories/${namespace}/${repository}/" \
+    -H "Authorization: Bearer ${DOCKERHUB_JWT_TOKEN}" \
+    -H "Content-Type: application/json" \
+    -d "{\"full_description\":${description}}")
+
+  local http_code
+  http_code=$(echo "${response}" | tail -n1)
+
+  if [[ "${http_code}" -eq 200 ]]; then
+    log_debug "  ✓ Description updated successfully"
+    return 0
+  else
+    log_warning "  ⚠ Failed to update description (HTTP ${http_code})"
+    return 1
+  fi
+}
+
+# ================================
 # DEFINE IMAGE MAPPINGS
 # ================================
 # Format: "gitlab_tag|dockerhub_tag" (pipe separator to avoid confusion with colons in tags)
@@ -103,6 +166,34 @@ for mapping in "${IMAGE_MAPPINGS[@]}"; do
     log_error "  ✗ Failed to push ${DOCKERHUB_TAG}"
     FAILED=$((FAILED + 1))
     continue
+  fi
+
+  # Extract namespace and repository from DOCKERHUB_TAG (format: namespace/repository:tag)
+  namespace=$(echo "${DOCKERHUB_TAG}" | cut -d'/' -f1)
+  repository=$(echo "${DOCKERHUB_TAG}" | cut -d'/' -f2 | cut -d':' -f1)
+
+  # Try to find README file for this image
+  readme_path=""
+  # Try multiple possible locations
+  if [[ -f "images/php/8.3/README.md" ]] && [[ "${repository}" == "php" ]]; then
+    readme_path="images/php/8.3/README.md"
+  elif [[ -f "images/node/20/README.md" ]] && [[ "${repository}" == "node" ]]; then
+    readme_path="images/node/20/README.md"
+  elif [[ -f "images/database/mysql/8.0/README.md" ]] && [[ "${repository}" == "mysql" ]]; then
+    readme_path="images/database/mysql/8.0/README.md"
+  elif [[ -f "images/database/redis/7/README.md" ]] && [[ "${repository}" == "redis" ]]; then
+    readme_path="images/database/redis/7/README.md"
+  elif [[ -f "images/web/nginx/1.26/README.md" ]] && [[ "${repository}" == "nginx" ]]; then
+    readme_path="images/web/nginx/1.26/README.md"
+  elif [[ -f "images/services/${repository}/README.md" ]]; then
+    readme_path="images/services/${repository}/README.md"
+  else
+    readme_path=""
+  fi
+
+  # Update Docker Hub description if README exists
+  if [[ -n "${readme_path}" ]]; then
+    update_dockerhub_description "${namespace}" "${repository}" "${readme_path}"
   fi
 
   log_success "  ✓ ${DOCKERHUB_TAG} synced"

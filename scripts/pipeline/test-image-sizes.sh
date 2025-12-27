@@ -88,7 +88,21 @@ done
 
 if [[ ${MISSING_IMAGES} -gt 0 ]]; then
   log_error "${MISSING_IMAGES} images not found locally"
-  log_error "Make sure all build jobs completed successfully on the same runner"
+
+  # Provide helpful guidance based on environment
+  if [[ -z "${CI:-}" ]]; then
+    # Local environment
+    log_error "→ In local environment, you must build images first:"
+    log_info "   make build-all        # Build all images with -local suffix"
+    log_info "   make test-all         # Then run tests"
+    log_info ""
+    log_info "Or use the combined workflow:"
+    log_info "   make build-and-test   # Build + test in one command"
+  else
+    # CI environment
+    log_error "Make sure all build jobs completed successfully on the same runner"
+  fi
+
   exit 1
 fi
 
@@ -127,9 +141,9 @@ echo "========================================" >> "${OUTPUT_FILE}"
 
 # Count total images
 if [[ "${CI_COMMIT_SHORT_SHA}" != "local" ]]; then
-  TOTAL_IMAGES=$(docker images --format "{{.Repository}}:{{.Tag}}" | grep "${CI_COMMIT_SHORT_SHA}" | wc -l)
+  TOTAL_IMAGES=$(docker images --format "{{.Repository}}:{{.Tag}}" | grep -c "${CI_COMMIT_SHORT_SHA}")
 else
-  TOTAL_IMAGES=$(docker images --format "{{.Repository}}:{{.Tag}}" | grep "${IMAGE_SUFFIX#-}" | wc -l)
+  TOTAL_IMAGES=$(docker images --format "{{.Repository}}:{{.Tag}}" | grep -c "${IMAGE_SUFFIX#-}")
 fi
 
 echo "TOTAL IMAGES: ${TOTAL_IMAGES}" >> "${OUTPUT_FILE}"
