@@ -629,7 +629,9 @@ docker service update --force myapp_redis
 [license-badge]: https://img.shields.io/badge/license-MIT-blue.svg
 [license]: ../LICENSE
 [discord-badge]: https://img.shields.io/discord/1260000352699289621?logo=discord&label=Discord&color=5865F2
+[discord]: https://discord.gg/MAmD5SG8Zu
 [issues-badge]: https://img.shields.io/gitlab/issues/open-raw/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Issues
+[issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
 
 <!-- Reference Links -->
 
