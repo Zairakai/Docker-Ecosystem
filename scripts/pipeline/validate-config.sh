@@ -50,33 +50,84 @@ done
 log_success "All required Dockerfiles present"
 
 # ================================
-# CHECK SCRIPTS
+# CHECK CRITICAL SCRIPTS (Pipeline-Essential)
 # ================================
-log_info "→ Checking required scripts…"
+log_info "→ Checking critical pipeline scripts…"
 
+# Scripts that MUST exist for CI/CD pipeline to work
 REQUIRED_SCRIPTS=(
+  # Core build system
   "scripts/build-all-images.sh"
   "scripts/common.sh"
   "scripts/docker-functions.sh"
-  "scripts/promote.sh"
+  "scripts/ansi.sh"
+
+  # Core CI/CD pipeline scripts
   "scripts/pipeline/build-image.sh"
+  "scripts/pipeline/test-image-sizes.sh"
+  "scripts/pipeline/test-multi-stage.sh"
+  "scripts/pipeline/sync-dockerhub.sh"
+  "scripts/pipeline/validate-config.sh"
+  "scripts/pipeline/validate-shellcheck.sh"
+
+  # Core release system
+  "scripts/promote.sh"
 )
+
+MISSING_CRITICAL=0
 
 for script in "${REQUIRED_SCRIPTS[@]}"; do
   if [ ! -f "${script}" ]; then
-    log_error "Missing required script: ${script}"
-    exit 1
+    log_error "Missing critical script: ${script}"
+    MISSING_CRITICAL=$((MISSING_CRITICAL + 1))
+  else
+    # Check if script is executable
+    if [ ! -x "${script}" ]; then
+      log_warning "Script not executable: ${script}"
+    fi
+    log_debug "  ✓ ${script}"
   fi
-
-  # Check if script is executable
-  if [ ! -x "${script}" ]; then
-    log_warning "Script not executable: ${script}"
-  fi
-
-  log_debug "  ✓ ${script}"
 done
 
-log_success "All required scripts present"
+if [[ ${MISSING_CRITICAL} -gt 0 ]]; then
+  log_error "${MISSING_CRITICAL} critical scripts missing"
+  exit 1
+fi
+
+log_success "All ${#REQUIRED_SCRIPTS[@]} critical scripts present"
+
+# ================================
+# CHECK ALL SCRIPTS (Exhaustive)
+# ================================
+log_info "→ Checking all shell scripts (exhaustive)…"
+
+# Find all .sh scripts (excluding vendor/third-party)
+mapfile -t ALL_SCRIPTS < <(find . -name "*.sh" -type f \
+  -not -path "*/node_modules/*" \
+  -not -path "*/vendor/*" \
+  -not -path "*/.git/*" \
+  -not -path "*/dist/*" \
+  -not -path "*/build/*" \
+  -not -path "*/coverage/*" \
+  | sort)
+
+TOTAL_SCRIPTS=${#ALL_SCRIPTS[@]}
+NON_EXECUTABLE=0
+
+log_info "Found ${TOTAL_SCRIPTS} shell scripts in project"
+
+for script in "${ALL_SCRIPTS[@]}"; do
+  if [ ! -x "${script}" ]; then
+    log_debug "  ⚠ Not executable: ${script}"
+    NON_EXECUTABLE=$((NON_EXECUTABLE + 1))
+  fi
+done
+
+if [[ ${NON_EXECUTABLE} -gt 0 ]]; then
+  log_warning "${NON_EXECUTABLE}/${TOTAL_SCRIPTS} scripts are not executable (chmod +x recommended)"
+else
+  log_success "All ${TOTAL_SCRIPTS} scripts are executable"
+fi
 
 # ================================
 # CHECK DIRECTORIES
@@ -146,8 +197,17 @@ log_success "Dockerfile syntax validation passed"
 # ================================
 log_section "Configuration Validation Summary"
 log_success "✅ Configuration validation passed"
-log_info "  - Dockerfiles: ${DOCKERFILE_COUNT} found"
-log_info "  - Scripts: ${#REQUIRED_SCRIPTS[@]} validated"
-log_info "  - Directories: ${#REQUIRED_DIRS[@]} checked"
+log_info ""
+log_info "Coverage:"
+log_info "  • Dockerfiles: ${DOCKERFILE_COUNT} found"
+log_info "  • Critical scripts: ${#REQUIRED_SCRIPTS[@]} validated (pipeline-essential)"
+log_info "  • All scripts: ${TOTAL_SCRIPTS} checked (exhaustive)"
+log_info "  • Directories: ${#REQUIRED_DIRS[@]} checked"
+log_info ""
+
+if [[ ${NON_EXECUTABLE} -gt 0 ]]; then
+  log_info "Recommendations:"
+  log_info "  • ${NON_EXECUTABLE} scripts could be made executable (chmod +x)"
+fi
 
 exit 0
