@@ -28,10 +28,16 @@
 
 # Source dependencies
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 # shellcheck disable=SC1091
 source "${SCRIPT_DIR}/ansi.sh"
 # shellcheck disable=SC1091
 source "${SCRIPT_DIR}/common.sh"
+
+# Setup environment for docker-functions.sh (same as build-image.sh)
+export DOCKER_REGISTRY="${CI_REGISTRY_IMAGE:-registry.gitlab.com/zairakai/docker-ecosystem}"
+export IMAGES_DIR="${PROJECT_ROOT}/images"
+
 # shellcheck disable=SC1091
 source "${SCRIPT_DIR}/docker-functions.sh"
 
