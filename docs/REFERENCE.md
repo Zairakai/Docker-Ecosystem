@@ -539,12 +539,8 @@ cosign generate-key-pair
 [![Discord][discord-badge]][discord]
 [![Issues][issues-badge]][issues]
 
-## Support
-
-[![Discord][discord-badge]][discord]
-[![Issues][issues-badge]][issues]
-
 **Need help?** Join our Discord community or report issues on GitLab.
+
 
 
 <!-- Badge References -->

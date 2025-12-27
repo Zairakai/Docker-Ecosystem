@@ -127,12 +127,12 @@ docker restart redis-container
 
 **Documentation**: https://gitlab.com/zairakai/docker-ecosystem
 
-## Support
 
 [![Discord][discord-badge]][discord]
 [![Issues][issues-badge]][issues]
 
 **Need help?** Join our Discord community or report issues on GitLab.
+
 
 <!-- Badge References -->
 [pipeline-badge]: https://gitlab.com/zairakai/docker-ecosystem/badges/main/pipeline.svg
@@ -148,6 +148,7 @@ docker restart redis-container
 [![Issues][issues-badge]][issues]
 
 **Need help?** Join our Discord community or report issues on GitLab.
+
 
 [issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
 

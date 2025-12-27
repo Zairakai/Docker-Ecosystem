@@ -167,12 +167,12 @@ docker run --rm -v ./tests:/app/tests zairakai/e2e-testing npx playwright show-r
 
 **Documentation**: https://gitlab.com/zairakai/docker-ecosystem
 
-## Support
 
 [![Discord][discord-badge]][discord]
 [![Issues][issues-badge]][issues]
 
 **Need help?** Join our Discord community or report issues on GitLab.
+
 
 <!-- Badge References -->
 [pipeline-badge]: https://gitlab.com/zairakai/docker-ecosystem/badges/main/pipeline.svg
@@ -188,6 +188,7 @@ docker run --rm -v ./tests:/app/tests zairakai/e2e-testing npx playwright show-r
 [![Issues][issues-badge]][issues]
 
 **Need help?** Join our Discord community or report issues on GitLab.
+
 
 [issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
 
