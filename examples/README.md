@@ -325,4 +325,3 @@ The Docker Ecosystem supports **3 distinct architectures** for Laravel + Vue.js:
 [compose-badge]: https://img.shields.io/badge/docker--compose-3.8+-2496ED.svg?logo=docker&logoColor=white
 [compose]: https://docs.docker.com/compose/
 
-<!-- Reference Links -->

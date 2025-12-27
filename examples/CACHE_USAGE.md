@@ -254,4 +254,3 @@ environment:
 [issues-badge]: https://img.shields.io/gitlab/issues/open-raw/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Issues
 [issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
 
-<!-- Reference Links -->

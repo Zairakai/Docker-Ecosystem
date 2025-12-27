@@ -13,7 +13,6 @@
 
 <!-- Community & Stats -->
 [![GitLab Stars][stars-badge]][stars-link]
-[![Total Downloads][total-downloads-badge]][dockerhub]
 [![Discord][discord-badge]][discord]
 [![Contributors][contributors-badge]][contributors]
 
@@ -488,7 +487,6 @@ _Built with ❤️ by the Zairakai team for Laravel + Vue.js developers_
 [stars-badge]: https://img.shields.io/gitlab/stars/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Stars
 [stars-link]: https://gitlab.com/zairakai/docker-ecosystem
 
-[total-downloads-badge]: https://img.shields.io/badge/docker%20pulls-1M%2B-blue?logo=docker
 
 [discord-badge]: https://img.shields.io/discord/1260000352699289621?logo=discord&label=Discord&color=5865F2
 [discord]: https://discord.gg/MAmD5SG8Zu

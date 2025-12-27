@@ -394,4 +394,3 @@ See `values.yaml` for complete configuration options.
 [alpine-badge]: https://img.shields.io/badge/built%20on-Alpine%203.19-0D597F?logo=alpine-linux&logoColor=white
 [alpine]: https://alpinelinux.org/
 
-<!-- Reference Links -->
