@@ -1,6 +1,5 @@
 # Node.js 20 LTS - Production-Ready Images for Vue.js
 
-
 <!-- Image Stats -->
 [![Docker Pulls][pulls-badge]][dockerhub]
 [![Image Size][size-badge]][dockerhub]
@@ -21,7 +20,7 @@ Part of the [Zairakai Docker Ecosystem](https://gitlab.com/zairakai/docker-ecosy
 ## Available Tags
 
 | Tag | Use Case | Key Features |
-|-----|----------|--------------|
+| --- | -------- | ------------ |
 | `20-prod` | Production | Minimal runtime, non-root |
 | `20-dev` | Development | + Yarn, npm, build tools, ESLint |
 | `20-test` | CI/CD Testing | + Jest, Playwright, Gherkin/Cucumber |
@@ -102,10 +101,12 @@ networks:
 ## Installed Tools
 
 ### Production (`20-prod`)
+
 - **Node.js 20.x LTS** - JavaScript runtime
 - **npm** - Package manager (minimal)
 
 ### Development (`20-dev`)
+
 - **Yarn** - Fast package manager
 - **npm** - Package manager
 - **ESLint** - Linting and code quality
@@ -113,6 +114,7 @@ networks:
 - **TypeScript** - Type-safe JavaScript
 
 ### Testing (`20-test`)
+
 - **Jest** - Unit testing framework
 - **Playwright** - E2E browser testing
 - **Cucumber/Gherkin** - BDD testing
@@ -123,18 +125,21 @@ networks:
 ## Key Features
 
 ### Security First
+
 - **Non-root execution**: Runs as `node:node` (UID/GID 1000)
 - **Alpine Linux base**: Minimal attack surface
 - **Dependency scanning**: Automated npm audit in CI/CD
 - **No secrets in images**: Configuration via environment variables
 
 ### Performance Optimized
+
 - **Minimal production size**: 35MB runtime-only image
 - **Multi-stage builds**: Build artifacts excluded from production
 - **Vite optimized**: Pre-configured for fast HMR
 - **Caching**: npm/yarn cache layers optimized
 
 ### Developer Experience
+
 - **Hot Module Replacement**: Full HMR support for Vite/Webpack
 - **TypeScript ready**: Pre-configured for TS projects
 - **ESLint included**: Code quality out of the box
@@ -147,7 +152,7 @@ networks:
 ### Environment Variables
 
 | Variable | Default | Description |
-|----------|---------|-------------|
+| -------- | ------- | ----------- |
 | `NODE_ENV` | `production` | Node environment |
 | `PORT` | `3000` | Application port |
 | `VITE_PORT` | `5173` | Vite dev server port |
@@ -181,11 +186,12 @@ export default {
 
 This image follows a **progressive extension architecture**:
 
-```
+```text
 Production (minimal) → Development (+tools) → Testing (+frameworks)
 ```
 
 Each layer builds upon the previous, ensuring:
+
 - **Production stays minimal** (35MB)
 - **No dev dependencies in production**
 - **Consistent Node.js version across environments**
@@ -195,25 +201,33 @@ Each layer builds upon the previous, ensuring:
 ## Use Cases
 
 ### Vue.js + Vite Applications
+
 Optimized for Vue 3 with Vite:
+
 - Fast HMR in development
 - Optimized production builds
 - TypeScript support
 
 ### Nuxt 3 Applications
+
 Perfect for Nuxt 3 SSR/SSG:
+
 - Server-side rendering
 - Static site generation
 - API routes
 
 ### React + Vite/Next.js
+
 Works great with React ecosystems:
+
 - React 18+ support
 - Next.js compatible
 - Fast refresh
 
 ### Build Pipelines
+
 Excellent for CI/CD:
+
 - Consistent build environment
 - Cached dependencies
 - Reproducible builds
@@ -313,18 +327,17 @@ services:
 
 ## Documentation
 
-- **Full Documentation**: https://gitlab.com/zairakai/docker-ecosystem/-/blob/main/docs/INDEX.md
-- **Quickstart Guide**: https://gitlab.com/zairakai/docker-ecosystem/-/blob/main/docs/QUICKSTART.md
-- **Testing Modes**: https://gitlab.com/zairakai/docker-ecosystem/-/blob/main/docs/TESTING_MODES.md
-- **Docker Compose Examples**: https://gitlab.com/zairakai/docker-ecosystem/-/tree/main/examples/compose
+- **[Full Documentation](https://gitlab.com/zairakai/docker-ecosystem/-/blob/main/docs/INDEX.md)**
+- **[Quickstart Guide](https://gitlab.com/zairakai/docker-ecosystem/-/blob/main/docs/QUICKSTART.md)**
+- **[Testing Modes](https://gitlab.com/zairakai/docker-ecosystem/-/blob/main/docs/TESTING_MODES.md)**
+- **[Docker Compose Examples](https://gitlab.com/zairakai/docker-ecosystem/-/tree/main/examples/compose)**
 
 ---
-
 
 ## Related Images
 
 | Image | Description |
-|-------|-------------|
+| ----- | ----------- |
 | [zairakai/php](https://hub.docker.com/r/zairakai/php) | PHP 8.3 for Laravel |
 | [zairakai/nginx](https://hub.docker.com/r/zairakai/nginx) | Nginx reverse proxy |
 | [zairakai/mysql](https://hub.docker.com/r/zairakai/mysql) | MySQL 8.0 with HA |
@@ -332,15 +345,10 @@ services:
 
 ---
 
-
 ## Support
 
-[![Discord][discord-badge]][discord]
 [![Issues][issues-badge]][issues]
-
-**Need help?** Join our Discord community or report issues on GitLab.
-
-**Built with care by [Zairakai](https://gitlab.com/zairakai) for the Vue.js community.**
+[![Discord][discord-badge]][discord]
 
 <!-- Badge References -->
 [pulls-badge]: https://img.shields.io/docker/pulls/zairakai/node?logo=docker&logoColor=white

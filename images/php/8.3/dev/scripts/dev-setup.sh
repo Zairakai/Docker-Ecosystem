@@ -195,7 +195,7 @@ main() {
 
 # Handle script arguments
 case "$1" in
-  --help|-h)
+  --help| h)
     echo "Usage: $0 [command]"
     echo ""
     echo "Environment variables:"

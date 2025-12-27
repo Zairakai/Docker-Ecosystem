@@ -532,7 +532,7 @@ main() {
         start_server=false
         shift
         ;;
-      --help|-h)
+      --help| h)
         show_help
         exit 0
         ;;

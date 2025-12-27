@@ -1,6 +1,5 @@
 # Nginx 1.26 - Optimized Reverse Proxy for Laravel
 
-
 <!-- Image Stats -->
 [![Docker Pulls][pulls-badge]][dockerhub]
 [![Image Size][size-badge]][dockerhub]
@@ -13,7 +12,7 @@
 [![Discord][discord-badge]][discord]
 Production-ready Nginx 1.26 optimized for Laravel applications with HTTP/3 support.
 
-Part of the [Zairakai Docker Ecosystem](https://gitlab.com/zairakai/docker-ecosystem).
+Part of the [Zairakai Docker Ecosystem][ecosystem].
 
 ---
 
@@ -114,7 +113,7 @@ server {
 }
 ```
 
-Full examples: [Nginx Configuration Examples](https://gitlab.com/zairakai/docker-ecosystem/-/tree/main/examples/nginx)
+Full examples: [Nginx Configuration Examples][nginx-examples]
 
 ---
 
@@ -123,19 +122,19 @@ Full examples: [Nginx Configuration Examples](https://gitlab.com/zairakai/docker
 This ecosystem supports 3 testing architectures:
 
 | Mode | Description | Use Case |
-|------|-------------|----------|
+| ---- | ----------- | -------- |
 | **Blade Only** | Traditional SSR | Simple apps, SEO-critical |
 | **SPA Only** | Decoupled frontend | Mobile apps, PWA |
 | **Hybrid** | Laravel + Vite | Modern full-stack (recommended) |
 
-Documentation: [Testing Modes Guide](https://gitlab.com/zairakai/docker-ecosystem/-/blob/main/docs/TESTING_MODES.md)
+Documentation: [Testing Modes Guide][testing-modes]
 
 ---
 
 ## Environment Variables
 
 | Variable | Default | Description |
-|----------|---------|-------------|
+| -------- | ------- | ----------- |
 | `NGINX_HOST` | `localhost` | Server name |
 | `NGINX_ROOT` | `/var/www/html/public` | Document root |
 | `NGINX_PHP_FPM` | `php:9000` | PHP-FPM upstream |
@@ -161,6 +160,7 @@ services:
 ## Performance Tuning
 
 Included optimizations:
+
 - **Gzip Level 6**: Balanced compression
 - **Client Body Buffer**: 128k for uploads
 - **FastCGI Buffers**: Optimized for PHP responses
@@ -176,14 +176,12 @@ Included optimizations:
 - [zairakai/mysql](https://hub.docker.com/r/zairakai/mysql) - MySQL database
 - [zairakai/redis](https://hub.docker.com/r/zairakai/redis) - Redis cache
 
-**Documentation**: https://gitlab.com/zairakai/docker-ecosystem
-
+**Documentation**: [Zairakai Docker Ecosystem][ecosystem]
 
 [![Discord][discord-badge]][discord]
 [![Issues][issues-badge]][issues]
 
 **Need help?** Join our Discord community or report issues on GitLab.
-
 
 <!-- Badge References -->
 [pipeline-badge]: https://gitlab.com/zairakai/docker-ecosystem/badges/main/pipeline.svg
@@ -195,11 +193,8 @@ Included optimizations:
 
 ## Support
 
-[![Discord][discord-badge]][discord]
 [![Issues][issues-badge]][issues]
-
-**Need help?** Join our Discord community or report issues on GitLab.
-
+[![Discord][discord-badge]][discord]
 
 [issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
 
@@ -215,3 +210,4 @@ Included optimizations:
 [issues-badge]: https://img.shields.io/gitlab/issues/open-raw/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Issues
 [issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
 [dockerhub]: https://hub.docker.com/r/zairakai/nginx
+[ecosystem]: https://gitlab.com/zairakai/docker-ecosystem

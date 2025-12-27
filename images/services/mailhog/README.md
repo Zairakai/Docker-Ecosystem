@@ -1,6 +1,5 @@
 # MailHog - Email Testing for Development
 
-
 <!-- Image Stats -->
 [![Docker Pulls][pulls-badge]][dockerhub]
 [![Image Size][size-badge]][dockerhub]
@@ -13,7 +12,7 @@
 [![Discord][discord-badge]][discord]
 Email testing tool with web UI for capturing and viewing emails sent by your Laravel application.
 
-Part of the [Zairakai Docker Ecosystem](https://gitlab.com/zairakai/docker-ecosystem).
+Part of the [Zairakai Docker Ecosystem][ecosystem].
 
 ---
 
@@ -96,14 +95,12 @@ MAIL_FROM_NAME="${APP_NAME}"
 
 ---
 
-**Documentation**: https://gitlab.com/zairakai/docker-ecosystem
-
+**Documentation**: [Zairakai Docker Ecosystem][ecosystem]
 
 [![Discord][discord-badge]][discord]
 [![Issues][issues-badge]][issues]
 
 **Need help?** Join our Discord community or report issues on GitLab.
-
 
 <!-- Badge References -->
 [pipeline-badge]: https://gitlab.com/zairakai/docker-ecosystem/badges/main/pipeline.svg
@@ -115,11 +112,8 @@ MAIL_FROM_NAME="${APP_NAME}"
 
 ## Support
 
-[![Discord][discord-badge]][discord]
 [![Issues][issues-badge]][issues]
-
-**Need help?** Join our Discord community or report issues on GitLab.
-
+[![Discord][discord-badge]][discord]
 
 [issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
 
@@ -135,3 +129,4 @@ MAIL_FROM_NAME="${APP_NAME}"
 [issues-badge]: https://img.shields.io/gitlab/issues/open-raw/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Issues
 [issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
 [dockerhub]: https://hub.docker.com/r/zairakai/mailhog
+[ecosystem]: https://gitlab.com/zairakai/docker-ecosystem

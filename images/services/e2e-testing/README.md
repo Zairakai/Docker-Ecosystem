@@ -1,6 +1,5 @@
 # E2E Testing - Playwright + Gherkin/Cucumber
 
-
 <!-- Image Stats -->
 [![Docker Pulls][pulls-badge]][dockerhub]
 [![Image Size][size-badge]][dockerhub]
@@ -13,7 +12,7 @@
 [![Discord][discord-badge]][discord]
 Complete end-to-end testing environment with Playwright and BDD (Behavior-Driven Development) support.
 
-Part of the [Zairakai Docker Ecosystem](https://gitlab.com/zairakai/docker-ecosystem).
+Part of the [Zairakai Docker Ecosystem][ecosystem].
 
 ---
 
@@ -165,14 +164,12 @@ docker run --rm -v ./tests:/app/tests zairakai/e2e-testing npx playwright show-r
 
 ---
 
-**Documentation**: https://gitlab.com/zairakai/docker-ecosystem
-
+**Documentation**: [Zairakai Docker Ecosystem][ecosystem]
 
 [![Discord][discord-badge]][discord]
 [![Issues][issues-badge]][issues]
 
 **Need help?** Join our Discord community or report issues on GitLab.
-
 
 <!-- Badge References -->
 [pipeline-badge]: https://gitlab.com/zairakai/docker-ecosystem/badges/main/pipeline.svg
@@ -184,11 +181,8 @@ docker run --rm -v ./tests:/app/tests zairakai/e2e-testing npx playwright show-r
 
 ## Support
 
-[![Discord][discord-badge]][discord]
 [![Issues][issues-badge]][issues]
-
-**Need help?** Join our Discord community or report issues on GitLab.
-
+[![Discord][discord-badge]][discord]
 
 [issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
 
@@ -204,3 +198,4 @@ docker run --rm -v ./tests:/app/tests zairakai/e2e-testing npx playwright show-r
 [issues-badge]: https://img.shields.io/gitlab/issues/open-raw/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Issues
 [issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
 [dockerhub]: https://hub.docker.com/r/zairakai/e2e-testing
+[ecosystem]: https://gitlab.com/zairakai/docker-ecosystem

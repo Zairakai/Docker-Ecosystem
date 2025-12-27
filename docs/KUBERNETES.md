@@ -1,61 +1,63 @@
 # Kubernetes Deployment Guide
 
 <!-- CI/CD & Quality -->
-[![Pipeline][pipeline-badge]][pipeline]
 [![License][license-badge]][license]
+[![Pipeline][pipeline-badge]][pipeline]
 
-<!-- Community -->
-[![Discord][discord-badge]][discord]
-[![Issues][issues-badge]][issues]
+
 [🏠 Home][home] > [📚 Documentation][docs] > Kubernetes Deployment Guide
 
 Complete guide for deploying Zairakai Docker Ecosystem on Kubernetes using Helm.
 
 ## Table of Contents
 
-- [Overview](#overview)
-  - [Architecture](#architecture)
-  - [Components](#components)
-- [Prerequisites](#prerequisites)
-  - [Required Tools](#required-tools)
-  - [Kubernetes Cluster](#kubernetes-cluster)
-  - [Storage Provisioner](#storage-provisioner)
-  - [Ingress Controller](#ingress-controller)
-- [Installation](#installation)
-  - [1. Create Namespace](#1-create-namespace)
-  - [2. Create Image Pull Secret (GitLab Registry)](#2-create-image-pull-secret-gitlab-registry)
-  - [3. Create Application Secrets](#3-create-application-secrets)
-  - [4. Create values.yaml](#4-create-valuesyaml)
-  - [5. Install Helm Chart](#5-install-helm-chart)
-  - [6. Verify Deployment](#6-verify-deployment)
-- [Configuration](#configuration)
-  - [Resource Limits](#resource-limits)
-  - [Horizontal Pod Autoscaling](#horizontal-pod-autoscaling)
-  - [Storage Configuration](#storage-configuration)
-- [High Availability](#high-availability)
-  - [MySQL Replication](#mysql-replication)
-  - [Redis Sentinel](#redis-sentinel)
-  - [Pod Disruption Budgets](#pod-disruption-budgets)
-  - [Multi-Zone Deployment](#multi-zone-deployment)
-- [Monitoring](#monitoring)
-  - [Prometheus ServiceMonitor](#prometheus-servicemonitor)
-  - [Grafana Dashboards](#grafana-dashboards)
-  - [Check Metrics](#check-metrics)
-- [Security](#security)
-  - [Network Policies](#network-policies)
-  - [Pod Security Standards](#pod-security-standards)
-  - [Image Verification with Cosign](#image-verification-with-cosign)
-- [Troubleshooting](#troubleshooting)
-  - [Pods Stuck in Pending](#pods-stuck-in-pending)
-  - [Image Pull Errors](#image-pull-errors)
-  - [Database Connection Issues](#database-connection-issues)
-  - [Application Logs](#application-logs)
-  - [Performance Issues](#performance-issues)
-- [Backup & Restore](#backup--restore)
-  - [Manual Backup](#manual-backup)
-  - [Automated Backups with CronJob](#automated-backups-with-cronjob)
-- [Production Checklist](#production-checklist)
-- [Additional Resources](#additional-resources)
+- [Kubernetes Deployment Guide](#kubernetes-deployment-guide)
+  - [Table of Contents](#table-of-contents)
+  - [Overview](#overview)
+    - [Architecture](#architecture)
+    - [Components](#components)
+  - [Prerequisites](#prerequisites)
+    - [Required Tools](#required-tools)
+    - [Kubernetes Cluster](#kubernetes-cluster)
+    - [Storage Provisioner](#storage-provisioner)
+    - [Ingress Controller](#ingress-controller)
+  - [Installation](#installation)
+    - [1. Create Namespace](#1-create-namespace)
+    - [2. Create Image Pull Secret (GitLab Registry)](#2-create-image-pull-secret-gitlab-registry)
+    - [3. Create Application Secrets](#3-create-application-secrets)
+    - [4. Create values.yaml](#4-create-valuesyaml)
+    - [5. Install Helm Chart](#5-install-helm-chart)
+    - [6. Verify Deployment](#6-verify-deployment)
+  - [Configuration](#configuration)
+    - [Resource Limits](#resource-limits)
+    - [Horizontal Pod Autoscaling](#horizontal-pod-autoscaling)
+    - [Storage Configuration](#storage-configuration)
+  - [High Availability](#high-availability)
+    - [MySQL Replication](#mysql-replication)
+    - [Redis Sentinel](#redis-sentinel)
+    - [Pod Disruption Budgets](#pod-disruption-budgets)
+    - [Multi-Zone Deployment](#multi-zone-deployment)
+  - [Monitoring](#monitoring)
+    - [Prometheus ServiceMonitor](#prometheus-servicemonitor)
+    - [Grafana Dashboards](#grafana-dashboards)
+    - [Check Metrics](#check-metrics)
+  - [Security](#security)
+    - [Network Policies](#network-policies)
+    - [Pod Security Standards](#pod-security-standards)
+    - [Image Verification with Cosign](#image-verification-with-cosign)
+  - [Troubleshooting](#troubleshooting)
+    - [Pods Stuck in Pending](#pods-stuck-in-pending)
+    - [Image Pull Errors](#image-pull-errors)
+    - [Database Connection Issues](#database-connection-issues)
+    - [Application Logs](#application-logs)
+    - [Performance Issues](#performance-issues)
+  - [Backup \& Restore](#backup--restore)
+    - [Manual Backup](#manual-backup)
+    - [Automated Backups with CronJob](#automated-backups-with-cronjob)
+  - [Production Checklist](#production-checklist)
+  - [Additional Resources](#additional-resources)
+  - [Navigation](#navigation)
+  - [Support](#support)
 
 ## Overview
 
@@ -680,12 +682,8 @@ Before going to production:
 
 ## Support
 
-[![Discord][discord-badge]][discord]
 [![Issues][issues-badge]][issues]
-
-**Need help?** Join our Discord community or report issues on GitLab.
-
-
+[![Discord][discord-badge]][discord]
 
 <!-- Badge References -->
 [pipeline-badge]: https://gitlab.com/zairakai/docker-ecosystem/badges/main/pipeline.svg

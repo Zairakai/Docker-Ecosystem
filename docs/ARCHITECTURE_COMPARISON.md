@@ -1,50 +1,52 @@
 # Architecture Comparison: 3 Testing Modes
 
 <!-- CI/CD & Quality -->
-[![Pipeline][pipeline-badge]][pipeline]
 [![License][license-badge]][license]
+[![Pipeline][pipeline-badge]][pipeline]
 
-<!-- Community -->
-[![Discord][discord-badge]][discord]
-[![Issues][issues-badge]][issues]
+
 [🏠 Home][home] > [📚 Documentation][docs] > Architecture Comparison
 
 This document compares the three distinct architectural modes supported by the Zairakai Docker Ecosystem.
 
 ## Table of Contents
 
-- [Quick Reference Table](#quick-reference-table)
-- [Mode 1: Blade-only (Pure SSR)](#mode-1-blade-only-pure-ssr)
-  - [Architecture Diagram](#architecture-diagram)
-  - [Key Characteristics](#key-characteristics)
-  - [Directory Structure](#directory-structure)
-  - [Example Blade Template](#example-blade-template)
-  - [Testing](#testing)
-  - [Gherkin Test Example](#gherkin-test-example)
-- [Mode 2: SPA-only (Decoupled Architecture)](#mode-2-spa-only-decoupled-architecture)
-  - [Architecture Diagram](#architecture-diagram-1)
-  - [Key Characteristics](#key-characteristics-1)
-  - [Directory Structure](#directory-structure-1)
-  - [Vue.js App Structure](#vuejs-app-structure)
-  - [Laravel API Routes](#laravel-api-routes)
-  - [Build & Testing Workflow](#build--testing-workflow)
-  - [Nginx Configuration](#nginx-configuration)
-  - [Gherkin Test Example](#gherkin-test-example-1)
-- [Mode 3: Hybrid (Laravel + Vite Standard)](#mode-3-hybrid-laravel--vite-standard)
-  - [Architecture Diagram](#architecture-diagram-2)
-  - [Key Characteristics](#key-characteristics-2)
-  - [Directory Structure](#directory-structure-2)
-  - [Blade Template with Vue.js](#blade-template-with-vuejs)
-  - [Vue.js Component](#vuejs-component)
-  - [Build & Testing Workflow](#build--testing-workflow-1)
-  - [Gherkin Test Example](#gherkin-test-example-2)
-- [Choosing the Right Mode](#choosing-the-right-mode)
-  - [Use Blade-only when:](#use-blade-only-when)
-  - [Use SPA-only when:](#use-spa-only-when)
-  - [Use Hybrid when:](#use-hybrid-when)
-- [Testing Strategy per Mode](#testing-strategy-per-mode)
-- [Performance Comparison](#performance-comparison)
-- [Conclusion](#conclusion)
+- [Architecture Comparison: 3 Testing Modes](#architecture-comparison-3-testing-modes)
+  - [Table of Contents](#table-of-contents)
+  - [Quick Reference Table](#quick-reference-table)
+  - [Mode 1: Blade-only (Pure SSR)](#mode-1-blade-only-pure-ssr)
+    - [Architecture Diagram](#architecture-diagram)
+    - [Key Characteristics](#key-characteristics)
+    - [Directory Structure](#directory-structure)
+    - [Example Blade Template](#example-blade-template)
+    - [Testing](#testing)
+    - [Gherkin Test Example](#gherkin-test-example)
+  - [Mode 2: SPA-only (Decoupled Architecture)](#mode-2-spa-only-decoupled-architecture)
+    - [Architecture Diagram](#architecture-diagram-1)
+    - [Key Characteristics](#key-characteristics-1)
+    - [Directory Structure](#directory-structure-1)
+    - [Vue.js App Structure](#vuejs-app-structure)
+    - [Laravel API Routes](#laravel-api-routes)
+    - [Build \& Testing Workflow](#build--testing-workflow)
+    - [Nginx Configuration](#nginx-configuration)
+    - [Gherkin Test Example](#gherkin-test-example-1)
+  - [Mode 3: Hybrid (Laravel + Vite Standard)](#mode-3-hybrid-laravel--vite-standard)
+    - [Architecture Diagram](#architecture-diagram-2)
+    - [Key Characteristics](#key-characteristics-2)
+    - [Directory Structure](#directory-structure-2)
+    - [Blade Template with Vue.js](#blade-template-with-vuejs)
+    - [Vue.js Component](#vuejs-component)
+    - [Build \& Testing Workflow](#build--testing-workflow-1)
+    - [Gherkin Test Example](#gherkin-test-example-2)
+  - [Choosing the Right Mode](#choosing-the-right-mode)
+    - [Use Blade-only when](#use-blade-only-when)
+    - [Use SPA-only when](#use-spa-only-when)
+    - [Use Hybrid when](#use-hybrid-when)
+  - [Testing Strategy per Mode](#testing-strategy-per-mode)
+  - [Performance Comparison](#performance-comparison)
+  - [Conclusion](#conclusion)
+  - [Navigation](#navigation)
+  - [Support](#support)
 
 ## Quick Reference Table
 
@@ -501,10 +503,8 @@ with minimal configuration changes.
 
 ## Support
 
-[![Discord][discord-badge]][discord]
 [![Issues][issues-badge]][issues]
-
-**Need help?** Join our Discord community or report issues on GitLab.
+[![Discord][discord-badge]][discord]
 
 <!-- Badge References -->
 [pipeline-badge]: https://gitlab.com/zairakai/docker-ecosystem/badges/main/pipeline.svg

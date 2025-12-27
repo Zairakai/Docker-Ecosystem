@@ -5,7 +5,6 @@
 [![License][license-badge]][license]
 [![Docker Compose][compose-badge]][compose]
 
-<!-- Community -->
 [![Discord][discord-badge]][discord]
 [![Issues][issues-badge]][issues]
 
@@ -307,11 +306,8 @@ The Docker Ecosystem supports **3 distinct architectures** for Laravel + Vue.js:
 
 ## Support
 
-[![Discord][discord-badge]][discord]
 [![Issues][issues-badge]][issues]
-
-**Need help?** Join our Discord community or report issues on GitLab.
-
+[![Discord][discord-badge]][discord]
 
 <!-- Badge References -->
 [pipeline-badge]: https://gitlab.com/zairakai/docker-ecosystem/badges/main/pipeline.svg
@@ -324,4 +320,3 @@ The Docker Ecosystem supports **3 distinct architectures** for Laravel + Vue.js:
 [issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
 [compose-badge]: https://img.shields.io/badge/docker--compose-3.8+-2496ED.svg?logo=docker&logoColor=white
 [compose]: https://docs.docker.com/compose/
-

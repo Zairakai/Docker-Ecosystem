@@ -58,23 +58,23 @@ show_usage() {
 parse_arguments() {
   while [[ $# -gt 0 ]]; do
     case $1 in
-      -t|--type)
+      -t| -type)
         BACKUP_TYPE="$2"
         shift 2
         ;;
-      -c|--compression)
+      -c| -compression)
         COMPRESSION="$2"
         shift 2
         ;;
-      -r|--retention)
+      -r| -retention)
         BACKUP_RETENTION_DAYS="$2"
         shift 2
         ;;
-      -o|--output)
+      -o| -output)
         BACKUP_DIR="$2"
         shift 2
         ;;
-      -h|--help)
+      -h| -help)
         show_usage
         exit 0
         ;;

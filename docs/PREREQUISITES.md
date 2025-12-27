@@ -1,12 +1,10 @@
 # Prerequisites Guide
 
 <!-- CI/CD & Quality -->
-[![Pipeline][pipeline-badge]][pipeline]
 [![License][license-badge]][license]
+[![Pipeline][pipeline-badge]][pipeline]
 
-<!-- Community -->
-[![Discord][discord-badge]][discord]
-[![Issues][issues-badge]][issues]
+
 [🏠 Home][home] > [📚 Documentation][docs] > Prerequisites Guide
 
 This guide helps you understand what knowledge, tools, and system requirements you need to use the Zairakai
@@ -387,12 +385,8 @@ Once you've confirmed you meet the prerequisites:
 
 ## Support
 
-[![Discord][discord-badge]][discord]
 [![Issues][issues-badge]][issues]
-
-**Need help?** Join our Discord community or report issues on GitLab.
-
-
+[![Discord][discord-badge]][discord]
 
 <!-- Badge References -->
 [pipeline-badge]: https://gitlab.com/zairakai/docker-ecosystem/badges/main/pipeline.svg

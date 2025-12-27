@@ -1,12 +1,9 @@
 # Docker Hub Synchronization & Description Updates
 
 <!-- CI/CD & Quality -->
-[![Pipeline][pipeline-badge]][pipeline]
 [![License][license-badge]][license]
+[![Pipeline][pipeline-badge]][pipeline]
 
-<!-- Community -->
-[![Discord][discord-badge]][discord]
-[![Issues][issues-badge]][issues]
 
 This document explains how Docker images are synchronized to Docker Hub with automatic description updates.
 
@@ -15,6 +12,7 @@ This document explains how Docker images are synchronized to Docker Hub with aut
 ## Overview
 
 The Docker Ecosystem automatically:
+
 1. **Mirrors images** from GitLab Container Registry to Docker Hub
 2. **Updates descriptions** from README files located in each image directory
 3. **Maintains consistency** between registry and documentation
@@ -25,7 +23,7 @@ The Docker Ecosystem automatically:
 
 ### Pipeline Flow
 
-```
+```text
 Tag push (vX.Y.Z) → Build → Test → Promote → Sync to Docker Hub
                                                ↓
                                       Update Descriptions (API)
@@ -33,7 +31,7 @@ Tag push (vX.Y.Z) → Build → Test → Promote → Sync to Docker Hub
 
 ### Architecture
 
-```
+```text
 images/
 ├── php/8.3/
 │   ├── Dockerfile
@@ -60,6 +58,7 @@ images/
 ### 1. Script: `scripts/pipeline/sync-dockerhub.sh`
 
 **Features:**
+
 - Docker Hub login via CLI (for image push)
 - Docker Hub API authentication (for description updates)
 - Automatic README detection per image
@@ -93,6 +92,7 @@ update_dockerhub_description() {
 **Location:** `.gitlab-ci.yml` → `promote` stage
 
 **Dependencies:**
+
 - `bash` - Shell scripting
 - `jq` - JSON processing (escape markdown for API)
 - `curl` - HTTP client for API calls
@@ -123,7 +123,7 @@ sync:dockerhub:
 ## Image to README Mapping
 
 | Docker Hub Repository | README Location | Description |
-|-----------------------|-----------------|-------------|
+| --------------------- | --------------- | ----------- |
 | `zairakai/php` | `images/php/8.3/README.md` | PHP 8.3 FPM (prod/dev/test) |
 | `zairakai/node` | `images/node/20/README.md` | Node.js 20 LTS (prod/dev/test) |
 | `zairakai/mysql` | `images/database/mysql/8.0/README.md` | MySQL 8.0 with HA |
@@ -211,6 +211,7 @@ Table of companion images.
 ### Markdown Support
 
 Docker Hub supports **GitHub-flavored Markdown**:
+
 - ✅ Headers, lists, tables
 - ✅ Code blocks with syntax highlighting
 - ✅ Links and images
@@ -225,12 +226,13 @@ Docker Hub supports **GitHub-flavored Markdown**:
 Required secrets in GitLab CI/CD:
 
 | Variable | Description | Example |
-|----------|-------------|---------|
+| -------- | ----------- | ------- |
 | `DOCKERHUB_USERNAME` | Docker Hub username | `zairakai` |
 | `DOCKERHUB_TOKEN` | Docker Hub access token | `dckr_pat_abc123...` |
 | `CI_REGISTRY_IMAGE` | GitLab registry prefix | `registry.gitlab.com/zairakai/docker-ecosystem` |
 
 **Security:**
+
 - Tokens are stored as GitLab CI/CD variables (Settings → CI/CD → Variables)
 - Never commit tokens to repository
 - Use Docker Hub **access tokens**, not account password
@@ -279,16 +281,19 @@ Response: 200 OK
 **Problem:** Image syncs but description unchanged on Docker Hub.
 
 **Diagnosis:**
+
 1. Check GitLab CI logs for `sync:dockerhub` job
 2. Look for `✓ Description updated successfully` or warnings
 
 **Common Causes:**
+
 - README file missing or wrong path
 - Invalid JWT token (credentials expired)
 - API rate limiting (rare)
 - Malformed JSON (special characters not escaped)
 
 **Solution:**
+
 ```bash
 # Test locally
 export DOCKERHUB_USERNAME="zairakai"
@@ -303,6 +308,7 @@ bash scripts/pipeline/sync-dockerhub.sh
 **Problem:** Pipeline fails at `validate:shellcheck` stage.
 
 **Solution:**
+
 ```bash
 # Run locally
 shellcheck scripts/pipeline/sync-dockerhub.sh
@@ -336,10 +342,12 @@ description=$(cat "${readme_path}")
 1. Edit README file in `images/{service}/README.md`
 2. Commit and push changes
 3. Create and push a version tag:
+
    ```bash
    git tag v1.2.3
    git push origin v1.2.3
    ```
+
 4. GitLab CI automatically:
    - Builds images
    - Syncs to Docker Hub
@@ -408,25 +416,17 @@ Potential improvements to consider:
 
 ## References
 
-- **Docker Hub API Docs**: https://docs.docker.com/docker-hub/api/latest/
-- **GitLab CI/CD Variables**: https://docs.gitlab.com/ee/ci/variables/
-- **GitHub-Flavored Markdown**: https://github.github.com/gfm/
-- **Shields.io Badges**: https://shields.io/
+- **[Docker Hub API Docs](https://docs.docker.com/docker-hub/api/latest/)**
+- **[GitLab CI/CD Variables](https://docs.gitlab.com/ee/ci/variables/)**
+- **[GitHub-Flavored Markdown](https://github.github.com/gfm/)**
+- **[Shields.io Badges](https://shields.io/)**
 
 ---
 
 ## Support
 
-[![Discord][discord-badge]][discord]
 [![Issues][issues-badge]][issues]
-
-**Need help?** Join our Discord community or report issues on GitLab.
-
----
-
-**Last Updated:** January 2025
-**Maintainer:** Stanislas Poisson (Zairakai)
-**Status:** ✅ Production Ready
+[![Discord][discord-badge]][discord]
 
 <!-- Badge References -->
 [pipeline-badge]: https://gitlab.com/zairakai/docker-ecosystem/badges/main/pipeline.svg

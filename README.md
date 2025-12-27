@@ -487,7 +487,6 @@ _Built with ❤️ by the Zairakai team for Laravel + Vue.js developers_
 [stars-badge]: https://img.shields.io/gitlab/stars/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Stars
 [stars-link]: https://gitlab.com/zairakai/docker-ecosystem
 
-
 [discord-badge]: https://img.shields.io/discord/1260000352699289621?logo=discord&label=Discord&color=5865F2
 [discord]: https://discord.gg/MAmD5SG8Zu
 

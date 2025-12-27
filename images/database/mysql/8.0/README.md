@@ -1,6 +1,5 @@
 # MySQL 8.0 - Production-Ready with High Availability
 
-
 <!-- Image Stats -->
 [![Docker Pulls][pulls-badge]][dockerhub]
 [![Image Size][size-badge]][dockerhub]
@@ -13,7 +12,7 @@
 [![Discord][discord-badge]][discord]
 Production-ready MySQL 8.0 with built-in support for replication and high availability.
 
-Part of the [Zairakai Docker Ecosystem](https://gitlab.com/zairakai/docker-ecosystem).
+Part of the [Zairakai Docker Ecosystem][ecosystem].
 
 ---
 
@@ -93,14 +92,14 @@ services:
       - mysql-master
 ```
 
-Full documentation: [Disaster Recovery Guide](https://gitlab.com/zairakai/docker-ecosystem/-/blob/main/docs/DISASTER_RECOVERY.md)
+Full documentation: [Disaster Recovery Guide][disaster-recovery]
 
 ---
 
 ## Environment Variables
 
 | Variable | Required | Default | Description |
-|----------|----------|---------|-------------|
+| -------- | -------- | ------- | ----------- |
 | `MYSQL_ROOT_PASSWORD` | Yes | - | Root password |
 | `MYSQL_DATABASE` | No | - | Database to create |
 | `MYSQL_USER` | No | - | User to create |
@@ -129,14 +128,12 @@ docker exec -i mysql-container mysql -u root -p${MYSQL_ROOT_PASSWORD} ${DB_NAME}
 - [zairakai/redis](https://hub.docker.com/r/zairakai/redis) - Redis 7 caching
 - [zairakai/nginx](https://hub.docker.com/r/zairakai/nginx) - Nginx web server
 
-**Documentation**: https://gitlab.com/zairakai/docker-ecosystem
-
+**Documentation**: [Zairakai Docker Ecosystem][ecosystem]
 
 [![Discord][discord-badge]][discord]
 [![Issues][issues-badge]][issues]
 
 **Need help?** Join our Discord community or report issues on GitLab.
-
 
 <!-- Badge References -->
 [pipeline-badge]: https://gitlab.com/zairakai/docker-ecosystem/badges/main/pipeline.svg
@@ -148,11 +145,8 @@ docker exec -i mysql-container mysql -u root -p${MYSQL_ROOT_PASSWORD} ${DB_NAME}
 
 ## Support
 
-[![Discord][discord-badge]][discord]
 [![Issues][issues-badge]][issues]
-
-**Need help?** Join our Discord community or report issues on GitLab.
-
+[![Discord][discord-badge]][discord]
 
 [issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
 
@@ -168,3 +162,4 @@ docker exec -i mysql-container mysql -u root -p${MYSQL_ROOT_PASSWORD} ${DB_NAME}
 [issues-badge]: https://img.shields.io/gitlab/issues/open-raw/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Issues
 [issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
 [dockerhub]: https://hub.docker.com/r/zairakai/mysql
+[ecosystem]: https://gitlab.com/zairakai/docker-ecosystem

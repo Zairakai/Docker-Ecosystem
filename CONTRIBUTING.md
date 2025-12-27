@@ -180,10 +180,8 @@ CI_REGISTRY_IMAGE=registry.gitlab.com/zairakai/docker-ecosystem \
 
 ## Support
 
-[![Discord][discord-badge]][discord]
 [![Issues][issues-badge]][issues]
-
-**Need help?** Join our Discord community or report issues on GitLab.
+[![Discord][discord-badge]][discord]
 
 **Let's build better Docker images together!**
 

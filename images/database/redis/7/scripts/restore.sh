@@ -62,19 +62,19 @@ show_usage() {
 parse_arguments() {
   while [[ $# -gt 0 ]]; do
     case $1 in
-      -t|--type)
+      -t| -type)
         RESTORE_TYPE="$2"
         shift 2
         ;;
-      -f|--force)
+      -f| -force)
         FORCE_RESTORE=true
         shift
         ;;
-      -F|--flush)
+      -F| -flush)
         FLUSH_BEFORE_RESTORE=true
         shift
         ;;
-      -h|--help)
+      -h| -help)
         show_usage
         exit 0
         ;;

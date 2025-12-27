@@ -1,12 +1,10 @@
 # Docker Ecosystem Architecture
 
 <!-- CI/CD & Quality -->
-[![Pipeline][pipeline-badge]][pipeline]
 [![License][license-badge]][license]
+[![Pipeline][pipeline-badge]][pipeline]
 
-<!-- Community -->
-[![Discord][discord-badge]][discord]
-[![Issues][issues-badge]][issues]
+
 [🏠 Home][home] > [📚 Documentation][docs] > Architecture Overview
 
 Comprehensive architectural overview of the Zairakai Docker Ecosystem - 13 lightweight images following a
@@ -14,35 +12,32 @@ progressive extension-only architecture.
 
 ## Table of Contents
 
-- [Overview](#overview)
-- [Design Philosophy](#design-philosophy)
-  - [Extension-Only Architecture](#extension-only-architecture)
-  - [Transparency & Security](#transparency--security)
-
-- [Image Structure](#image-structure)
-  - [PHP Stack (3 images)](#php-stack-3-images)
-  - [Node.js Stack (3 images)](#nodejs-stack-3-images)
-  - [Database & Services (6 images)](#database--services-6-images)
-
-- [System Architecture](#system-architecture)
-- [Performance Benefits](#performance-benefits)
-- [Security Architecture](#security-architecture)
-  - [Multi-Layer Security Scanning](#multi-layer-security-scanning)
-  - [Container Security](#container-security)
-
-- [Use Cases](#use-cases)
-  - [Perfect For](#perfect-for)
-  - [Not Recommended For](#not-recommended-for)
-
-- [Version Strategy](#version-strategy)
-  - [Tagging Strategy](#tagging-strategy)
-  - [Version Selection](#version-selection)
-
-- [Development Workflow](#development-workflow)
-  - [Typical Development Session](#typical-development-session)
-  - [Testing Workflow](#testing-workflow)
-
-- [Navigation](#navigation)
+- [Docker Ecosystem Architecture](#docker-ecosystem-architecture)
+  - [Table of Contents](#table-of-contents)
+  - [Overview](#overview)
+  - [Design Philosophy](#design-philosophy)
+    - [Extension-Only Architecture](#extension-only-architecture)
+    - [Transparency \& Security](#transparency--security)
+  - [Image Structure](#image-structure)
+    - [PHP Stack (3 images)](#php-stack-3-images)
+    - [Node.js Stack (3 images)](#nodejs-stack-3-images)
+    - [Database \& Services (6 images)](#database--services-6-images)
+  - [System Architecture](#system-architecture)
+  - [Performance Benefits](#performance-benefits)
+  - [Security Architecture](#security-architecture)
+    - [Multi-Layer Security Scanning](#multi-layer-security-scanning)
+    - [Container Security](#container-security)
+  - [Use Cases](#use-cases)
+    - [Perfect For](#perfect-for)
+    - [Not Recommended For](#not-recommended-for)
+  - [Version Strategy](#version-strategy)
+    - [Tagging Strategy](#tagging-strategy)
+    - [Version Selection](#version-selection)
+  - [Development Workflow](#development-workflow)
+    - [Typical Development Session](#typical-development-session)
+    - [Testing Workflow](#testing-workflow)
+  - [Navigation](#navigation)
+  - [Support](#support)
 
 ## Overview
 
@@ -367,12 +362,8 @@ docker-compose run --rm performance-testing
 
 ## Support
 
-[![Discord][discord-badge]][discord]
 [![Issues][issues-badge]][issues]
-
-**Need help?** Join our Discord community or report issues on GitLab.
-
-
+[![Discord][discord-badge]][discord]
 
 <!-- Badge References -->
 [pipeline-badge]: https://gitlab.com/zairakai/docker-ecosystem/badges/main/pipeline.svg

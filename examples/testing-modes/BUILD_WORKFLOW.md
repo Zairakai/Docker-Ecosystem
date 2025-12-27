@@ -1,12 +1,11 @@
 # Build Workflow: Laravel + Vite Assets
 
 <!-- CI/CD & Quality -->
-[![Pipeline][pipeline-badge]][pipeline]
 [![License][license-badge]][license]
+[![Pipeline][pipeline-badge]][pipeline]
 
-<!-- Community -->
-[![Discord][discord-badge]][discord]
 [![Issues][issues-badge]][issues]
+[![Discord][discord-badge]][discord]
 
 This document explains how Laravel + Vite asset compilation works in the Docker ecosystem.
 
@@ -363,11 +362,8 @@ docker-compose exec php php artisan config:clear
 
 ## Support
 
-[![Discord][discord-badge]][discord]
 [![Issues][issues-badge]][issues]
-
-**Need help?** Join our Discord community or report issues on GitLab.
-
+[![Discord][discord-badge]][discord]
 
 <!-- Badge References -->
 [pipeline-badge]: https://gitlab.com/zairakai/docker-ecosystem/badges/main/pipeline.svg
@@ -378,4 +374,3 @@ docker-compose exec php php artisan config:clear
 [discord]: https://discord.gg/MAmD5SG8Zu
 [issues-badge]: https://img.shields.io/gitlab/issues/open-raw/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Issues
 [issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
-

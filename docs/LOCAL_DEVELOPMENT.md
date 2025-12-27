@@ -4,9 +4,6 @@
 [![Pipeline][pipeline-badge]][pipeline]
 [![License][license-badge]][license]
 
-<!-- Community -->
-[![Discord][discord-badge]][discord]
-[![Issues][issues-badge]][issues]
 This guide explains how to develop, build, and test the Docker Ecosystem locally.
 
 ---
@@ -49,6 +46,7 @@ make validate-all
 ```
 
 This runs:
+
 - ✅ **Dockerfile validation** (`validate-config.sh`)
 - ✅ **ShellCheck 100% compliance** (`validate-shellcheck.sh`)
 
@@ -65,6 +63,7 @@ make build-all
 ```
 
 Builds all 13 images with `-local` suffix:
+
 - `php:8.3-local-prod`, `php:8.3-local-dev`, `php:8.3-local-test`
 - `node:20-local-prod`, `node:20-local-dev`, `node:20-local-test`
 - `database:mysql-8.0-local`, `database:redis-7-local`
@@ -97,6 +96,7 @@ make test-all
 ```
 
 This runs:
+
 - ✅ **Image size validation** (`test-image-sizes.sh`)
 - ✅ **Multi-stage integrity tests** (`test-multi-stage.sh`)
 
@@ -109,6 +109,7 @@ This runs:
 **Cause:** Images not built yet
 
 **Solution:**
+
 ```bash
 # Build images first
 make build-all
@@ -128,6 +129,7 @@ make build-and-test
 ```
 
 This is equivalent to:
+
 ```bash
 make build-all && make test-all
 ```
@@ -140,7 +142,7 @@ make build-all && make test-all
 
 Images built locally have the `-local` suffix to distinguish them from CI builds:
 
-```
+```text
 registry.gitlab.com/zairakai/docker-ecosystem/php:8.3-local-prod
                                                     └─────┘
                                                     Suffix added by make
@@ -150,7 +152,7 @@ registry.gitlab.com/zairakai/docker-ecosystem/php:8.3-local-prod
 
 CI builds use commit SHA suffix:
 
-```
+```text
 registry.gitlab.com/zairakai/docker-ecosystem/php:8.3-abc1234-prod
                                                     └──────┘
                                                     CI_COMMIT_SHORT_SHA
@@ -160,7 +162,7 @@ registry.gitlab.com/zairakai/docker-ecosystem/php:8.3-abc1234-prod
 
 Released images have clean tags:
 
-```
+```text
 registry.gitlab.com/zairakai/docker-ecosystem/php:8.3-prod
                                                 (no suffix)
 ```
@@ -209,15 +211,6 @@ make test-image-sizes
 # Or manually
 docker images | grep "zairakai/docker-ecosystem"
 ```
-
-Expected sizes:
-- PHP prod: ~45 MB
-- Node prod: ~35 MB
-- PHP dev: ~85 MB
-- Node dev: ~120 MB
-- MySQL: ~150 MB
-- Redis: ~40 MB
-- Nginx: ~25 MB
 
 ### Inspect an Image
 
@@ -320,6 +313,7 @@ This is handled automatically when `PUSH_TO_REGISTRY=false` (default for local b
 **Cause:** Shell script has warnings/errors
 
 **Solution:**
+
 ```bash
 # See specific errors
 shellcheck scripts/pipeline/build-image.sh
@@ -333,9 +327,11 @@ shellcheck scripts/pipeline/build-image.sh
 **Problem:** Production image exceeds 100 MB
 
 **Solution:**
+
 1. Check `.dockerignore` excludes build artifacts
 2. Ensure multi-stage builds are working (no dev tools in prod)
 3. Clean up package managers:
+
    ```dockerfile
    RUN apk add --no-cache package && \
        rm -rf /var/cache/apk/*
@@ -348,6 +344,7 @@ shellcheck scripts/pipeline/build-image.sh
 **Cause:** Container runs as non-root but volume has root ownership
 
 **Solution:**
+
 ```bash
 # Fix ownership
 sudo chown -R $(id -u):$(id -g) ./path/to/volume
@@ -361,7 +358,7 @@ docker run --user $(id -u):$(id -g) ...
 ## CI/CD Comparison
 
 | Aspect | Local (`make build-all`) | CI/CD Pipeline |
-|--------|-------------------------|----------------|
+| ------ | ----------------------- | -------------- |
 | **Suffix** | `-local` | `-$CI_COMMIT_SHORT_SHA` |
 | **Push** | No (stays local) | Yes (to registry) |
 | **Cache** | Enabled by default | Enabled with inline cache |
@@ -376,12 +373,14 @@ docker run --user $(id -u):$(id -g) ...
 After building and testing locally:
 
 1. **Commit changes** with proper git format:
+
    ```bash
    git add .
    git commit -m "feat(images): description of changes"
    ```
 
 2. **Push to GitLab**:
+
    ```bash
    git push origin feature/your-branch
    ```
@@ -389,6 +388,7 @@ After building and testing locally:
 3. **Create MR** and let CI/CD validate
 
 4. **Tag for release** (after merge to main):
+
    ```bash
    git tag v1.2.3
    git push origin v1.2.3
@@ -400,10 +400,8 @@ After building and testing locally:
 
 ## Support
 
-[![Discord][discord-badge]][discord]
 [![Issues][issues-badge]][issues]
-
-**Need help?** Join our Discord community or report issues on GitLab.
+[![Discord][discord-badge]][discord]
 
 ---
 
@@ -413,11 +411,6 @@ After building and testing locally:
 - [Architecture](ARCHITECTURE.md) - Understanding multi-stage builds
 - [CI/CD Pipeline](../.gitlab-ci.yml) - GitLab CI configuration
 - [Build Scripts](../scripts/README.md) - Build automation details
-
----
-
-**Last Updated:** January 2025
-**Maintained by:** Stanislas Poisson (Zairakai)
 
 <!-- Badge References -->
 [pipeline-badge]: https://gitlab.com/zairakai/docker-ecosystem/badges/main/pipeline.svg

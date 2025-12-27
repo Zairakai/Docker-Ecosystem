@@ -1,6 +1,5 @@
 # MinIO - S3-Compatible Object Storage
 
-
 <!-- Image Stats -->
 [![Docker Pulls][pulls-badge]][dockerhub]
 [![Image Size][size-badge]][dockerhub]
@@ -13,7 +12,7 @@
 [![Discord][discord-badge]][discord]
 High-performance S3-compatible object storage for development and testing.
 
-Part of the [Zairakai Docker Ecosystem](https://gitlab.com/zairakai/docker-ecosystem).
+Part of the [Zairakai Docker Ecosystem][ecosystem].
 
 ---
 
@@ -117,14 +116,12 @@ Compatible with AWS S3 SDKs:
 
 ---
 
-**Documentation**: https://gitlab.com/zairakai/docker-ecosystem
-
+**Documentation**: [Zairakai Docker Ecosystem][ecosystem]
 
 [![Discord][discord-badge]][discord]
 [![Issues][issues-badge]][issues]
 
 **Need help?** Join our Discord community or report issues on GitLab.
-
 
 <!-- Badge References -->
 [pipeline-badge]: https://gitlab.com/zairakai/docker-ecosystem/badges/main/pipeline.svg
@@ -136,11 +133,8 @@ Compatible with AWS S3 SDKs:
 
 ## Support
 
-[![Discord][discord-badge]][discord]
 [![Issues][issues-badge]][issues]
-
-**Need help?** Join our Discord community or report issues on GitLab.
-
+[![Discord][discord-badge]][discord]
 
 [issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
 
@@ -156,3 +150,4 @@ Compatible with AWS S3 SDKs:
 [issues-badge]: https://img.shields.io/gitlab/issues/open-raw/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Issues
 [issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
 [dockerhub]: https://hub.docker.com/r/zairakai/minio
+[ecosystem]: https://gitlab.com/zairakai/docker-ecosystem

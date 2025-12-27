@@ -390,10 +390,8 @@ Our security implementation follows:
 
 ## Support
 
-[![Discord][discord-badge]][discord]
 [![Issues][issues-badge]][issues]
-
-**Need help?** Join our Discord community or report issues on GitLab.
+[![Discord][discord-badge]][discord]
 
 <!-- Reference Links -->
 [discord]: https://discord.gg/MAmD5SG8Zu

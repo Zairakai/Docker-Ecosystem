@@ -324,7 +324,7 @@ main() {
         threshold="$2"
         shift 2
         ;;
-      --help|-h)
+      --help| h)
         show_help
         exit 0
         ;;

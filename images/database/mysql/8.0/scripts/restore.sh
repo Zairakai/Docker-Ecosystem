@@ -68,23 +68,23 @@ show_usage() {
 parse_arguments() {
   while [[ $# -gt 0 ]]; do
     case $1 in
-      -d|--database)
+      -d| -database)
         MYSQL_DATABASE="$2"
         shift 2
         ;;
-      -t|--type)
+      -t| -type)
         RESTORE_TYPE="$2"
         shift 2
         ;;
-      -f|--force)
+      -f| -force)
         FORCE_RESTORE=true
         shift
         ;;
-      -p|--point-in-time)
+      -p| -point-in-time)
         RESTORE_POINT="$2"
         shift 2
         ;;
-      -h|--help)
+      -h| -help)
         show_usage
         exit 0
         ;;

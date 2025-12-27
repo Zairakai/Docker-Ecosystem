@@ -1,9 +1,10 @@
 # Performance Testing Examples
 
-[![Pipeline][pipeline-badge]][pipeline]
 [![License][license-badge]][license]
-[![Discord][discord-badge]][discord]
+[![Pipeline][pipeline-badge]][pipeline]
+
 [![Issues][issues-badge]][issues]
+[![Discord][discord-badge]][discord]
 
 This container provides multiple load and performance testing tools for Laravel and Vue.js applications.
 
@@ -116,10 +117,8 @@ Mount a volume to persist reports:
 
 ## Support
 
-[![Discord][discord-badge]][discord]
 [![Issues][issues-badge]][issues]
-
-**Need help?** Join our Discord community or report issues on GitLab.
+[![Discord][discord-badge]][discord]
 
 <!-- Badge References -->
 [pipeline-badge]: https://gitlab.com/zairakai/docker-ecosystem/badges/main/pipeline.svg

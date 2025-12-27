@@ -1,6 +1,5 @@
 # Performance Testing - Artillery, k6, Locust
 
-
 <!-- Image Stats -->
 [![Docker Pulls][pulls-badge]][dockerhub]
 [![Image Size][size-badge]][dockerhub]
@@ -13,7 +12,7 @@
 [![Discord][discord-badge]][discord]
 Comprehensive load and performance testing toolkit with multiple frameworks.
 
-Part of the [Zairakai Docker Ecosystem](https://gitlab.com/zairakai/docker-ecosystem).
+Part of the [Zairakai Docker Ecosystem][ecosystem].
 
 ---
 
@@ -35,7 +34,7 @@ docker run --rm \
 ## Included Tools
 
 | Tool | Language | Best For |
-|------|----------|----------|
+| ---- | -------- | -------- |
 | **Artillery** | YAML/JS | Simple HTTP load tests |
 | **k6** | JavaScript | Modern scripting, metrics |
 | **Locust** | Python | Complex user behavior |
@@ -192,14 +191,12 @@ All tools generate detailed reports:
 
 ---
 
-**Documentation**: https://gitlab.com/zairakai/docker-ecosystem
-
+**Documentation**: [Zairakai Docker Ecosystem][ecosystem]
 
 [![Discord][discord-badge]][discord]
 [![Issues][issues-badge]][issues]
 
 **Need help?** Join our Discord community or report issues on GitLab.
-
 
 <!-- Badge References -->
 [pipeline-badge]: https://gitlab.com/zairakai/docker-ecosystem/badges/main/pipeline.svg
@@ -211,11 +208,8 @@ All tools generate detailed reports:
 
 ## Support
 
-[![Discord][discord-badge]][discord]
 [![Issues][issues-badge]][issues]
-
-**Need help?** Join our Discord community or report issues on GitLab.
-
+[![Discord][discord-badge]][discord]
 
 [issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
 
@@ -231,3 +225,4 @@ All tools generate detailed reports:
 [issues-badge]: https://img.shields.io/gitlab/issues/open-raw/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Issues
 [issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
 [dockerhub]: https://hub.docker.com/r/zairakai/performance-testing
+[ecosystem]: https://gitlab.com/zairakai/docker-ecosystem

@@ -1,6 +1,5 @@
 # Redis 7 - High-Performance Cache with Sentinel Support
 
-
 <!-- Image Stats -->
 [![Docker Pulls][pulls-badge]][dockerhub]
 [![Image Size][size-badge]][dockerhub]
@@ -13,7 +12,7 @@
 [![Discord][discord-badge]][discord]
 Production-ready Redis 7 with built-in support for Redis Sentinel high availability.
 
-Part of the [Zairakai Docker Ecosystem](https://gitlab.com/zairakai/docker-ecosystem).
+Part of the [Zairakai Docker Ecosystem][ecosystem].
 
 ---
 
@@ -77,14 +76,14 @@ services:
       - redis-master
 ```
 
-Full documentation: [Disaster Recovery Guide](https://gitlab.com/zairakai/docker-ecosystem/-/blob/main/docs/DISASTER_RECOVERY.md)
+Full documentation: [Disaster Recovery Guide][disaster-recovery]
 
 ---
 
 ## Environment Variables
 
 | Variable | Default | Description |
-|----------|---------|-------------|
+| -------- | ------- | ----------- |
 | `REDIS_PASSWORD` | - | Redis password (recommended) |
 | `REDIS_MAXMEMORY` | `256mb` | Maximum memory |
 | `REDIS_MAXMEMORY_POLICY` | `allkeys-lru` | Eviction policy |
@@ -125,14 +124,12 @@ docker restart redis-container
 - [zairakai/mysql](https://hub.docker.com/r/zairakai/mysql) - MySQL 8.0 database
 - [zairakai/nginx](https://hub.docker.com/r/zairakai/nginx) - Nginx web server
 
-**Documentation**: https://gitlab.com/zairakai/docker-ecosystem
-
+**Documentation**: [Zairakai Docker Ecosystem][ecosystem]
 
 [![Discord][discord-badge]][discord]
 [![Issues][issues-badge]][issues]
 
 **Need help?** Join our Discord community or report issues on GitLab.
-
 
 <!-- Badge References -->
 [pipeline-badge]: https://gitlab.com/zairakai/docker-ecosystem/badges/main/pipeline.svg
@@ -144,11 +141,8 @@ docker restart redis-container
 
 ## Support
 
-[![Discord][discord-badge]][discord]
 [![Issues][issues-badge]][issues]
-
-**Need help?** Join our Discord community or report issues on GitLab.
-
+[![Discord][discord-badge]][discord]
 
 [issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
 
@@ -164,3 +158,4 @@ docker restart redis-container
 [issues-badge]: https://img.shields.io/gitlab/issues/open-raw/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Issues
 [issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
 [dockerhub]: https://hub.docker.com/r/zairakai/redis
+[ecosystem]: https://gitlab.com/zairakai/docker-ecosystem

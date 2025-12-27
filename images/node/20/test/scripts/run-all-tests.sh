@@ -412,7 +412,7 @@ main() {
         parallel=true
         shift
         ;;
-      --help|-h)
+      --help| h)
         show_help
         exit 0
         ;;

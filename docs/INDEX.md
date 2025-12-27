@@ -1,9 +1,11 @@
 # 📚 Documentation Index
 
-[![Pipeline][pipeline-badge]][pipeline]
 [![License][license-badge]][license]
-[![Discord][discord-badge]][discord]
+[![Pipeline][pipeline-badge]][pipeline]
+
 [![Issues][issues-badge]][issues]
+[![Discord][discord-badge]][discord]
+
 [🏠 Home][home] > Documentation Index
 
 Welcome to the Zairakai Docker Ecosystem documentation - your complete guide to production-ready Docker images
@@ -44,6 +46,7 @@ for Laravel + Vue.js development.
     - [Contributing](#contributing)
     - [Getting Help](#getting-help)
   - [Navigation](#navigation)
+  - [Support](#support)
 
 ## Getting Started
 
@@ -317,11 +320,8 @@ Want to contribute to the Zairakai Docker Ecosystem?
 
 ## Support
 
-[![Discord][discord-badge]][discord]
 [![Issues][issues-badge]][issues]
-
-**Need help?** Join our Discord community or report issues on GitLab.
-
+[![Discord][discord-badge]][discord]
 
 <!-- Badge References -->
 [pipeline-badge]: https://gitlab.com/zairakai/docker-ecosystem/badges/main/pipeline.svg

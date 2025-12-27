@@ -413,7 +413,7 @@ main() {
   # Parse arguments
   while [[ $# -gt 0 ]]; do
     case $1 in
-      --help|-h)
+      --help| h)
         show_help
         exit 0
         ;;
@@ -421,7 +421,7 @@ main() {
         from_compose=true
         shift
         ;;
-      --timeout=*|--interval=*|--parallel|--fail-fast)
+      --timeout=*| -interval=*| -parallel| -fail-fast)
         # These are handled later, just add to services array
         services+=("$1")
         shift
