@@ -1,5 +1,9 @@
 # Docker Ecosystem Reference
 
+[![Pipeline][pipeline-badge]][pipeline]
+[![License][license-badge]][license]
+[![Discord][discord-badge]][discord]
+[![Issues][issues-badge]][issues]
 [🏠 Home][home] > [📚 Documentation][docs] > Docker Ecosystem Reference
 
 Quick reference for images, tags, commands, and configurations.
@@ -527,7 +531,21 @@ cosign generate-key-pair
 - **[Testing Modes][testing-modes]** - Blade, SPA, and Hybrid architectures
 - **[Monitoring Guide][monitoring]** - Prometheus, Grafana, Jaeger setup
 
-**Need help?** Join our [Discord][discord] community or report issues on [GitLab][issues].
+## Support
+
+[![Discord][discord-badge]][discord]
+[![Issues][issues-badge]][issues]
+
+**Need help?** Join our Discord community or report issues on GitLab.
+
+
+<!-- Badge References -->
+[pipeline-badge]: https://gitlab.com/zairakai/docker-ecosystem/badges/main/pipeline.svg
+[pipeline]: https://gitlab.com/zairakai/docker-ecosystem/-/pipelines
+[license-badge]: https://img.shields.io/badge/license-MIT-blue.svg
+[license]: ../LICENSE
+[discord-badge]: https://img.shields.io/discord/1260000352699289621?logo=discord&label=Discord&color=5865F2
+[issues-badge]: https://img.shields.io/gitlab/issues/open-raw/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Issues
 
 <!-- Reference Links -->
 
@@ -541,5 +559,3 @@ cosign generate-key-pair
 [security]: ../SECURITY.md
 [contributing]: ../CONTRIBUTING.md
 [examples]: ../examples/
-[discord]: https://discord.gg/MAmD5SG8Zu
-[issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues

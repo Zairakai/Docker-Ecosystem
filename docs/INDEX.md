@@ -1,5 +1,9 @@
 # 📚 Documentation Index
 
+[![Pipeline][pipeline-badge]][pipeline]
+[![License][license-badge]][license]
+[![Discord][discord-badge]][discord]
+[![Issues][issues-badge]][issues]
 [🏠 Home][home] > Documentation Index
 
 Welcome to the Zairakai Docker Ecosystem documentation - your complete guide to production-ready Docker images
@@ -311,6 +315,15 @@ Want to contribute to the Zairakai Docker Ecosystem?
 
 *Built with ❤️ by the Zairakai team for Laravel + Vue.js developers*
 
+
+<!-- Badge References -->
+[pipeline-badge]: https://gitlab.com/zairakai/docker-ecosystem/badges/main/pipeline.svg
+[pipeline]: https://gitlab.com/zairakai/docker-ecosystem/-/pipelines
+[license-badge]: https://img.shields.io/badge/license-MIT-blue.svg
+[license]: ../LICENSE
+[discord-badge]: https://img.shields.io/discord/1260000352699289621?logo=discord&label=Discord&color=5865F2
+[issues-badge]: https://img.shields.io/gitlab/issues/open-raw/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Issues
+
 <!-- Reference Links -->
 
 [home]: ../README.md
@@ -327,8 +340,6 @@ Want to contribute to the Zairakai Docker Ecosystem?
 [swarm]: SWARM.md
 [contributing]: ../CONTRIBUTING.md
 [examples]: ../examples/
-[discord]: https://discord.gg/MAmD5SG8Zu
-[issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
 
 [README-cicd-release-flow-quality-gated]: ../README.md#cicd-release-flow-quality-gated
 [build_workflow]: ../examples/testing-modes/BUILD_WORKFLOW.md

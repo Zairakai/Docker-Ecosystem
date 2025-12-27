@@ -1,5 +1,9 @@
 # Testing Modes Architecture
 
+[![Pipeline][pipeline-badge]][pipeline]
+[![License][license-badge]][license]
+[![Discord][discord-badge]][discord]
+[![Issues][issues-badge]][issues]
 [🏠 Home][home] > [📚 Documentation][docs] > Testing Modes Architecture
 
 Complete guide to the three testing modes available in the Zairakai Docker Ecosystem - Blade SSR, SPA-only,
@@ -419,7 +423,21 @@ Choose the mode that matches your application architecture and testing requireme
 - **[Architecture Comparison][architecture-comparison]** - Detailed mode comparison
 - **[Examples][examples]** - Docker Compose configurations
 
-**Need help?** Join our [Discord][discord] community or report issues on [GitLab][issues].
+## Support
+
+[![Discord][discord-badge]][discord]
+[![Issues][issues-badge]][issues]
+
+**Need help?** Join our Discord community or report issues on GitLab.
+
+
+<!-- Badge References -->
+[pipeline-badge]: https://gitlab.com/zairakai/docker-ecosystem/badges/main/pipeline.svg
+[pipeline]: https://gitlab.com/zairakai/docker-ecosystem/-/pipelines
+[license-badge]: https://img.shields.io/badge/license-MIT-blue.svg
+[license]: ../LICENSE
+[discord-badge]: https://img.shields.io/discord/1260000352699289621?logo=discord&label=Discord&color=5865F2
+[issues-badge]: https://img.shields.io/gitlab/issues/open-raw/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Issues
 
 <!-- Reference Links -->
 
@@ -428,5 +446,3 @@ Choose the mode that matches your application architecture and testing requireme
 [architecture]: ARCHITECTURE.md
 [architecture-comparison]: ARCHITECTURE_COMPARISON.md
 [examples]: ../examples/
-[discord]: https://discord.gg/MAmD5SG8Zu
-[issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues

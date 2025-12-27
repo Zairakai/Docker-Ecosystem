@@ -1,5 +1,9 @@
 # Local Development Workflow
 
+[![Pipeline][pipeline-badge]][pipeline]
+[![License][license-badge]][license]
+[![Discord][discord-badge]][discord]
+[![Issues][issues-badge]][issues]
 This guide explains how to develop, build, and test the Docker Ecosystem locally.
 
 ---
@@ -388,6 +392,10 @@ After building and testing locally:
    ```
 
    This triggers full CI/CD with registry push and Docker Hub sync.
+
+---
+
+**Need help?** Join our [Discord](https://discord.gg/MAmD5SG8Zu) community or report issues on [GitLab](https://gitlab.com/zairakai/docker-ecosystem/-/issues).
 
 ---
 

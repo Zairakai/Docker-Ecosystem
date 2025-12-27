@@ -1,5 +1,10 @@
 # Cache Configuration Guide
 
+[![Pipeline][pipeline-badge]][pipeline]
+[![License][license-badge]][license]
+[![Discord][discord-badge]][discord]
+[![Issues][issues-badge]][issues]
+
 This guide explains how to configure persistent cache volumes for Composer and npm/yarn/pnpm to improve container restart performance.
 
 ## Why Use Cache Volumes?
@@ -230,6 +235,16 @@ environment:
 
 **Need help?** Join our [Discord][discord] community or check the [Reference Guide][reference].
 
+
+<!-- Badge References -->
+[pipeline-badge]: https://gitlab.com/zairakai/docker-ecosystem/badges/main/pipeline.svg
+[pipeline]: https://gitlab.com/zairakai/docker-ecosystem/-/pipelines
+[license-badge]: https://img.shields.io/badge/license-MIT-blue.svg
+[license]: ../../LICENSE
+[discord-badge]: https://img.shields.io/discord/1260000352699289621?logo=discord&label=Discord&color=5865F2
+[discord]: https://discord.gg/MAmD5SG8Zu
+[issues-badge]: https://img.shields.io/gitlab/issues/open-raw/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Issues
+[issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
+
 <!-- Reference Links -->
 [reference]: REFERENCE.md
-[discord]: https://discord.gg/MAmD5SG8Zu

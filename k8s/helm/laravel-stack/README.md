@@ -1,5 +1,13 @@
 # Laravel Stack Helm Chart
 
+[![Pipeline][pipeline-badge]][pipeline]
+[![License][license-badge]][license]
+[![Kubernetes][k8s-badge]][k8s]
+[![Helm][helm-badge]][helm]
+[![Discord][discord-badge]][discord]
+[![Contributors][contributors-badge]][contributors]
+[![Alpine][alpine-badge]][alpine]
+
 Complete Kubernetes deployment for Laravel + Vue.js applications using Zairakai Docker images.
 
 ## Features
@@ -358,6 +366,24 @@ See `values.yaml` for complete configuration options.
 
 **Need help?** Join our [Discord][discord] community or check the [Reference Guide][reference].
 
+
+<!-- Badge References -->
+[pipeline-badge]: https://gitlab.com/zairakai/docker-ecosystem/badges/main/pipeline.svg
+[pipeline]: https://gitlab.com/zairakai/docker-ecosystem/-/pipelines
+[license-badge]: https://img.shields.io/badge/license-MIT-blue.svg
+[license]: ../../../LICENSE
+[discord-badge]: https://img.shields.io/discord/1260000352699289621?logo=discord&label=Discord&color=5865F2
+[discord]: https://discord.gg/MAmD5SG8Zu
+[issues-badge]: https://img.shields.io/gitlab/issues/open-raw/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Issues
+[issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
+[k8s-badge]: https://img.shields.io/badge/kubernetes-1.24+-326CE5.svg?logo=kubernetes&logoColor=white
+[k8s]: https://kubernetes.io
+[helm-badge]: https://img.shields.io/badge/helm-3.8+-0F1689.svg?logo=helm&logoColor=white
+[helm]: https://helm.sh
+[contributors-badge]: https://img.shields.io/gitlab/contributors/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Contributors
+[contributors]: https://gitlab.com/zairakai/docker-ecosystem/-/graphs/main
+[alpine-badge]: https://img.shields.io/badge/built%20on-Alpine%203.19-0D597F?logo=alpine-linux&logoColor=white
+[alpine]: https://alpinelinux.org/
+
 <!-- Reference Links -->
 [reference]: REFERENCE.md
-[discord]: https://discord.gg/MAmD5SG8Zu

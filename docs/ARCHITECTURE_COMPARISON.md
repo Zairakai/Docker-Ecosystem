@@ -1,5 +1,9 @@
 # Architecture Comparison: 3 Testing Modes
 
+[![Pipeline][pipeline-badge]][pipeline]
+[![License][license-badge]][license]
+[![Discord][discord-badge]][discord]
+[![Issues][issues-badge]][issues]
 [🏠 Home][home] > [📚 Documentation][docs] > Architecture Comparison
 
 This document compares the three distinct architectural modes supported by the Zairakai Docker Ecosystem.
@@ -492,7 +496,21 @@ with minimal configuration changes.
 - **[Architecture Guide][architecture]** - System design patterns
 - **[Reference Guide][reference]** - Complete configuration reference
 
-**Need help?** Join our [Discord][discord] community or report issues on [GitLab][issues].
+## Support
+
+[![Discord][discord-badge]][discord]
+[![Issues][issues-badge]][issues]
+
+**Need help?** Join our Discord community or report issues on GitLab.
+
+
+<!-- Badge References -->
+[pipeline-badge]: https://gitlab.com/zairakai/docker-ecosystem/badges/main/pipeline.svg
+[pipeline]: https://gitlab.com/zairakai/docker-ecosystem/-/pipelines
+[license-badge]: https://img.shields.io/badge/license-MIT-blue.svg
+[license]: ../LICENSE
+[discord-badge]: https://img.shields.io/discord/1260000352699289621?logo=discord&label=Discord&color=5865F2
+[issues-badge]: https://img.shields.io/gitlab/issues/open-raw/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Issues
 
 <!-- Reference Links -->
 
@@ -502,5 +520,3 @@ with minimal configuration changes.
 [reference]: REFERENCE.md
 [testing-modes]: TESTING_MODES.md
 [architecture]: ARCHITECTURE.md
-[discord]: https://discord.gg/MAmD5SG8Zu
-[issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
