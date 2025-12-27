@@ -191,9 +191,9 @@ for mapping in "${IMAGE_MAPPINGS[@]}"; do
     readme_path=""
   fi
 
-  # Update Docker Hub description if README exists
+  # Update Docker Hub description if README exists (non-blocking)
   if [[ -n "${readme_path}" ]]; then
-    update_dockerhub_description "${namespace}" "${repository}" "${readme_path}"
+    update_dockerhub_description "${namespace}" "${repository}" "${readme_path}" || log_debug "  (description update skipped)"
   fi
 
   log_success "  ✓ ${DOCKERHUB_TAG} synced"
