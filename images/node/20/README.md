@@ -22,7 +22,7 @@ Part of the [Zairakai Docker Ecosystem](https://gitlab.com/zairakai/docker-ecosy
 | Tag | Use Case | Key Features |
 | --- | -------- | ------------ |
 | `20-prod` | Production | Minimal runtime, non-root |
-| `20-dev` | Development | + Yarn, npm, build tools, ESLint |
+| `20-dev` | Development | + Yarn, pnpm, npm, build tools, linters |
 | `20-test` | CI/CD Testing | + Jest, Playwright, Gherkin/Cucumber |
 | `latest-prod` | Production (latest) | Alias for 20-prod |
 | `latest-dev` | Development (latest) | Alias for 20-dev |
@@ -108,8 +108,11 @@ networks:
 ### Development (`20-dev`)
 
 - **Yarn** - Fast package manager
+- **pnpm** - Efficient disk space package manager
 - **npm** - Package manager
-- **ESLint** - Linting and code quality
+- **ESLint** - JavaScript/TypeScript linting
+- **Prettier** - Code formatting
+- **Stylelint** - CSS/SCSS linting
 - **Build tools**: Vite, Webpack support
 - **TypeScript** - Type-safe JavaScript
 
@@ -142,7 +145,8 @@ networks:
 
 - **Hot Module Replacement**: Full HMR support for Vite/Webpack
 - **TypeScript ready**: Pre-configured for TS projects
-- **ESLint included**: Code quality out of the box
+- **Linters included**: ESLint, Prettier, Stylelint globally available
+- **Multiple package managers**: npm, Yarn, pnpm all ready to use
 - **Volume-friendly**: Proper permissions for bind mounts
 
 ---

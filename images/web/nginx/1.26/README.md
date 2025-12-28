@@ -59,7 +59,7 @@ networks:
 
 ## Key Features
 
-- **HTTP/3 Support**: Latest protocol with QUIC
+- **HTTP/2 Support**: Modern protocol with multiplexing and server push
 - **Laravel Optimized**: Pre-configured for Laravel routing
 - **Gzip Compression**: Automatic asset compression
 - **FastCGI Caching**: PHP-FPM cache integration
@@ -112,6 +112,8 @@ server {
     }
 }
 ```
+
+> **Note:** This is an example configuration. Mount your custom `nginx.conf` to use Vite proxy in development.
 
 Full examples: [Nginx Configuration Examples][nginx-examples]
 

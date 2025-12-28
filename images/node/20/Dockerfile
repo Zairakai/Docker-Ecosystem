@@ -141,6 +141,9 @@ RUN apk add --no-cache \
     typescript \
     ts-node \
     vite \
+    eslint \
+    prettier \
+    stylelint \
   # Create development directories
   && mkdir -p /home/node/.cache /home/node/.npm /home/node/.yarn /home/node/.config \
   && chown -R node:node /home/node \
@@ -153,8 +156,8 @@ RUN apk add --no-cache \
 # Copy development configuration files
 COPY --chown=root:root dev/config/node.dev.json /usr/local/etc/node-config.json
 
-# Note: ESLint/Prettier configs should be managed per-project
-# Each project has its own .eslintrc.js, .prettierrc, etc.
+# Note: ESLint/Prettier/Stylelint are globally available
+# Project-specific configs should be managed per-project (.eslintrc.js, .prettierrc, etc.)
 
 # Copy development scripts
 COPY --chown=root:root dev/scripts/yarn-install.sh /usr/local/bin/yarn-install.sh

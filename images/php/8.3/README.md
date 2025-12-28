@@ -129,7 +129,7 @@ networks:
 
 ### Security First
 
-- **Non-root execution**: Runs as `www:www` (UID/GID 82)
+- **Non-root execution**: Runs as `www:www` (UID/GID 1000)
 - **Alpine Linux base**: Minimal attack surface
 - **No secrets in images**: Configuration via environment variables
 - **Security scanning**: Automated vulnerability scans in CI/CD

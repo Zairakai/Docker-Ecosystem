@@ -118,6 +118,46 @@ docker restart redis-container
 
 ---
 
+## Sentinel Monitoring & Testing
+
+Built-in scripts for Redis Sentinel health checks and failover testing.
+
+### Check Sentinel Status
+
+Verify Sentinel configuration and cluster health:
+
+```bash
+docker exec redis-sentinel bash /scripts/check-sentinel.sh
+```
+
+Shows:
+
+- Sentinel status (running/stopped)
+- Master information
+- Slaves information
+- Sentinels information
+- Master reachability
+
+### Test Failover
+
+Test automatic failover by triggering a master switch:
+
+```bash
+docker exec redis-sentinel bash /scripts/test-failover.sh
+```
+
+This script will:
+
+1. Get current master
+2. Force a failover
+3. Wait for completion (max 30s)
+4. Verify new master is reachable
+5. Show final configuration
+
+> **Warning:** This triggers a real failover. Use only in testing/staging environments.
+
+---
+
 ## Related Images
 
 - [zairakai/php](https://hub.docker.com/r/zairakai/php) - PHP 8.3 with phpredis
