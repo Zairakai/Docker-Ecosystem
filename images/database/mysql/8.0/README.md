@@ -130,10 +130,14 @@ docker exec -i mysql-container mysql -u root -p${MYSQL_ROOT_PASSWORD} ${DB_NAME}
 
 **Documentation**: [Zairakai Docker Ecosystem][ecosystem]
 
-[![Discord][discord-badge]][discord]
-[![Issues][issues-badge]][issues]
+## Support
 
-**Need help?** Join our Discord community or report issues on GitLab.
+[![Issues][issues-badge]][issues]
+[![Discord][discord-badge]][discord]
+
+[issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
+
+
 
 <!-- Badge References -->
 [pipeline-badge]: https://gitlab.com/zairakai/docker-ecosystem/badges/main/pipeline.svg
@@ -142,11 +146,4 @@ docker exec -i mysql-container mysql -u root -p${MYSQL_ROOT_PASSWORD} ${DB_NAME}
 [discord-badge]: https://img.shields.io/discord/1260000352699289621?logo=discord&label=Discord&color=5865F2
 [discord]: https://discord.gg/MAmD5SG8Zu
 [issues-badge]: https://img.shields.io/gitlab/issues/open-raw/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Issues
-
-## Support
-
-[![Issues][issues-badge]][issues]
-[![Discord][discord-badge]][discord]
-
-[issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
-
+[ecosystem]: https://gitlab.com/zairakai/docker-ecosystem
