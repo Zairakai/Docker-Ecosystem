@@ -66,6 +66,15 @@ validate:shellcheck:
     - bash scripts/pipeline/validate-shellcheck.sh
   allow_failure: false
 
+validate:markdownlint:
+  stage: validate
+  image: node:20-alpine
+  before_script:
+    - npm install -g markdownlint-cli2 markdownlint
+  script:
+    - markdownlint-cli2 "**/*.md" "#node_modules"
+  allow_failure: false
+
 # ================================
 # BUILD TEMPLATES
 # ================================
@@ -97,6 +106,7 @@ build:core:php:
   needs:
     - validate:config
     - validate:shellcheck
+    - validate:markdownlint
   variables:
     PUSH_TO_REGISTRY: "false"
   script:
@@ -112,6 +122,7 @@ build:core:node:
   needs:
     - validate:config
     - validate:shellcheck
+    - validate:markdownlint
   variables:
     PUSH_TO_REGISTRY: "false"
   script:
