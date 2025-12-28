@@ -107,9 +107,10 @@ networks:
 
 ### Development (`20-dev`)
 
-- **Yarn** - Fast package manager
+- **npm** - Package manager (included with Node.js)
+- **npx** - Package runner (included with npm)
+- **Yarn** - Fast package manager (v1.22.22)
 - **pnpm** - Efficient disk space package manager
-- **npm** - Package manager
 - **ESLint** - JavaScript/TypeScript linting
 - **Prettier** - Code formatting
 - **Stylelint** - CSS/SCSS linting
@@ -146,7 +147,7 @@ networks:
 - **Hot Module Replacement**: Full HMR support for Vite/Webpack
 - **TypeScript ready**: Pre-configured for TS projects
 - **Linters included**: ESLint, Prettier, Stylelint globally available
-- **Multiple package managers**: npm, Yarn, pnpm all ready to use
+- **Multiple package managers**: npm, npx, Yarn, pnpm all ready to use
 - **Volume-friendly**: Proper permissions for bind mounts
 
 ---
