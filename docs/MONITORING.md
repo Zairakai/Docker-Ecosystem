@@ -4,7 +4,6 @@
 [![License][license-badge]][license]
 [![Pipeline][pipeline-badge]][pipeline]
 
-
 [🏠 Home][home] > [📚 Documentation][docs] > Monitoring & Observability
 
 This document describes how to monitor the Zairakai Docker Ecosystem using Prometheus metrics, structured

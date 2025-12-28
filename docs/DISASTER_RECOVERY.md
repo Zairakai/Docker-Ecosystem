@@ -4,7 +4,6 @@
 [![License][license-badge]][license]
 [![Pipeline][pipeline-badge]][pipeline]
 
-
 [🏠 Home][home] > [📚 Documentation][docs] > Disaster Recovery Guide
 
 Complete disaster recovery procedures for the Zairakai Docker Ecosystem.

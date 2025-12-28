@@ -4,7 +4,6 @@
 [![License][license-badge]][license]
 [![Pipeline][pipeline-badge]][pipeline]
 
-
 [🏠 Home][home] > [📚 Documentation][docs] > Docker Swarm Deployment Guide
 
 Complete guide for deploying Zairakai Docker Ecosystem on Docker Swarm for production high-availability setups.

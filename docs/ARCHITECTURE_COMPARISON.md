@@ -4,7 +4,6 @@
 [![License][license-badge]][license]
 [![Pipeline][pipeline-badge]][pipeline]
 
-
 [🏠 Home][home] > [📚 Documentation][docs] > Architecture Comparison
 
 This document compares the three distinct architectural modes supported by the Zairakai Docker Ecosystem.

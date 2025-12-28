@@ -29,7 +29,7 @@ docker run -d \
   zairakai/minio:latest
 ```
 
-Access console at: **http://localhost:9001**
+Access console at: **<http://localhost:9001>**
 
 ---
 
@@ -69,6 +69,7 @@ AWS_USE_PATH_STYLE_ENDPOINT=true
 ```
 
 Install AWS SDK:
+
 ```bash
 composer require league/flysystem-aws-s3-v3 "^3.0"
 ```
@@ -88,7 +89,7 @@ composer require league/flysystem-aws-s3-v3 "^3.0"
 
 ## Creating Buckets
 
-Via console (http://localhost:9001) or CLI:
+Via console (<http://localhost:9001>) or CLI:
 
 ```bash
 docker exec minio-container mc mb /data/laravel
@@ -109,6 +110,7 @@ docker exec minio-container mc policy set download /data/laravel
 ## API Compatibility
 
 Compatible with AWS S3 SDKs:
+
 - PHP AWS SDK
 - Boto3 (Python)
 - AWS CLI
@@ -126,10 +128,14 @@ Compatible with AWS S3 SDKs:
 [issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
 
 <!-- Badge References -->
+[pulls-badge]: https://img.shields.io/docker/pulls/zairakai/minio?logo=docker&logoColor=white
+[size-badge]: https://img.shields.io/docker/image-size/zairakai/minio/latest?logo=docker&logoColor=white&label=size
 [pipeline-badge]: https://gitlab.com/zairakai/docker-ecosystem/badges/main/pipeline.svg
 [pipeline]: https://gitlab.com/zairakai/docker-ecosystem/-/pipelines
 [license-badge]: https://img.shields.io/badge/license-MIT-blue.svg
+[license]: https://gitlab.com/zairakai/docker-ecosystem/-/blob/main/LICENSE
 [discord-badge]: https://img.shields.io/discord/1260000352699289621?logo=discord&label=Discord&color=5865F2
 [discord]: https://discord.gg/MAmD5SG8Zu
 [issues-badge]: https://img.shields.io/gitlab/issues/open-raw/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Issues
 [ecosystem]: https://gitlab.com/zairakai/docker-ecosystem
+[dockerhub]: https://hub.docker.com/r/zairakai/minio

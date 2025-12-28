@@ -1,0 +1,17 @@
+{
+  "name": "docker-ecosystem",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Zairakai Docker Ecosystem - Markdown linting",
+  "scripts": {
+    "lint:md": "markdownlint-cli2 '**/*.md' '#node_modules'",
+    "lint:md:fix": "markdownlint-cli2 --fix '**/*.md' '#node_modules'"
+  },
+  "devDependencies": {
+    "markdownlint": "^0.40.0",
+    "markdownlint-cli2": "^0.20.0"
+  },
+  "engines": {
+    "node": ">=16"
+  }
+}

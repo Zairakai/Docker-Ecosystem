@@ -4,7 +4,6 @@
 [![License][license-badge]][license]
 [![Pipeline][pipeline-badge]][pipeline]
 
-
 This document explains how Docker images are synchronized to Docker Hub with automatic description updates.
 
 ---

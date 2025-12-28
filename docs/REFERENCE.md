@@ -4,7 +4,6 @@
 [![License][license-badge]][license]
 [![Pipeline][pipeline-badge]][pipeline]
 
-
 [🏠 Home][home] > [📚 Documentation][docs] > Docker Ecosystem Reference
 
 Quick reference for images, tags, commands, and configurations.

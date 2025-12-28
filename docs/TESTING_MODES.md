@@ -4,7 +4,6 @@
 [![License][license-badge]][license]
 [![Pipeline][pipeline-badge]][pipeline]
 
-
 [🏠 Home][home] > [📚 Documentation][docs] > Testing Modes Architecture
 
 Complete guide to the three testing modes available in the Zairakai Docker Ecosystem - Blade SSR, SPA-only,

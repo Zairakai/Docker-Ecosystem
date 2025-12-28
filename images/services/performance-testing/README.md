@@ -83,6 +83,7 @@ scenarios:
 ```
 
 Run:
+
 ```bash
 docker run --rm -v ./load-tests:/tests zairakai/performance-testing \
   artillery run /tests/basic-load.yml
@@ -116,6 +117,7 @@ export default function () {
 ```
 
 Run:
+
 ```bash
 docker run --rm -v ./load-tests:/tests zairakai/performance-testing \
   k6 run /tests/script.js
@@ -142,6 +144,7 @@ class WebsiteUser(HttpUser):
 ```
 
 Run:
+
 ```bash
 docker run --rm -p 8089:8089 \
   -v ./load-tests:/tests \
@@ -149,7 +152,7 @@ docker run --rm -p 8089:8089 \
   locust -f /tests/locustfile.py --host=http://localhost
 ```
 
-Access web UI at: **http://localhost:8089**
+Access web UI at: **<http://localhost:8089>**
 
 ---
 
@@ -201,10 +204,14 @@ All tools generate detailed reports:
 [issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
 
 <!-- Badge References -->
+[pulls-badge]: https://img.shields.io/docker/pulls/zairakai/performance-testing?logo=docker&logoColor=white
+[size-badge]: https://img.shields.io/docker/image-size/zairakai/performance-testing/latest?logo=docker&logoColor=white&label=size
 [pipeline-badge]: https://gitlab.com/zairakai/docker-ecosystem/badges/main/pipeline.svg
 [pipeline]: https://gitlab.com/zairakai/docker-ecosystem/-/pipelines
 [license-badge]: https://img.shields.io/badge/license-MIT-blue.svg
+[license]: https://gitlab.com/zairakai/docker-ecosystem/-/blob/main/LICENSE
 [discord-badge]: https://img.shields.io/discord/1260000352699289621?logo=discord&label=Discord&color=5865F2
 [discord]: https://discord.gg/MAmD5SG8Zu
 [issues-badge]: https://img.shields.io/gitlab/issues/open-raw/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Issues
 [ecosystem]: https://gitlab.com/zairakai/docker-ecosystem
+[dockerhub]: https://hub.docker.com/r/zairakai/performance-testing

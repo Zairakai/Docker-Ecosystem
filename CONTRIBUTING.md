@@ -189,8 +189,6 @@ CI_REGISTRY_IMAGE=registry.gitlab.com/zairakai/docker-ecosystem \
 [discord]: https://discord.gg/MAmD5SG8Zu
 [issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
 [security]: ./SECURITY.md
-[docs]: docs/
-[examples]: examples/
 [contributors]: https://gitlab.com/zairakai/docker-ecosystem/-/graphs/main
 
 <!-- Badge Links -->
@@ -198,4 +196,3 @@ CI_REGISTRY_IMAGE=registry.gitlab.com/zairakai/docker-ecosystem \
 [contributors-badge]: https://img.shields.io/gitlab/contributors/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Contributors
 [discord-badge]: https://img.shields.io/discord/1260000352699289621?logo=discord&label=Discord&color=5865F2
 [issues-badge]: https://img.shields.io/gitlab/issues/open/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Issues
-[docs-badge]: https://img.shields.io/badge/docs-available-blue?logo=readthedocs&logoColor=white

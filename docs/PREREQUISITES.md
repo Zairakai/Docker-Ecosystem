@@ -4,7 +4,6 @@
 [![License][license-badge]][license]
 [![Pipeline][pipeline-badge]][pipeline]
 
-
 [🏠 Home][home] > [📚 Documentation][docs] > Prerequisites Guide
 
 This guide helps you understand what knowledge, tools, and system requirements you need to use the Zairakai

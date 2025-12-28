@@ -4,7 +4,6 @@
 [![License][license-badge]][license]
 [![Pipeline][pipeline-badge]][pipeline]
 
-
 [🏠 Home][home] > [📚 Documentation][docs] > Architecture Overview
 
 Comprehensive architectural overview of the Zairakai Docker Ecosystem - 13 lightweight images following a

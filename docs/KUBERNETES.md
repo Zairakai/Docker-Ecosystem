@@ -4,7 +4,6 @@
 [![License][license-badge]][license]
 [![Pipeline][pipeline-badge]][pipeline]
 
-
 [🏠 Home][home] > [📚 Documentation][docs] > Kubernetes Deployment Guide
 
 Complete guide for deploying Zairakai Docker Ecosystem on Kubernetes using Helm.

@@ -144,7 +144,7 @@ MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE…
 -----END PUBLIC KEY-----
 ```
 
-*(Public key will be added after initial key generation)*
+> **Note:** Public key will be added after initial key generation
 
 #### Verify Image Signature
 

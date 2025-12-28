@@ -412,7 +412,9 @@ scripts/backup/restore.sh redis     # Point-in-time recovery
 
 **Need help?** Join our Discord community or report issues on GitLab.
 
-_Built with ❤️ by the Zairakai team for Laravel + Vue.js developers_
+---
+
+Built with ❤️ by the Zairakai team for Laravel + Vue.js developers
 
 <!-- Documentation Links (no badges) -->
 [license]: ./LICENSE

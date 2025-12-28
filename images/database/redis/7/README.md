@@ -133,13 +133,16 @@ docker restart redis-container
 
 [issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
 
-
-
 <!-- Badge References -->
+[pulls-badge]: https://img.shields.io/docker/pulls/zairakai/redis?logo=docker&logoColor=white
+[size-badge]: https://img.shields.io/docker/image-size/zairakai/redis/7?logo=docker&logoColor=white&label=size
 [pipeline-badge]: https://gitlab.com/zairakai/docker-ecosystem/badges/main/pipeline.svg
 [pipeline]: https://gitlab.com/zairakai/docker-ecosystem/-/pipelines
 [license-badge]: https://img.shields.io/badge/license-MIT-blue.svg
+[license]: https://gitlab.com/zairakai/docker-ecosystem/-/blob/main/LICENSE
 [discord-badge]: https://img.shields.io/discord/1260000352699289621?logo=discord&label=Discord&color=5865F2
 [discord]: https://discord.gg/MAmD5SG8Zu
 [issues-badge]: https://img.shields.io/gitlab/issues/open-raw/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Issues
 [ecosystem]: https://gitlab.com/zairakai/docker-ecosystem
+[dockerhub]: https://hub.docker.com/r/zairakai/redis
+[disaster-recovery]: https://gitlab.com/zairakai/docker-ecosystem/-/blob/main/docs/DISASTER_RECOVERY.md

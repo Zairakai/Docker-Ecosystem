@@ -42,8 +42,28 @@ validate: ## ✅ Validate Dockerfiles and scripts
 shellcheck: ## 🐚 Run shellcheck on all shell scripts (100% compliance)
 	@bash scripts/pipeline/validate-shellcheck.sh
 
+.PHONY: lint-md
+lint-md: ## 📝 Lint Markdown files (check only)
+	@bash -c 'source $(ANSI) && info "Linting Markdown files..." && \
+	if command -v npx >/dev/null 2>&1; then \
+		npx markdownlint-cli2 "**/*.md" "#node_modules" && ok "Markdown linting passed"; \
+	else \
+		error "npx not found. Run: npm install -g markdownlint-cli2"; \
+		exit 1; \
+	fi'
+
+.PHONY: lint-md-fix
+lint-md-fix: ## 📝 Lint and auto-fix Markdown files
+	@bash -c 'source $(ANSI) && info "Fixing Markdown files..." && \
+	if command -v npx >/dev/null 2>&1; then \
+		npx markdownlint-cli2 --fix "**/*.md" "#node_modules" && ok "Markdown files fixed"; \
+	else \
+		error "npx not found. Run: npm install -g markdownlint-cli2"; \
+		exit 1; \
+	fi'
+
 .PHONY: validate-all
-validate-all: validate shellcheck ## ✅ Run all validation checks
+validate-all: validate shellcheck lint-md ## ✅ Run all validation checks
 	@bash -c 'source $(ANSI) && ok "All validation checks passed"'
 
 ## ────────────────────────────────────────────────────────────────────

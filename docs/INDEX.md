@@ -316,7 +316,9 @@ Want to contribute to the Zairakai Docker Ecosystem?
 - [← Back to Home][home]
 - [Quick Start Guide →][quickstart]
 
-*Built with ❤️ by the Zairakai team for Laravel + Vue.js developers*
+---
+
+Built with ❤️ by the Zairakai team for Laravel + Vue.js developers
 
 ## Support
 
