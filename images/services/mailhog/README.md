@@ -98,8 +98,8 @@ MAIL_FROM_NAME="${APP_NAME}"
 ## Support
 
 [![Issues][issues-badge]][issues]
-[![Discord][discord-badge]][discord]
 [![Documentation][docs-badge]][ecosystem]
+[![Discord][discord-badge]][discord]
 
 [issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
 
@@ -110,9 +110,9 @@ MAIL_FROM_NAME="${APP_NAME}"
 [pipeline]: https://gitlab.com/zairakai/docker-ecosystem/-/pipelines
 [license-badge]: https://img.shields.io/badge/license-MIT-blue.svg
 [license]: https://gitlab.com/zairakai/docker-ecosystem/-/blob/main/LICENSE
-[discord-badge]: https://img.shields.io/discord/1260000352699289621?logo=discord&label=Discord&color=5865F2
+[discord-badge]: https://img.shields.io/discord/1260000352699289621?logo=discord&logoColor=white&label=Discord&color=5865F2
 [discord]: https://discord.gg/MAmD5SG8Zu
-[issues-badge]: https://img.shields.io/gitlab/issues/open-raw/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Issues
+[issues-badge]: https://img.shields.io/gitlab/issues/open-raw/zairakai%2Fdocker-ecosystem?logo=gitlab&logoColor=white&label=Issues
 [ecosystem]: https://gitlab.com/zairakai/docker-ecosystem
 [docs-badge]: https://img.shields.io/badge/docs-ecosystem-blue?logo=gitlab&logoColor=white
 [dockerhub]: https://hub.docker.com/r/zairakai/mailhog
