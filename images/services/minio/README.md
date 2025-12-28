@@ -118,12 +118,11 @@ Compatible with AWS S3 SDKs:
 
 ---
 
-**Documentation**: [Zairakai Docker Ecosystem][ecosystem]
-
 ## Support
 
 [![Issues][issues-badge]][issues]
 [![Discord][discord-badge]][discord]
+[![Documentation][docs-badge]][ecosystem]
 
 [issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
 
@@ -138,4 +137,5 @@ Compatible with AWS S3 SDKs:
 [discord]: https://discord.gg/MAmD5SG8Zu
 [issues-badge]: https://img.shields.io/gitlab/issues/open-raw/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Issues
 [ecosystem]: https://gitlab.com/zairakai/docker-ecosystem
+[docs-badge]: https://img.shields.io/badge/docs-ecosystem-blue?logo=gitlab&logoColor=white
 [dockerhub]: https://hub.docker.com/r/zairakai/minio

@@ -176,12 +176,11 @@ Included optimizations:
 - [zairakai/mysql](https://hub.docker.com/r/zairakai/mysql) - MySQL database
 - [zairakai/redis](https://hub.docker.com/r/zairakai/redis) - Redis cache
 
-**Documentation**: [Zairakai Docker Ecosystem][ecosystem]
-
 ## Support
 
 [![Issues][issues-badge]][issues]
 [![Discord][discord-badge]][discord]
+[![Documentation][docs-badge]][ecosystem]
 
 [issues]: https://gitlab.com/zairakai/docker-ecosystem/-/issues
 
@@ -196,6 +195,7 @@ Included optimizations:
 [discord]: https://discord.gg/MAmD5SG8Zu
 [issues-badge]: https://img.shields.io/gitlab/issues/open-raw/zairakai%2Fdocker-ecosystem?logo=gitlab&label=Issues
 [ecosystem]: https://gitlab.com/zairakai/docker-ecosystem
+[docs-badge]: https://img.shields.io/badge/docs-ecosystem-blue?logo=gitlab&logoColor=white
 [dockerhub]: https://hub.docker.com/r/zairakai/nginx
 [nginx-examples]: https://gitlab.com/zairakai/docker-ecosystem/-/tree/main/examples/nginx
 [testing-modes]: https://gitlab.com/zairakai/docker-ecosystem/-/blob/main/docs/TESTING_MODES.md
