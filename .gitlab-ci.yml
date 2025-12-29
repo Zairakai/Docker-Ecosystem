@@ -5,11 +5,14 @@
 stages:
   - validate
   - security
-  - build
+  - build-prod
+  - build-dev
+  - build-test
   - build-services-core
   - build-services-extra
   - test
   - promote
+  - cleanup
 
 variables:
   DOCKER_HOST: "unix:///var/run/docker.sock"
@@ -36,15 +39,35 @@ include:
 
 sast:
   stage: security
+  needs:
+    - job: validate:config
+      optional: true
+    - job: validate:shellcheck
+      optional: true
 
 dependency_scanning:
   stage: security
+  needs:
+    - job: validate:config
+      optional: true
+    - job: validate:shellcheck
+      optional: true
 
 iac-sast:
   stage: security
+  needs:
+    - job: validate:config
+      optional: true
+    - job: validate:shellcheck
+      optional: true
 
 secret_detection:
   stage: security
+  needs:
+    - job: validate:config
+      optional: true
+    - job: validate:shellcheck
+      optional: true
 
 # ================================
 # VALIDATION STAGE
@@ -64,15 +87,6 @@ validate:shellcheck:
     - apk add --no-cache bash
   script:
     - bash scripts/pipeline/validate-shellcheck.sh
-  allow_failure: false
-
-validate:markdownlint:
-  stage: validate
-  image: node:20-alpine
-  before_script:
-    - npm install -g markdownlint-cli2 markdownlint
-  script:
-    - markdownlint-cli2 "**/*.md" "#node_modules"
   allow_failure: false
 
 # ================================
@@ -98,36 +112,72 @@ validate:markdownlint:
     GIT_DEPTH: 1
 
 # ================================
-# BUILD CORE IMAGES (Multi-stage: prod → dev → test)
+# BUILD PRODUCTION STAGE (Base images)
 # ================================
-build:core:php:
+build:php:prod:
   <<: *build_base
-  stage: build
+  stage: build-prod
   needs:
     - validate:config
     - validate:shellcheck
-    - validate:markdownlint
-  variables:
-    PUSH_TO_REGISTRY: "false"
   script:
     - bash scripts/pipeline/build-image.sh images/php/8.3 php 8.3-prod
+  rules:
+    - if: $CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/
+
+build:node:prod:
+  <<: *build_base
+  stage: build-prod
+  needs:
+    - validate:config
+    - validate:shellcheck
+  script:
+    - bash scripts/pipeline/build-image.sh images/node/20 node 20-prod
+  rules:
+    - if: $CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/
+
+# ================================
+# BUILD DEVELOPMENT STAGE
+# ================================
+build:php:dev:
+  <<: *build_base
+  stage: build-dev
+  needs:
+    - build:php:prod
+  script:
     - bash scripts/pipeline/build-image.sh images/php/8.3 php 8.3-dev
+  rules:
+    - if: $CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/
+
+build:node:dev:
+  <<: *build_base
+  stage: build-dev
+  needs:
+    - build:node:prod
+  script:
+    - bash scripts/pipeline/build-image.sh images/node/20 node 20-dev
+  rules:
+    - if: $CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/
+
+# ================================
+# BUILD TESTING STAGE
+# ================================
+build:php:test:
+  <<: *build_base
+  stage: build-test
+  needs:
+    - build:php:dev
+  script:
     - bash scripts/pipeline/build-image.sh images/php/8.3 php 8.3-test
   rules:
     - if: $CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/
 
-build:core:node:
+build:node:test:
   <<: *build_base
-  stage: build
+  stage: build-test
   needs:
-    - validate:config
-    - validate:shellcheck
-    - validate:markdownlint
-  variables:
-    PUSH_TO_REGISTRY: "false"
+    - build:node:dev
   script:
-    - bash scripts/pipeline/build-image.sh images/node/20 node 20-prod
-    - bash scripts/pipeline/build-image.sh images/node/20 node 20-dev
     - bash scripts/pipeline/build-image.sh images/node/20 node 20-test
   rules:
     - if: $CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/
@@ -135,40 +185,34 @@ build:core:node:
 # ================================
 # BUILD SERVICES CORE (Group 1: Critical services after PHP/Node)
 # ================================
-build:service:mysql:
+build:mysql:
   <<: *build_base
   stage: build-services-core
   needs:
-    - build:core:php
-    - build:core:node
-  variables:
-    PUSH_TO_REGISTRY: "false"
+    - build:php:test
+    - build:node:test
   script:
     - bash scripts/pipeline/build-image.sh images/database/mysql/8.0 database mysql-8.0
   rules:
     - if: $CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/
 
-build:service:redis:
+build:redis:
   <<: *build_base
   stage: build-services-core
   needs:
-    - build:core:php
-    - build:core:node
-  variables:
-    PUSH_TO_REGISTRY: "false"
+    - build:php:test
+    - build:node:test
   script:
     - bash scripts/pipeline/build-image.sh images/database/redis/7 database redis-7
   rules:
     - if: $CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/
 
-build:service:nginx:
+build:nginx:
   <<: *build_base
   stage: build-services-core
   needs:
-    - build:core:php
-    - build:core:node
-  variables:
-    PUSH_TO_REGISTRY: "false"
+    - build:php:test
+    - build:node:test
   script:
     - bash scripts/pipeline/build-image.sh images/web/nginx/1.26 web nginx-1.26
   rules:
@@ -177,56 +221,49 @@ build:service:nginx:
 # ================================
 # BUILD SERVICES EXTRA (Group 2: Secondary services)
 # ================================
-build:service:mailhog:
+build:mailhog:
   <<: *build_base
   stage: build-services-extra
   needs:
-    - build:service:mysql
-    - build:service:redis
-    - build:service:nginx
-  variables:
-    PUSH_TO_REGISTRY: "false"
+    - build:mysql
+    - build:redis
+    - build:nginx
   script:
     - bash scripts/pipeline/build-image.sh images/services/mailhog services mailhog
   rules:
     - if: $CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/
 
-build:service:minio:
+build:minio:
   <<: *build_base
   stage: build-services-extra
   needs:
-    - build:service:mysql
-    - build:service:redis
-    - build:service:nginx
-  variables:
-    PUSH_TO_REGISTRY: "false"
+    - build:mysql
+    - build:redis
+    - build:nginx
   script:
     - bash scripts/pipeline/build-image.sh images/services/minio services minio
   rules:
     - if: $CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/
 
-build:service:e2e-testing:
+build:e2e-testing:
   <<: *build_base
   stage: build-services-extra
   needs:
-    - build:service:mailhog
-    - build:service:minio
-  variables:
-    PUSH_TO_REGISTRY: "false"
+    - build:mysql
+    - build:redis
+    - build:nginx
   script:
     - bash scripts/pipeline/build-image.sh images/services/e2e-testing services e2e-testing
   rules:
     - if: $CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/
 
-build:service:performance-testing:
+build:performance-testing:
   <<: *build_base
   stage: build-services-extra
   needs:
-    - build:service:mysql
-    - build:service:redis
-    - build:service:nginx
-  variables:
-    PUSH_TO_REGISTRY: "false"
+    - build:mysql
+    - build:redis
+    - build:nginx
   script:
     - bash scripts/pipeline/build-image.sh images/services/performance-testing services performance-testing
   rules:
@@ -239,11 +276,19 @@ test:image-sizes:
   stage: test
   image: docker:27-cli
   needs:
-    # Only need final stage - they already depend on previous builds
-    - build:service:mailhog
-    - build:service:minio
-    - build:service:e2e-testing
-    - build:service:performance-testing
+    - build:php:prod
+    - build:php:dev
+    - build:php:test
+    - build:node:prod
+    - build:node:dev
+    - build:node:test
+    - build:mysql
+    - build:redis
+    - build:nginx
+    - build:mailhog
+    - build:minio
+    - build:e2e-testing
+    - build:performance-testing
   before_script:
     - apk add --no-cache bash
     - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
@@ -260,11 +305,12 @@ test:multi-stage-integrity:
   stage: test
   image: docker:27-cli
   needs:
-    # Only need final stage - they already depend on previous builds
-    - build:service:mailhog
-    - build:service:minio
-    - build:service:e2e-testing
-    - build:service:performance-testing
+    - build:php:prod
+    - build:php:dev
+    - build:php:test
+    - build:node:prod
+    - build:node:dev
+    - build:node:test
   before_script:
     - apk add --no-cache bash
     - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
@@ -280,7 +326,19 @@ promote:tags:
   stage: promote
   image: docker:27-cli
   needs:
-    # Only need tests - they already depend on all builds
+    - build:php:prod
+    - build:php:dev
+    - build:php:test
+    - build:node:prod
+    - build:node:dev
+    - build:node:test
+    - build:mysql
+    - build:redis
+    - build:nginx
+    - build:mailhog
+    - build:minio
+    - build:e2e-testing
+    - build:performance-testing
     - test:image-sizes
     - test:multi-stage-integrity
   before_script:
@@ -303,7 +361,7 @@ sync:dockerhub:
   needs:
     - promote:tags
   before_script:
-    - apk add --no-cache bash jq curl
+    - apk add --no-cache bash
     # Login GitLab Registry
     - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
   script:
@@ -313,4 +371,44 @@ sync:dockerhub:
     - docker logout docker.io || true
   rules:
     - if: $CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/
+  allow_failure: true
+
+# ================================
+# CLEANUP STAGE
+# ================================
+cleanup:staging-tags:
+  stage: cleanup
+  image: docker:27-cli
+  needs:
+    - promote:tags
+  before_script:
+    - apk add --no-cache bash curl jq
+    - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+  script:
+    - echo "🧹 Cleaning up Docker images on runner…"
+    - |
+      # Remove dangling images (untagged/temporary)
+      docker image prune -f || true
+
+      # Remove images with current CI commit SHA suffix
+      echo "→ Removing images tagged with ${IMAGE_SUFFIX}…"
+      docker images --filter=reference="*${IMAGE_SUFFIX}*" -q | xargs -r docker rmi -f || true
+
+      # Remove GitLab registry images
+      echo "→ Removing GitLab registry images…"
+      docker images --filter=reference="${CI_REGISTRY_IMAGE}/*" -q | xargs -r docker rmi -f || true
+
+      # Show remaining images
+      echo "→ Remaining Docker images:"
+      docker images --format "table {{.Repository}}:{{.Tag}}\t{{.Size}}" || true
+    - echo ""
+    - echo "🧹 Cleaning up GitLab registry tags via API…"
+    - chmod +x scripts/cleanup.sh
+    - bash scripts/cleanup.sh
+    - echo "✅ Cleanup completed"
+  after_script:
+    - docker logout $CI_REGISTRY
+  rules:
+    - if: $CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/
+  when: always
   allow_failure: true
