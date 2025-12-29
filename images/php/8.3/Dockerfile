@@ -148,7 +148,7 @@ RUN pecl install xdebug-${XDEBUG_VERSION} \
   && docker-php-ext-enable xdebug
 
 # Install Redis extension
-ARG REDIS_VERSION=6.0.2
+ARG REDIS_VERSION=6.1.0
 RUN pecl install redis-${REDIS_VERSION} \
   && docker-php-ext-enable redis
 
